@@ -3,22 +3,234 @@
 ## Week 1
 
 ### Day 1
-Status: Planned
+
+#### Jahnavi
+
+**Status:** Planned
+
+**Progress**
+
+* To be updated.
+
+**Observations**
+
+* To be updated.
+
+---
+
+#### Sreeja
+
+**Status:** Planned
+
+**Progress**
+
+* To be updated.
+
+**Observations**
+
+* To be updated.
+
+---
 
 ### Day 2
-Status: Planned
+
+#### Jahnavi
+
+**Status:** Planned
+
+**Progress**
+
+* To be updated.
+
+**Observations**
+
+* To be updated.
+
+---
+
+#### Sreeja
+
+**Status:** Planned
+
+**Progress**
+
+* To be updated.
+
+**Observations**
+
+* To be updated.
+
+---
 
 ### Day 3
-Status: Planned
+
+#### Jahnavi
+
+**Status:** Planned
+
+**Progress**
+
+* To be updated.
+
+**Observations**
+
+* To be updated.
+
+---
+
+#### Sreeja
+
+**Status:** Planned
+
+**Progress**
+
+* To be updated.
+
+**Observations**
+
+* To be updated.
+
+---
 
 ### Day 4
-Status: Planned
+
+#### Jahnavi
+
+**Status:** Planned
+
+**Progress**
+
+* To be updated.
+
+**Observations**
+
+* To be updated.
+
+---
+
+#### Sreeja
+
+**Status:** Planned
+
+**Progress**
+
+* To be updated.
+
+**Observations**
+
+* To be updated.
+
+---
 
 ### Day 5
-Status: Planned
+
+#### Jahnavi
+
+**Status:** Planned
+
+**Progress**
+
+* To be updated.
+
+**Observations**
+
+* To be updated.
+
+---
+
+#### Sreeja
+
+**Status:** Planned
+
+**Progress**
+
+* To be updated.
+
+**Observations**
+
+* To be updated.
+
+---
 
 ### Day 6
-Status: Planned
+
+#### Jahnavi
+
+**Status:** Planned
+
+**Progress**
+
+* To be updated.
+
+**Observations**
+
+* To be updated.
+
+---
+
+#### Sreeja
+
+**Status:** Planned
+
+**Progress**
+
+* To be updated.
+
+**Observations**
+
+* To be updated.
+
+---
 
 ### Day 7
-Status: Planned
+
+#### Jahnavi
+
+**Status:** Planned
+
+**Progress**
+
+* To be updated.
+
+**Observations**
+
+* To be updated.
+
+---
+
+#### Sreeja
+
+**Status:** Planned
+
+**Progress**
+
+* To be updated.
+
+**Observations**
+
+* To be updated.
+
+---
+
+## End of Week Summary
+
+### Jahnavi
+
+* To be updated.
+
+### Sreeja
+
+* To be updated.
+
+### Joint Achievements
+
+* To be updated.
+
+### Challenges Faced
+
+* To be updated.
+
+### Next Steps
+
+* To be updated.
+

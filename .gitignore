@@ -1,0 +1,18 @@
+# Build files
+*.o
+*.out
+*.exe
+
+# Logs
+*.log
+
+# IDE files
+.vscode/
+.idea/
+
+# Build directories
+build/
+bin/
+
+# Linux temporary files
+*~

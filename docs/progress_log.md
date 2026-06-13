@@ -4,111 +4,72 @@
 
 ### Day 1
 
-#### Jahnavi
-
-**Status:** Planned
+**Status:** Completed
 
 **Progress**
 
-* To be updated.
+* Studied Producer–Consumer Architecture.
+* Studied POSIX Threads concepts and thread lifecycle.
+* Studied synchronization mechanisms including mutexes and condition variables.
+* Understood the Streaming Media Player architecture and its mapping to telecom stream processing.
+* Reviewed Socket Programming fundamentals.
+* Reviewed MPI fundamentals and distributed processing concepts.
 
 **Observations**
 
-* To be updated.
-
----
-
-#### Sreeja
-
-**Status:** Planned
-
-**Progress**
-
-* To be updated.
-
-**Observations**
-
-* To be updated.
+* Producer and Consumer communicate through a shared buffer.
+* Synchronization is required to prevent race conditions.
+* Streaming architectures can be adapted for telecom packet processing.
 
 ---
 
 ### Day 2
 
-#### Jahnavi
-
-**Status:** Planned
+**Status:** Completed
 
 **Progress**
 
-* To be updated.
+* Designed packet data structure for future telecom packet processing.
+* Designed shared buffer architecture and workflow.
+* Documented producer-consumer synchronization mechanisms.
+* Updated architecture documentation.
+* Created project structure for POSIX Threads implementation.
+* Configured GitHub repository, branching strategy, and development workflow.
 
 **Observations**
 
-* To be updated.
-
----
-
-#### Sreeja
-
-**Status:** Planned
-
-**Progress**
-
-* To be updated.
-
-**Observations**
-
-* To be updated.
+* Circular buffers are suitable for continuous stream processing.
+* Proper architecture documentation simplifies implementation and future extensions.
+* Synchronization requirements were identified before implementation.
 
 ---
 
 ### Day 3
 
-#### Jahnavi
-
-**Status:** Planned
+**Status:** Completed
 
 **Progress**
 
-* To be updated.
+* Implemented POSIX Threads based Producer-Consumer prototype.
+* Implemented shared circular buffer.
+* Implemented Producer thread and Consumer thread.
+* Integrated mutex synchronization.
+* Integrated condition variables (`not_full` and `not_empty`).
+* Validated producer-consumer execution workflow.
+* Added statistics collection framework.
+* Collected production and consumption metrics.
 
 **Observations**
 
-* To be updated.
-
----
-
-#### Sreeja
-
-**Status:** Planned
-
-**Progress**
-
-* To be updated.
-
-**Observations**
-
-* To be updated.
+* Producer waits when the buffer becomes full.
+* Consumer waits when the buffer becomes empty.
+* Condition variables prevent busy waiting and improve synchronization efficiency.
+* Circular buffers support efficient continuous stream processing.
+* Producer and Consumer successfully processed all generated frames without data loss.
 
 ---
 
 ### Day 4
-
-#### Jahnavi
-
-**Status:** Planned
-
-**Progress**
-
-* To be updated.
-
-**Observations**
-
-* To be updated.
-
----
-
-#### Sreeja
 
 **Status:** Planned
 
@@ -124,22 +85,6 @@
 
 ### Day 5
 
-#### Jahnavi
-
-**Status:** Planned
-
-**Progress**
-
-* To be updated.
-
-**Observations**
-
-* To be updated.
-
----
-
-#### Sreeja
-
 **Status:** Planned
 
 **Progress**
@@ -153,22 +98,6 @@
 ---
 
 ### Day 6
-
-#### Jahnavi
-
-**Status:** Planned
-
-**Progress**
-
-* To be updated.
-
-**Observations**
-
-* To be updated.
-
----
-
-#### Sreeja
 
 **Status:** Planned
 
@@ -184,22 +113,6 @@
 
 ### Day 7
 
-#### Jahnavi
-
-**Status:** Planned
-
-**Progress**
-
-* To be updated.
-
-**Observations**
-
-* To be updated.
-
----
-
-#### Sreeja
-
 **Status:** Planned
 
 **Progress**
@@ -214,15 +127,7 @@
 
 ## End of Week Summary
 
-### Jahnavi
-
-* To be updated.
-
-### Sreeja
-
-* To be updated.
-
-### Joint Achievements
+### Achievements
 
 * To be updated.
 
@@ -233,4 +138,3 @@
 ### Next Steps
 
 * To be updated.
-

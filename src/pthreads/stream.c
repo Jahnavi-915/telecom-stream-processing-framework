@@ -5,6 +5,12 @@
 
 #define BUFFER_SIZE 5
 
+// Statistics Counters
+int produced_count = 0;
+int consumed_count = 0;
+int buffer_full_events = 0;
+int buffer_empty_events = 0;
+
 typedef struct {
     int frame_id;
 } Frame;
@@ -25,6 +31,7 @@ void* producer_thread(void* arg) {
         pthread_mutex_lock(&buffer->lock);
         
         while (buffer->count == BUFFER_SIZE) {
+            buffer_full_events++;
             printf("[Producer] Buffer FULL. Waiting...\n");
             pthread_cond_wait(&buffer->not_full, &buffer->lock);
         }
@@ -34,6 +41,8 @@ void* producer_thread(void* arg) {
         buffer->queue[buffer->tail] = new_frame;
         buffer->tail = (buffer->tail + 1) % BUFFER_SIZE;
         buffer->count++;
+
+        produced_count++;
         
         printf("[Producer] Produced Frame ID: %d (Total in buffer: %d)\n", i, buffer->count);
         
@@ -51,6 +60,7 @@ void* consumer_thread(void* arg) {
         pthread_mutex_lock(&buffer->lock);
         
         while (buffer->count == 0) {
+            buffer_empty_events++;
             printf("[Consumer] Buffer EMPTY. Waiting...\n");
             pthread_cond_wait(&buffer->not_empty, &buffer->lock);
         }
@@ -58,6 +68,8 @@ void* consumer_thread(void* arg) {
         Frame consumed_frame = buffer->queue[buffer->head];
         buffer->head = (buffer->head + 1) % BUFFER_SIZE;
         buffer->count--;
+
+        consumed_count++;
         
         printf("[Consumer] Consumed Frame ID: %d (Total in buffer: %d)\n", consumed_frame.frame_id, buffer->count);
         
@@ -95,5 +107,13 @@ int main() {
     pthread_cond_destroy(&buffer.not_empty);
     
     printf("Stream Processing Complete.\n");
+
+    printf("\n=== Statistics ===\n");
+
+    printf("Frames Produced : %d\n", produced_count);
+    printf("Frames Consumed : %d\n", consumed_count);
+    printf("Buffer Full Events : %d\n", buffer_full_events);
+    printf("Buffer Empty Events : %d\n", buffer_empty_events);
+
     return 0;
 }

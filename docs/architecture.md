@@ -80,12 +80,33 @@ A circular queue shared between producer and consumer threads.
 
 Removes packets from the buffer and processes them.
 
+### Producer-Consumer Synchronization
+
+The producer and consumer threads communicate through a shared circular buffer.
+
+#### Producer Workflow
+
+1. Generate packet
+2. Acquire mutex
+3. Insert packet into buffer
+4. Signal consumer
+5. Release mutex
+
+#### Consumer Workflow
+
+1. Acquire mutex
+2. Remove packet from buffer
+3. Process packet
+4. Signal producer
+5. Release mutex
+
 ### Synchronization Mechanisms
 
 The implementation will use:
 
-- pthread_mutex_t
-- pthread_cond_t
+* pthread_mutex_t
+* pthread_cond_t (not_full)
+* pthread_cond_t (not_empty)
 
 to ensure safe access to the shared buffer and prevent race conditions.
 
@@ -93,10 +114,10 @@ to ensure safe access to the shared buffer and prevent race conditions.
 
 The following statistics will be collected:
 
-- Packets Produced
-- Packets Consumed
-- Buffer Full Events
-- Buffer Empty Events
+* Packets Produced
+* Packets Consumed
+* Buffer Full Events
+* Buffer Empty Events
 
 ### Expected Outcome
 

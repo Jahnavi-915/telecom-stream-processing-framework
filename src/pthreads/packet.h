@@ -2,10 +2,10 @@
 #define PACKET_H
 
 struct Packet {
-    int id;
-    int priority;
-    char source[20];
-    char destination[20];
+    int id;                  // Unique packet identifier
+    int priority;            // Packet priority level
+    char source[20];         // Source node/server
+    char destination[20];    // Destination node/server
 };
 
 #endif

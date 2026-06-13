@@ -17,12 +17,26 @@ pthread_cond_t not_full;
 pthread_cond_t not_empty;
 
 void* producer(void* arg)
-{
+{   
+    // Generate packet
+
+    // Wait if buffer is full
+
+    // Insert packet into buffer
+
+    // Notify consumer
+
     return NULL;
 }
 
 void* consumer(void* arg)
 {
+    // Wait if buffer is empty
+
+    // Remove packet from buffer
+
+    // Process packet
+    
     return NULL;
 }
 

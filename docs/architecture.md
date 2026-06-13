@@ -60,6 +60,49 @@ This architecture serves as a reference model for future telecom packet processi
 
 ---
 
+## POSIX Threads Prototype Design
+
+### Objective
+
+Implement a Producer-Consumer model using POSIX Threads to simulate telecom stream processing.
+
+### Components
+
+#### Producer Thread
+
+Generates packets and inserts them into a shared buffer.
+
+#### Shared Buffer
+
+A circular queue shared between producer and consumer threads.
+
+#### Consumer Thread
+
+Removes packets from the buffer and processes them.
+
+### Synchronization Mechanisms
+
+The implementation will use:
+
+- pthread_mutex_t
+- pthread_cond_t
+
+to ensure safe access to the shared buffer and prevent race conditions.
+
+### Performance Metrics
+
+The following statistics will be collected:
+
+- Packets Produced
+- Packets Consumed
+- Buffer Full Events
+- Buffer Empty Events
+
+### Expected Outcome
+
+A working producer-consumer simulation that serves as the foundation for future telecom packet processing implementations.
+
+
 ## Future Expansion
 
 The architecture will evolve to support:

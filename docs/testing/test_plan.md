@@ -42,6 +42,8 @@ Evaluates:
 * Throughput
 * Buffer Utilization
 * Waiting Events
+* Synchronization Overhead
+* Performance under varying production and consumption rates
 
 ---
 
@@ -54,6 +56,11 @@ Evaluates behavior under:
 * High Frame Volumes
 * Fast Producer Rates
 * Fast Consumer Rates
+* Slow System Configurations
+* High-Speed Configurations
+* Producer Burst Workloads
+* Consumer Burst Workloads
+* Maximum Throughput Scenarios
 
 ---
 
@@ -86,8 +93,30 @@ Verifies:
 
 * Execution Time
 * Throughput
+* Average Buffer Occupancy
 * Buffer Utilization
 * Resource Usage
+
+---
+
+## Test Suite
+
+### Functional and Validation Tests
+
+* TC-01 Balanced Baseline
+* TC-02 Small Buffer
+* TC-03 Large Buffer
+* TC-04 Fast Producer
+* TC-05 Fast Consumer
+* TC-06 High Volume
+
+### Extended Performance Tests
+
+* TC-07 Slow System
+* TC-08 Fast System
+* TC-09 Maximum Throughput
+* TC-10 Producer Burst
+* TC-11 Consumer Burst
 
 ---
 
@@ -103,3 +132,5 @@ Verifies:
 ## Notes
 
 Detailed test cases, observations, validation reports, performance analysis reports, and bug reports will be maintained separately during the testing and validation phase.
+
+The testing framework is also intended to support comparative evaluation of external implementations provided by other project teams.

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <unistd.h>
+#include <sys/time.h>
 
 #define BUFFER_SIZE 5
 
@@ -10,6 +11,8 @@ int produced_count = 0;
 int consumed_count = 0;
 int buffer_full_events = 0;
 int buffer_empty_events = 0;
+int total_buffer_occupancy = 0;
+int occupancy_samples = 0;
 
 typedef struct {
     int frame_id;
@@ -41,6 +44,8 @@ void* producer_thread(void* arg) {
         buffer->queue[buffer->tail] = new_frame;
         buffer->tail = (buffer->tail + 1) % BUFFER_SIZE;
         buffer->count++;
+        total_buffer_occupancy += buffer->count;
+        occupancy_samples++;
 
         produced_count++;
         
@@ -70,18 +75,23 @@ void* consumer_thread(void* arg) {
         buffer->count--;
 
         consumed_count++;
+        total_buffer_occupancy += buffer->count;
+        occupancy_samples++;
         
         printf("[Consumer] Consumed Frame ID: %d (Total in buffer: %d)\n", consumed_frame.frame_id, buffer->count);
         
         pthread_cond_signal(&buffer->not_full);
         pthread_mutex_unlock(&buffer->lock);
         
-        usleep(150000);
+        usleep(100000);
     }
     return NULL;
 }
 
 int main() {
+    struct timeval start_time, end_time;
+    gettimeofday(&start_time, NULL);
+
     SharedBuffer buffer;
     buffer.head = 0;
     buffer.tail = 0;
@@ -102,11 +112,25 @@ int main() {
     pthread_join(producer_id, NULL);
     pthread_join(consumer_id, NULL);
     
-    pthread_mutex_destroy(&buffer.lock);
-    pthread_cond_destroy(&buffer.not_full);
-    pthread_cond_destroy(&buffer.not_empty);
-    
     printf("Stream Processing Complete.\n");
+    
+    gettimeofday(&end_time, NULL);
+
+    double execution_time =(end_time.tv_sec - start_time.tv_sec) + (end_time.tv_usec - start_time.tv_usec) / 1000000.0;
+    double throughput = 0.0;
+
+    if (execution_time > 0)
+    {
+        throughput = consumed_count / execution_time;
+    }
+    double avg_occupancy = 0.0;
+
+    if (occupancy_samples > 0)
+    {
+        avg_occupancy = (double) total_buffer_occupancy /occupancy_samples;
+    }
+    double utilization = (avg_occupancy / BUFFER_SIZE) * 100;
+
 
     printf("\n=== Statistics ===\n");
 
@@ -114,6 +138,14 @@ int main() {
     printf("Frames Consumed : %d\n", consumed_count);
     printf("Buffer Full Events : %d\n", buffer_full_events);
     printf("Buffer Empty Events : %d\n", buffer_empty_events);
+    printf("Execution Time : %.4f seconds\n", execution_time);
+    printf("Throughput : %.2f frames/sec\n", throughput);
+    printf("Average Buffer Occupancy : %.2f\n",avg_occupancy);
+    printf("Buffer Utilization : %.2f%%\n",utilization);
+ 
+    pthread_mutex_destroy(&buffer.lock);
+    pthread_cond_destroy(&buffer.not_full);
+    pthread_cond_destroy(&buffer.not_empty);
 
     return 0;
 }

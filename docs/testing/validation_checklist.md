@@ -57,35 +57,83 @@ Evaluator:
 * [ ] Buffer Empty Events recorded
 * [ ] Execution Time measured
 * [ ] Throughput calculated
+* [ ] Average Buffer Occupancy calculated
+* [ ] Buffer Utilization calculated
 
 ---
 
 ## Stress Validation
 
-### Small Buffer Test
+### TC-01 Balanced Baseline
 
 * [ ] Passed
 * [ ] Failed
 
-### Large Buffer Test
+### TC-02 Small Buffer
 
 * [ ] Passed
 * [ ] Failed
 
-### Fast Producer Test
+### TC-03 Large Buffer
 
 * [ ] Passed
 * [ ] Failed
 
-### Fast Consumer Test
+### TC-04 Fast Producer
 
 * [ ] Passed
 * [ ] Failed
 
-### High Volume Test
+### TC-05 Fast Consumer
 
 * [ ] Passed
 * [ ] Failed
+
+### TC-06 High Volume
+
+* [ ] Passed
+* [ ] Failed
+
+---
+
+## Extended Performance Validation
+
+### TC-07 Slow System
+
+* [ ] Passed
+* [ ] Failed
+
+### TC-08 Fast System
+
+* [ ] Passed
+* [ ] Failed
+
+### TC-09 Maximum Throughput
+
+* [ ] Passed
+* [ ] Failed
+
+### TC-10 Producer Burst
+
+* [ ] Passed
+* [ ] Failed
+
+### TC-11 Consumer Burst
+
+* [ ] Passed
+* [ ] Failed
+
+---
+
+## Comparative Evaluation
+
+For external implementations:
+
+* [ ] Correctness verified
+* [ ] Synchronization verified
+* [ ] Performance metrics collected
+* [ ] Stability verified
+* [ ] Results compared against reference implementation
 
 ---
 

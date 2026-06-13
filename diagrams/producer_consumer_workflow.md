@@ -1,20 +1,6 @@
 # Producer-Consumer Workflow Diagram
 
 ```text
-                Producer Thread
-                       |
-                       | Generate Frame
-                       v
-              Shared Circular Buffer
-                       |
-                       | Consume Frame
-                       v
-                Consumer Thread
-```
-
-## Workflow
-
-```text
 Producer
     |
     | Generate Frame

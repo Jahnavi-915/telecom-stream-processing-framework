@@ -6,6 +6,12 @@ A Producer-Consumer prototype has been implemented using POSIX Threads to simula
 
 The implementation validates thread synchronization, shared buffer management, and inter-thread communication mechanisms.
 
+stream.c
+    Current working prototype
+
+producer_consumer.cpp
+    Planned modular implementation structure
+
 ---
 
 ## Implemented Components

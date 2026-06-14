@@ -2,101 +2,41 @@
 
 ## Overview
 
-The Telecom Stream Processing Framework is a systems-oriented project focused on designing, implementing, validating, and analyzing efficient algorithms and processing frameworks for large-scale telecom data streams.
+The Telecom Stream Processing Framework is a parallel and distributed systems project focused on designing, implementing, validating, and evaluating frameworks for real-time telecom data stream processing.
 
-Modern telecommunication infrastructures generate continuous streams of traffic data from multiple geographically distributed Data Extraction Servers (DES). Efficient extraction, communication, synchronization, and processing of these streams are critical for real-time analytics, network monitoring, traffic engineering, and large-scale network management.
+Modern telecommunication infrastructures continuously generate large volumes of traffic data from geographically distributed Data Extraction Servers (DES). Efficient collection, transmission, synchronization, processing, and analysis of these streams are critical for network monitoring, traffic engineering, anomaly detection, and large-scale telecom analytics.
 
-This project investigates multiple parallel and distributed computing approaches for handling such workloads, with emphasis on scalability, throughput, synchronization efficiency, communication overhead, and real-time processing capabilities.
+This project investigates multiple processing approaches including POSIX Threads, Socket Programming, MPI, and Hybrid Parallel Processing models.
 
 ---
 
-## Project Goal
+# Project Goals
 
-The primary goal of this project is to develop, evaluate, and compare efficient algorithms and processing frameworks for real-time telecom data extraction and stream processing.
-
-The project explores different approaches to:
+The primary objectives of this project are:
 
 * Process continuous telecom traffic streams.
-* Handle data originating from multiple Data Extraction Servers.
-* Design scalable parallel and distributed processing architectures.
-* Optimize communication and synchronization mechanisms.
-* Improve throughput, performance, and resource utilization.
-* Develop reliable frameworks for large-scale telecom data processing.
+* Design scalable stream-processing architectures.
+* Evaluate synchronization and communication mechanisms.
+* Measure throughput, latency, and resource utilization.
+* Compare shared-memory and distributed-processing approaches.
+* Develop reusable testing and validation methodologies.
 
 ---
 
-## Problem Statement
+# Technologies Used
 
-Telecommunication networks generate massive volumes of traffic data across geographically distributed locations. These data streams must be collected, transmitted, synchronized, processed, and analyzed efficiently while maintaining correctness and scalability.
-
-Key challenges include:
-
-* Continuous stream processing.
-* Concurrent execution and synchronization.
-* High-volume data handling.
-* Communication between distributed components.
-* Scalability across multiple processing units and servers.
-* Real-time performance requirements.
-
-This project focuses on developing frameworks and algorithms capable of addressing these challenges using modern parallel and distributed computing techniques.
-
----
-
-## Core Areas of Study
-
-### Parallel Programming
-
+* C / C++
 * POSIX Threads (Pthreads)
-* Multi-threaded Programming
-* Shared Memory Systems
-* Thread Lifecycle Management
-* Synchronization Mechanisms
-
-### Stream Processing
-
-* Producer–Consumer Architectures
-* Shared Buffers
-* Continuous Data Streams
-* Real-Time Processing Pipelines
-* Data Flow Management
-
-### Synchronization
-
-* Mutexes
-* Condition Variables
-* Read–Write Locks
-* Race Condition Prevention
-* Deadlock Analysis
-* Resource Coordination
-
-### Communication Frameworks
-
-* TCP/IP Socket Programming
-* Client–Server Architectures
-* Data Transmission Models
-* Network Communication Protocols
-
-### Distributed Computing
-
-* MPI (Message Passing Interface)
-* Distributed Processing Models
-* Message Passing Architectures
-* Hybrid Parallel Frameworks
-* MPI + POSIX Threads Integration
-
-### System Evaluation
-
-* Functional Testing
-* Validation Methodologies
-* Performance Benchmarking
-* Scalability Analysis
-* Throughput Measurement
-* Latency Analysis
-* Resource Utilization Studies
+* TCP Socket Programming
+* MPI (Planned)
+* Hybrid MPI + Pthreads (Planned)
+* Ubuntu Linux
+* GCC
+* Git & GitHub
 
 ---
 
-## Conceptual Architecture
+# System Architecture
 
 ```text
 Multiple Data Extraction Servers (DES)
@@ -121,96 +61,155 @@ Multiple Data Extraction Servers (DES)
 
 ---
 
-## Current Project Status
+# Implemented Modules
 
-### Phase 1: POSIX Threads Implementation
+## 1. POSIX Threads Producer–Consumer Prototype
 
-**Status:** Completed
+Location:
 
-The initial Producer-Consumer prototype has been successfully implemented using POSIX Threads.
+```text
+src/pthreads/
+```
 
-### Implemented Features
+Features:
 
 * Producer Thread
 * Consumer Thread
 * Circular Shared Buffer
 * Mutex Synchronization
-* Condition Variables (`not_full`, `not_empty`)
+* Condition Variables
 * Execution Time Measurement
-* Throughput Calculation
+* Throughput Measurement
 * Average Buffer Occupancy Analysis
 * Buffer Utilization Analysis
 
-### Prototype Capabilities
+Workflow:
 
-* Correct producer-consumer synchronization
-* Shared memory communication
-* Circular buffer management
-* Performance monitoring
-* Functional validation
-* Stress testing support
-
----
-
-## Testing and Validation Framework
-
-A comprehensive testing and validation framework has been developed to support both internal implementation validation and future evaluation of external implementations.
-
-### Validation Components
-
-* Test Plan
-* Test Case Catalog
-* Validation Checklist
-* Test Case Execution Templates
-* Bug Reporting Framework
-* Performance Analysis Framework
-
-### Executed Test Cases
-
-#### Functional and Validation Tests
-
-* TC-01 Balanced Baseline
-* TC-02 Small Buffer
-* TC-03 Large Buffer
-* TC-04 Fast Producer
-* TC-05 Fast Consumer
-* TC-06 High Volume
-
-#### Extended Performance Tests
-
-* TC-07 Slow System
-* TC-08 Fast System
-* TC-09 Maximum Throughput
-* TC-10 Producer Burst
-* TC-11 Consumer Burst
-
-### Validation Results
-
-The POSIX Threads implementation successfully passed all executed test cases.
-
-Observed outcomes:
-
-* No frame loss
-* No frame duplication
-* No race conditions
-* No deadlocks
-* No crashes
-* Stable synchronization behavior
-
-### Performance Highlights
-
-* Throughput successfully measured across multiple workload configurations.
-* Buffer utilization analyzed under balanced, producer-heavy, and consumer-heavy workloads.
-* Maximum observed throughput exceeded **29,000 frames per second** during maximum-throughput testing.
+```text
+Producer Thread
+       ↓
+Shared Buffer
+       ↓
+Consumer Thread
+```
 
 ---
 
-## Repository Structure
+## 2. TCP Socket Communication Prototype
+
+Location:
+
+```text
+src/sockets/
+```
+
+Features:
+
+* TCP Server
+* TCP Client
+* Packet Transmission
+* Packet Reception
+* Packet Logging
+* Throughput Measurement
+* Delivery Statistics
+
+Workflow:
+
+```text
+DES Server
+      ↓
+TCP Socket Connection
+      ↓
+Client
+      ↓
+Packet Logging
+      ↓
+Statistics Collection
+```
+
+---
+
+# Build & Run Instructions
+
+## POSIX Threads Module
+
+Navigate to:
+
+```bash
+cd src/pthreads
+```
+
+Compile:
+
+```bash
+gcc stream.c -o stream -lpthread
+```
+
+Run:
+
+```bash
+./stream
+```
+
+---
+
+## Socket Server
+
+Navigate to:
+
+```bash
+cd src/sockets
+```
+
+Compile:
+
+```bash
+gcc server.c -o server
+```
+
+Run:
+
+```bash
+./server
+```
+
+---
+
+## Socket Client
+
+Open another terminal.
+
+Navigate to:
+
+```bash
+cd src/sockets
+```
+
+Compile:
+
+```bash
+gcc client.c -o client
+```
+
+Run:
+
+```bash
+./client
+```
+
+---
+
+# Repository Structure
 
 ```text
 telecom-stream-processing-framework/
 │
 ├── diagrams/
+│   ├── producer_consumer_workflow.md
+│   ├── shared_buffer_diagram.md
+│   ├── socket_workflow.md
+│   ├── system_architecture.md
+│   └── testing_workflow.md
 │
 ├── docs/
 │   ├── design/
@@ -218,10 +217,12 @@ telecom-stream-processing-framework/
 │   ├── project/
 │   └── testing/
 │
-├── reports/
-│   └── GROUP-E/
+├── logs/
+│   └── received_packets.log
 │
-├── tests/
+├── reports/
+│   ├── GROUP-E_posix_threads/
+│   └── GROUP-E_sockets/
 │
 ├── src/
 │   ├── pthreads/
@@ -229,52 +230,146 @@ telecom-stream-processing-framework/
 │   ├── mpi/
 │   └── hybrid/
 │
-├── README.md
+├── tests/
 │
-└── .gitignore
+└── README.md
 ```
 
 ---
 
-## Technologies
+# Testing & Validation Framework
 
-* C / C++
-* POSIX Threads (Pthreads)
-* TCP Socket Programming
-* MPI (Message Passing Interface)
-* Ubuntu Linux
-* GCC
-* Git & GitHub
+A reusable testing and validation framework has been developed to support:
 
----
+* Internal implementation validation
+* Comparative evaluation
+* Future MPI validation
+* Future Hybrid framework validation
 
-## Expected Outcomes
+Validation Components:
 
-### Completed
-
-* POSIX Threads Producer-Consumer Prototype
-* Shared Buffer Synchronization Framework
-* Performance Monitoring Framework
-* Testing and Validation Framework
-* Benchmarking Infrastructure
-
-### Planned
-
-* Client–Server Communication Model using TCP Sockets
-* Distributed Processing Architecture using MPI
-* Hybrid MPI + POSIX Threads Processing Framework
-* Comparative Evaluation of Multiple Implementation Approaches
-* Scalable Telecom Stream Processing Framework
+* Test Plan
+* Test Case Catalog
+* Validation Checklist
+* Observation Templates
+* Bug Report Framework
+* Performance Analysis Framework
 
 ---
 
-## Future Roadmap
+# POSIX Threads Validation Results
 
-### Phase 2
+Executed Test Cases:
 
-* Socket Programming Implementation
-* Client–Server Packet Communication
-* Network-Based Stream Processing
+* TC-01 Balanced Baseline
+* TC-02 Small Buffer
+* TC-03 Large Buffer
+* TC-04 Fast Producer
+* TC-05 Fast Consumer
+* TC-06 High Volume
+* TC-07 Slow System
+* TC-08 Fast System
+* TC-09 Maximum Throughput
+* TC-10 Producer Burst
+* TC-11 Consumer Burst
+
+Results:
+
+✅ No frame loss
+
+✅ No frame duplication
+
+✅ No race conditions
+
+✅ No deadlocks
+
+✅ No crashes
+
+✅ Stable synchronization behavior
+
+Performance Highlight:
+
+* Maximum throughput exceeded **29,000 frames/sec**
+
+---
+
+# Socket Communication Validation Results
+
+Executed Test Cases:
+
+* SC-01 Functional Test
+* SC-02 Small Stream Test
+* SC-03 Medium Stream Test
+* SC-04 High Rate Stream Test
+* SC-05 High Throughput Test
+* SC-06 Stress Test
+
+Results:
+
+✅ TCP connection established successfully
+
+✅ Packet transmission successful
+
+✅ Packet reception successful
+
+✅ Packet ordering preserved
+
+✅ Packet logging successful
+
+✅ Zero packet loss observed
+
+Performance Highlight:
+
+* Maximum sustained throughput ≈ **904 packets/sec**
+* Delivery Success Rate = **100%**
+
+---
+
+# Current Project Status
+
+## Completed
+
+✅ POSIX Threads Producer–Consumer Prototype
+
+✅ Shared Buffer Synchronization Framework
+
+✅ Performance Monitoring Framework
+
+✅ Testing & Validation Framework
+
+✅ TCP Socket Communication Prototype
+
+✅ Packet Logging Framework
+
+✅ Socket Validation Framework
+
+✅ Stress Testing & Performance Analysis
+
+---
+
+## Next Phase
+
+### POSIX Threads + Socket Integration
+
+Target Workflow:
+
+```text
+Producer Thread
+       ↓
+Shared Buffer
+       ↓
+Sender Thread
+       ↓
+TCP Socket
+       ↓
+Client
+       ↓
+Packet Processing
+```
+
+---
+
+## Future Phases
 
 ### Phase 3
 
@@ -286,17 +381,17 @@ telecom-stream-processing-framework/
 
 * Hybrid MPI + POSIX Threads Framework
 * Distributed Multi-Threaded Processing
-* Advanced Scalability Evaluation
+* Scalability Evaluation
 
 ### Phase 5
 
-* Comparative Analysis
-* Performance Benchmarking
-* Final System Evaluation
+* Comparative Performance Analysis
+* Benchmarking
+* Final Framework Evaluation
 
 ---
 
-## Team
+# Team
 
 | Name          | Institution     | Role        |
 | ------------- | --------------- | ----------- |
@@ -305,12 +400,12 @@ telecom-stream-processing-framework/
 
 ---
 
-## Acknowledgement
+# Acknowledgement
 
-This project is being developed as part of the MPPLAB Telecom Data Extraction initiative under the guidance of **Dr. V. C. V. Rao**, focusing on the design, implementation, validation, and analysis of parallel and distributed approaches for large-scale telecom stream processing.
+This project is being developed as part of the MPPLAB Telecom Data Extraction initiative under the guidance of **Dr. V. C. V. Rao**, focusing on the design, implementation, validation, and evaluation of parallel and distributed approaches for large-scale telecom stream processing.
 
 ---
 
-## License
+# License
 
 This repository is intended for academic research, experimentation, and educational purposes.

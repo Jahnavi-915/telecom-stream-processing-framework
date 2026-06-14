@@ -19,3 +19,5 @@ bin/
 
 # Executables
 stream
+server
+client

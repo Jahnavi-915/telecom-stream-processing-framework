@@ -9,8 +9,14 @@ The implementation validates thread synchronization, shared buffer management, i
 ### Source Files
 
 ```text
-stream.c
-    Current working prototype
+src/pthreads/stream.c
+    POSIX Threads Producer-Consumer prototype
+
+src/sockets/server.c
+    TCP Server implementation
+
+src/sockets/client.c
+    TCP Client implementation
 
 producer_consumer.cpp
     Planned modular implementation structure
@@ -241,9 +247,10 @@ Introduce telecom-oriented Packet structures containing:
 
 ### Framework Integration
 
-* Socket Programming Integration
+* POSIX Threads + Socket Programming Integration
 * MPI-based Distributed Processing
 * Hybrid MPI + POSIX Threads Processing
+* Telecom Packet Streaming Framework
 
 ### Comparative Evaluation
 
@@ -259,3 +266,150 @@ The testing and validation framework will also be used to evaluate:
 ## Conclusion
 
 The POSIX Threads Producer-Consumer prototype successfully establishes a validated reference implementation for the Telecom Stream Processing Framework project. The implementation provides correct synchronization behavior, comprehensive performance metrics, and a reusable testing framework that will support future Socket Programming, MPI, and Hybrid Parallel Processing phases.
+
+# Socket Communication Module
+
+## Overview
+
+In addition to the POSIX Threads Producer-Consumer prototype, a TCP-based Socket Communication prototype has been successfully implemented and validated.
+
+The socket module simulates telecom packet transmission between a Data Extraction Server (DES) and a receiving client.
+
+Implemented Features:
+
+* TCP Server
+* TCP Client
+* Packet Transmission
+* Packet Reception
+* Packet Logging
+* Execution Time Measurement
+* Throughput Measurement
+* Packet Delivery Statistics
+
+## Packet Structure
+
+```c
+typedef struct
+{
+    int packet_id;
+    char payload[100];
+} Packet;
+```
+
+## Communication Workflow
+
+```text
+DES Server
+      ↓
+TCP Socket Connection
+      ↓
+Client
+      ↓
+Packet Logging
+      ↓
+Statistics Collection
+```
+
+## Implemented Metrics
+
+### Server Side
+
+* Total Packets Sent
+* Execution Time
+* Send Throughput
+
+### Client Side
+
+* Total Packets Received
+* Execution Time
+* Receive Throughput
+
+### Communication Metrics
+
+* Packet Loss
+* Delivery Success Rate
+* Packet Ordering Verification
+
+## Validation Summary
+
+The socket communication module was validated using six test cases:
+
+* TC1 – Functional Test
+* TC2 – Small Stream Test
+* TC3 – Medium Stream Test
+* TC4 – High Rate Stream Test
+* TC5 – High Throughput Test
+* TC6 – Stress Test
+
+## Key Results
+
+* Maximum Sustained Throughput: ~904 packets/sec
+* Total Packets Sent: 1000
+* Total Packets Received: 1000
+* Packet Loss: 0
+* Delivery Success Rate: 100%
+
+The implementation successfully demonstrated reliable packet transmission and stable operation under stress conditions.
+
+# Current Project Status
+
+## Completed
+
+### POSIX Threads Module
+
+* Producer Thread
+* Consumer Thread
+* Shared Circular Buffer
+* Mutex Synchronization
+* Condition Variables
+* Performance Monitoring
+* Validation Framework
+
+### Socket Programming Module
+
+* TCP Server
+* TCP Client
+* Packet Streaming
+* Packet Logging
+* Throughput Measurement
+* Validation and Stress Testing
+
+### Testing Framework
+
+* Test Case Catalog
+* Validation Checklist
+* Bug Report Template
+* Observation Templates
+* Validation Reports
+
+### Documentation
+
+* Architecture Design
+* Implementation Documentation
+* Progress Tracking
+* Testing Documentation
+* Performance Analysis Reports
+
+These deliverables establish the foundation for future telecom packet processing, distributed processing, and hybrid parallel computing implementations.
+
+### Next Development Phase
+
+The next phase of the project will integrate the POSIX Threads Producer-Consumer architecture with the Socket Communication module.
+
+Target Architecture:
+
+```text
+Producer Thread
+       ↓
+Shared Buffer
+       ↓
+Sender Thread
+       ↓
+TCP Socket
+       ↓
+Client
+       ↓
+Packet Processing
+```
+
+This integrated architecture will serve as the first complete telecom stream-processing prototype.

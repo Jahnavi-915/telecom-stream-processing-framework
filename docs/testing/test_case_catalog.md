@@ -263,3 +263,138 @@ A test case is considered successful if:
 * No crashes occur
 * Synchronization behaves as expected
 * Reported statistics are valid and consistent with the test configuration
+
+---
+
+# Socket Communication Test Cases
+
+The following test cases were developed to validate the TCP-based Socket Communication module.
+
+## SC-01 Functional Test
+
+### Objective
+
+Validate basic client-server communication and packet transmission.
+
+### Configuration
+
+* Packets Sent: 10
+* Packet Delay: 1 second
+
+### Expected Result
+
+* Successful connection establishment
+* Packets Sent = Packets Received
+* Packet Loss = 0
+* Stable execution
+
+---
+
+## SC-02 Small Stream Test
+
+### Objective
+
+Validate communication for a small packet stream.
+
+### Configuration
+
+* Packets Sent: 3
+* Packet Delay: 1 second
+
+### Expected Result
+
+* Successful packet delivery
+* Packet Loss = 0
+* Stable communication
+
+---
+
+## SC-03 Medium Stream Test
+
+### Objective
+
+Validate communication stability for a longer packet stream.
+
+### Configuration
+
+* Packets Sent: 50
+* Packet Delay: 1 second
+
+### Expected Result
+
+* Successful packet delivery
+* Packet Loss = 0
+* Stable throughput
+
+---
+
+## SC-04 High Rate Stream Test
+
+### Objective
+
+Evaluate communication under increased packet transmission rates.
+
+### Configuration
+
+* Packets Sent: 50
+* Packet Delay: 0.1 second
+
+### Expected Result
+
+* Increased throughput
+* Packet Loss = 0
+* Stable communication
+
+---
+
+## SC-05 High Throughput Test
+
+### Objective
+
+Measure communication performance under aggressive packet generation.
+
+### Configuration
+
+* Packets Sent: 50
+* Packet Delay: 0.001 second
+
+### Expected Result
+
+* High throughput
+* Stable packet delivery
+* No packet loss
+
+---
+
+## SC-06 Stress Test
+
+### Objective
+
+Validate stability under heavy communication workload.
+
+### Configuration
+
+* Packets Sent: 1000
+* Packet Delay: 0.001 second
+
+### Expected Result
+
+* Successful transmission of all packets
+* Packet Loss = 0
+* Stable execution under stress conditions
+
+---
+
+# Socket Module Pass Criteria
+
+A socket communication test is considered successful if:
+
+* Server starts successfully.
+* Client connects successfully.
+* Packets Sent = Packets Received.
+* Packet Loss = 0.
+* Packet ordering is preserved.
+* Logging completes successfully.
+* Throughput is successfully calculated.
+* Execution completes without crashes.
+* Communication remains stable throughout the test.

@@ -121,6 +121,121 @@ Multiple Data Extraction Servers (DES)
 
 ---
 
+## Current Project Status
+
+### Phase 1: POSIX Threads Implementation
+
+**Status:** Completed
+
+The initial Producer-Consumer prototype has been successfully implemented using POSIX Threads.
+
+### Implemented Features
+
+* Producer Thread
+* Consumer Thread
+* Circular Shared Buffer
+* Mutex Synchronization
+* Condition Variables (`not_full`, `not_empty`)
+* Execution Time Measurement
+* Throughput Calculation
+* Average Buffer Occupancy Analysis
+* Buffer Utilization Analysis
+
+### Prototype Capabilities
+
+* Correct producer-consumer synchronization
+* Shared memory communication
+* Circular buffer management
+* Performance monitoring
+* Functional validation
+* Stress testing support
+
+---
+
+## Testing and Validation Framework
+
+A comprehensive testing and validation framework has been developed to support both internal implementation validation and future evaluation of external implementations.
+
+### Validation Components
+
+* Test Plan
+* Test Case Catalog
+* Validation Checklist
+* Test Case Execution Templates
+* Bug Reporting Framework
+* Performance Analysis Framework
+
+### Executed Test Cases
+
+#### Functional and Validation Tests
+
+* TC-01 Balanced Baseline
+* TC-02 Small Buffer
+* TC-03 Large Buffer
+* TC-04 Fast Producer
+* TC-05 Fast Consumer
+* TC-06 High Volume
+
+#### Extended Performance Tests
+
+* TC-07 Slow System
+* TC-08 Fast System
+* TC-09 Maximum Throughput
+* TC-10 Producer Burst
+* TC-11 Consumer Burst
+
+### Validation Results
+
+The POSIX Threads implementation successfully passed all executed test cases.
+
+Observed outcomes:
+
+* No frame loss
+* No frame duplication
+* No race conditions
+* No deadlocks
+* No crashes
+* Stable synchronization behavior
+
+### Performance Highlights
+
+* Throughput successfully measured across multiple workload configurations.
+* Buffer utilization analyzed under balanced, producer-heavy, and consumer-heavy workloads.
+* Maximum observed throughput exceeded **29,000 frames per second** during maximum-throughput testing.
+
+---
+
+## Repository Structure
+
+```text
+telecom-stream-processing-framework/
+│
+├── diagrams/
+│
+├── docs/
+│   ├── design/
+│   ├── progress/
+│   ├── project/
+│   └── testing/
+│
+├── reports/
+│   └── GROUP-E/
+│
+├── tests/
+│
+├── src/
+│   ├── pthreads/
+│   ├── sockets/
+│   ├── mpi/
+│   └── hybrid/
+│
+├── README.md
+│
+└── .gitignore
+```
+
+---
+
 ## Technologies
 
 * C / C++
@@ -128,20 +243,56 @@ Multiple Data Extraction Servers (DES)
 * TCP Socket Programming
 * MPI (Message Passing Interface)
 * Ubuntu Linux
+* GCC
 * Git & GitHub
 
 ---
 
 ## Expected Outcomes
 
-* Efficient stream processing algorithms.
-* Multi-threaded telecom data processing frameworks.
-* Client–Server based communication models.
-* Distributed processing architectures using MPI.
-* Hybrid parallel processing solutions.
-* Comparative analysis of multiple implementation approaches.
-* Testing, validation, and benchmarking methodologies.
-* Scalable frameworks for real-time telecom stream processing.
+### Completed
+
+* POSIX Threads Producer-Consumer Prototype
+* Shared Buffer Synchronization Framework
+* Performance Monitoring Framework
+* Testing and Validation Framework
+* Benchmarking Infrastructure
+
+### Planned
+
+* Client–Server Communication Model using TCP Sockets
+* Distributed Processing Architecture using MPI
+* Hybrid MPI + POSIX Threads Processing Framework
+* Comparative Evaluation of Multiple Implementation Approaches
+* Scalable Telecom Stream Processing Framework
+
+---
+
+## Future Roadmap
+
+### Phase 2
+
+* Socket Programming Implementation
+* Client–Server Packet Communication
+* Network-Based Stream Processing
+
+### Phase 3
+
+* MPI-Based Distributed Processing
+* Multi-Node Data Distribution
+* Distributed Telecom Traffic Processing
+
+### Phase 4
+
+* Hybrid MPI + POSIX Threads Framework
+* Distributed Multi-Threaded Processing
+* Advanced Scalability Evaluation
+
+### Phase 5
+
+* Comparative Analysis
+* Performance Benchmarking
+* Final System Evaluation
 
 ---
 
@@ -158,3 +309,8 @@ Multiple Data Extraction Servers (DES)
 
 This project is being developed as part of the MPPLAB Telecom Data Extraction initiative under the guidance of **Dr. V. C. V. Rao**, focusing on the design, implementation, validation, and analysis of parallel and distributed approaches for large-scale telecom stream processing.
 
+---
+
+## License
+
+This repository is intended for academic research, experimentation, and educational purposes.

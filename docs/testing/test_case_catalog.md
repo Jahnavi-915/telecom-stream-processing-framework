@@ -398,3 +398,152 @@ A socket communication test is considered successful if:
 * Throughput is successfully calculated.
 * Execution completes without crashes.
 * Communication remains stable throughout the test.
+
+
+---
+
+# Pthreads + Socket Integration Test Cases
+
+The following test cases will be used to validate the integrated Producer Thread → Shared Buffer → Sender Thread → TCP Socket → Client architecture.
+
+## IC-01 Functional Test
+
+### Objective
+
+Validate basic end-to-end packet streaming functionality.
+
+### Configuration
+
+* Packets Generated: 10
+* Buffer Size: 5
+* Packet Delay: 1 second
+
+### Expected Result
+
+* Packets Generated = Packets Received
+* Packet Loss = 0
+* Successful packet logging
+* Stable execution
+
+---
+
+## IC-02 Small Stream Test
+
+### Objective
+
+Validate integrated communication using a small packet stream.
+
+### Configuration
+
+* Packets Generated: 20
+* Buffer Size: 5
+* Packet Delay: 1 second
+
+### Expected Result
+
+* Successful packet delivery
+* Packet Loss = 0
+* Stable synchronization
+* Stable communication
+
+---
+
+## IC-03 Medium Stream Test
+
+### Objective
+
+Validate stability of the integrated architecture under moderate workload.
+
+### Configuration
+
+* Packets Generated: 100
+* Buffer Size: 5
+* Packet Delay: 0.1 second
+
+### Expected Result
+
+* Successful packet transmission
+* Successful packet reception
+* Packet Loss = 0
+* Stable throughput
+
+---
+
+## IC-04 High Rate Stream Test
+
+### Objective
+
+Evaluate performance under increased packet generation rates.
+
+### Configuration
+
+* Packets Generated: 500
+* Buffer Size: 10
+* Packet Delay: 0.01 second
+
+### Expected Result
+
+* Increased throughput
+* Packet Loss = 0
+* Stable synchronization
+* Stable communication
+
+---
+
+## IC-05 High Throughput Test
+
+### Objective
+
+Measure maximum throughput of the integrated architecture.
+
+### Configuration
+
+* Packets Generated: 1000
+* Buffer Size: 10
+* Packet Delay: 0 second
+
+### Expected Result
+
+* Maximum throughput
+* Stable packet delivery
+* Packet Loss = 0
+* No synchronization failures
+
+---
+
+## IC-06 Stress Test
+
+### Objective
+
+Validate stability under heavy streaming workload.
+
+### Configuration
+
+* Packets Generated: 5000
+* Buffer Size: 10
+* Packet Delay: 0 second
+
+### Expected Result
+
+* Successful delivery of all packets
+* Packet Loss = 0
+* Stable execution
+* No deadlocks or crashes
+
+---
+
+# Integration Module Pass Criteria
+
+An integration test is considered successful if:
+
+* Producer Thread generates all packets successfully.
+* Sender Thread transmits all packets successfully.
+* Client receives all transmitted packets.
+* Packets Generated = Packets Received.
+* Packet Loss = 0.
+* Packet ordering is preserved.
+* Shared buffer operates correctly.
+* Synchronization behaves correctly.
+* Throughput is successfully calculated.
+* Execution completes without crashes.
+* End-to-end communication remains stable throughout the test.

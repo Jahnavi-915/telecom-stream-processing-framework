@@ -146,3 +146,107 @@ PASS / FAIL
 ### Remarks
 
 Provide a brief summary of the communication behavior, packet delivery correctness, performance observations, and overall stability of the socket implementation.
+
+
+---
+
+# Pthreads + Socket Integration Test Case Execution Template
+
+## Test ID
+
+IC-XX
+
+## Test Name
+
+Test Name Here
+
+---
+
+## Objective
+
+Describe the purpose of the test case.
+
+---
+
+## Configuration
+
+Buffer Size:
+
+Packets Generated:
+
+Packet Delay:
+
+Communication Protocol:
+
+Port Number:
+
+---
+
+## Producer Results
+
+Packets Generated:
+
+Buffer Full Events:
+
+Execution Time:
+
+---
+
+## Sender Thread Results
+
+Packets Sent:
+
+Buffer Empty Events:
+
+Execution Time:
+
+---
+
+## Client Results
+
+Packets Received:
+
+Execution Time:
+
+Receive Throughput:
+
+---
+
+## Communication Statistics
+
+Packet Loss:
+
+Delivery Success Rate:
+
+Packet Ordering Verified:
+
+Logging Successful:
+
+---
+
+## Performance Statistics
+
+Overall Execution Time:
+
+Throughput:
+
+Buffer Utilization:
+
+---
+
+## Observations
+
+* Observation 1
+* Observation 2
+* Observation 3
+* Observation 4
+
+---
+
+## Conclusion
+
+PASS / FAIL
+
+### Remarks
+
+Provide a brief summary of synchronization behavior, packet transmission correctness, communication reliability, performance observations, and overall stability of the integrated Pthreads + Socket implementation.

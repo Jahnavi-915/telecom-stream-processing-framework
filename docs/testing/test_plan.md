@@ -256,6 +256,111 @@ Verifies:
 
 ---
 
+---
+
+## Pthreads + Socket Integration Testing
+
+### Functional Testing
+
+Verifies:
+
+* Packet generation by Producer Thread
+* Correct packet insertion into Shared Buffer
+* Correct packet removal by Sender Thread
+* Successful packet transmission
+* Successful packet reception
+* Packet logging functionality
+
+---
+
+### Synchronization Testing
+
+Verifies:
+
+* Correct mutex behavior
+* Correct condition variable behavior
+* Shared buffer integrity
+* Producer–Sender coordination
+* Absence of race conditions
+
+---
+
+### Communication Testing
+
+Verifies:
+
+* TCP connection establishment
+* Reliable packet delivery
+* Packet ordering
+* Packet integrity
+* Communication stability
+
+---
+
+### Performance Testing
+
+Evaluates:
+
+* Execution Time
+* Packet Throughput
+* Buffer Utilization
+* Packet Delivery Rate
+* Communication Overhead
+
+---
+
+### Stress Testing
+
+Evaluates behavior under:
+
+* Small Packet Streams
+* Medium Packet Streams
+* Large Packet Streams
+* High Packet Rates
+* Continuous Streaming Workloads
+
+---
+
+### Validation Testing
+
+Verifies:
+
+* Successful integration execution
+* Correct packet streaming workflow
+* Correct synchronization behavior
+* Successful packet delivery
+* Stable operation under varying workloads
+
+---
+
+## Integration Validation Metrics
+
+### Functional Metrics
+
+* Packets Generated
+* Packets Buffered
+* Packets Sent
+* Packets Received
+* Packet Loss
+
+### Synchronization Metrics
+
+* Buffer Full Events
+* Buffer Empty Events
+
+### Communication Metrics
+
+* Delivery Success Rate
+* Packet Ordering Verification
+* Logging Verification
+
+### Performance Metrics
+
+* Execution Time
+* Throughput
+* Buffer Utilization
+* Communication Overhead
+
 ## Future Test Expansion
 
 Future testing phases will extend the framework to support:
@@ -265,3 +370,4 @@ Future testing phases will extend the framework to support:
 * Hybrid MPI + POSIX Threads Testing
 * Telecom Packet Streaming Validation
 * Comparative Evaluation of External Implementations
+

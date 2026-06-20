@@ -21,3 +21,5 @@ bin/
 stream
 server
 client
+server_app
+client_app

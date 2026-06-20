@@ -128,6 +128,44 @@ Statistics Collection
 ```
 
 ---
+## 3. Pthreads + Socket Integration Prototype
+
+Location:
+
+```text
+src/hybrid/pthreads_socket_integration/
+```
+
+Features:
+
+* Producer Thread
+* Shared Circular Buffer
+* Sender Thread
+* TCP Server
+* TCP Client
+* Telecom Packet Structure
+* Packet Logging
+* Performance Monitoring
+* Throughput Measurement
+* Delivery Success Rate Measurement
+
+Workflow:
+
+```text
+Producer Thread
+       ↓
+Shared Buffer
+       ↓
+Sender Thread
+       ↓
+TCP Socket
+       ↓
+Client Receiver
+       ↓
+Packet Logging
+       ↓
+Statistics Collection
+```
 
 # Build & Run Instructions
 
@@ -196,7 +234,49 @@ Run:
 ```bash
 ./client
 ```
+## Pthreads + Socket Integration Server
 
+Navigate to:
+
+```bash
+cd src/hybrid/pthreads_socket_integration
+```
+
+Compile:
+
+```bash
+gcc server.c -o server -lpthread
+```
+
+Run:
+
+```bash
+./server
+```
+
+---
+
+## Pthreads + Socket Integration Client
+
+Open another terminal.
+
+Navigate to:
+
+```bash
+cd src/hybrid/pthreads_socket_integration
+```
+
+Compile:
+
+```bash
+gcc client.c -o client
+```
+
+Run:
+
+```bash
+./client
+```
 ---
 
 # Repository Structure
@@ -221,8 +301,9 @@ telecom-stream-processing-framework/
 │   └── received_packets.log
 │
 ├── reports/
-│   ├── GROUP-E_posix_threads/
-│   └── GROUP-E_sockets/
+├── GROUP-E_posix_threads/
+├── GROUP-E_sockets/
+└── GROUP-E_integration/
 │
 ├── src/
 │   ├── pthreads/
@@ -325,6 +406,45 @@ Performance Highlight:
 
 ---
 
+# Pthreads + Socket Integration Validation Results
+
+Executed Test Cases:
+
+* IC-01 Functional Test
+* IC-02 Small Stream Test
+* IC-03 Medium Stream Test
+* IC-04 High Rate Stream Test
+* IC-05 High Throughput Test
+* IC-06 Stress Test
+
+Results:
+
+✅ Producer–Sender synchronization successful
+
+✅ TCP communication successful
+
+✅ Packet transmission successful
+
+✅ Packet reception successful
+
+✅ Packet ordering preserved
+
+✅ Packet logging successful
+
+✅ Zero packet loss observed
+
+✅ No race conditions observed
+
+✅ No deadlocks observed
+
+Performance Highlights:
+
+* Maximum Send Throughput ≈ 927 packets/sec
+* Maximum Receive Throughput ≈ 927 packets/sec
+* Total Packets Sent = 10,000
+* Total Packets Received = 10,000
+* Delivery Success Rate = 100%
+
 # Current Project Status
 
 ## Completed
@@ -345,37 +465,50 @@ Performance Highlight:
 
 ✅ Stress Testing & Performance Analysis
 
+✅ Pthreads + Socket Integration Prototype
+
+✅ Integration Performance Monitoring Framework
+
+✅ Integration Testing & Validation Framework
+
 ---
 
-## Next Phase
+## Current Phase
 
-### POSIX Threads + Socket Integration
+### MPI-Based Distributed Processing
+
+Planned Activities:
+
+* MPI Study and Concept Understanding
+* MPI Architecture Design
+* Message Passing Implementation
+* Distributed Packet Processing
+* MPI Testing and Validation
+* Performance Evaluation
 
 Target Workflow:
 
 ```text
-Producer Thread
-       ↓
-Shared Buffer
-       ↓
-Sender Thread
-       ↓
-TCP Socket
-       ↓
-Client
-       ↓
-Packet Processing
+Data Extraction Server 1
+           │
+           ▼
+Data Extraction Server 2
+           │
+           ▼
+Data Extraction Server N
+           │
+           ▼
+MPI Communication Layer
+           │
+           ▼
+Distributed Packet Processing
+           │
+           ▼
+Statistics Collection
 ```
-
 ---
 
 ## Future Phases
-
-### Phase 3
-
-* MPI-Based Distributed Processing
-* Multi-Node Data Distribution
-* Distributed Telecom Traffic Processing
 
 ### Phase 4
 

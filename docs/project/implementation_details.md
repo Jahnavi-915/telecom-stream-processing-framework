@@ -413,3 +413,135 @@ Packet Processing
 ```
 
 This integrated architecture will serve as the first complete telecom stream-processing prototype.
+
+# Pthreads + Socket Integration Module
+
+## Overview
+
+The Pthreads + Socket Integration Module combines the POSIX Threads Producer–Consumer architecture with the TCP Socket Communication model into a single end-to-end telecom packet streaming prototype.
+
+The implementation enables packet generation, shared-buffer synchronization, network transmission, packet reception, logging, performance monitoring, and communication validation within a unified workflow.
+
+For detailed architecture diagrams, workflow descriptions, and design decisions, refer to:
+
+* design/integration_design.md
+* design/architecture.md
+
+---
+
+## Source Files
+
+```text
+src/hybrid/pthreads_socket_integration/server.c
+    Integrated Pthreads + Socket Server
+
+src/hybrid/pthreads_socket_integration/client.c
+    Integrated TCP Client Receiver
+```
+
+---
+
+## Implemented Features
+
+### Server Side
+
+* Producer Thread
+* Shared Circular Buffer
+* Sender Thread
+* Mutex Synchronization
+* Condition Variables
+* TCP Server
+* Telecom Packet Generation
+* Statistics Collection
+
+### Client Side
+
+* TCP Client
+* Packet Reception
+* Packet Display
+* Packet Logging
+* Statistics Collection
+
+---
+
+## Implemented Packet Structure
+
+```c
+typedef struct {
+    int packet_id;
+    int priority;
+    char source[50];
+    char destination[50];
+    char payload[100];
+} TelecomPacket;
+```
+
+The packet structure was introduced to simulate telecom packet transmission and provide support for packet identification, routing information, and payload handling.
+
+---
+
+## Implemented Statistics
+
+### Server Statistics
+
+* Packets Generated
+* Packets Sent
+* Buffer Full Events
+* Buffer Empty Events
+* Execution Time
+* Send Throughput
+
+### Client Statistics
+
+* Packets Received
+* Delivery Success Rate
+* Execution Time
+* Receive Throughput
+
+---
+
+## Testing Summary
+
+The integration module was validated using six test scenarios:
+
+* IC-01 Functional Test
+* IC-02 Small Stream Test
+* IC-03 Medium Stream Test
+* IC-04 High Rate Stream Test
+* IC-05 High Throughput Test
+* IC-06 Stress Test
+
+---
+
+## Validation Summary
+
+The implementation successfully demonstrated:
+
+* Correct Producer–Sender synchronization
+* Stable Shared Buffer operation
+* Reliable TCP communication
+* Correct packet transmission and reception
+* Packet ordering preservation
+* Zero packet loss
+* No race conditions
+* No deadlocks
+* Stable execution under varying workloads
+
+---
+
+## Key Results
+
+* Maximum Send Throughput: ~927 packets/sec
+* Maximum Receive Throughput: ~927 packets/sec
+* Total Packets Sent: 10,000
+* Total Packets Received: 10,000
+* Packet Loss: 0
+* Delivery Success Rate: 100%
+
+---
+
+## Current Status
+
+The Pthreads + Socket Integration Module has been successfully implemented, tested, validated, and documented.
+
+This module serves as the foundation for future Multiple DES, MPI-based, and Hybrid MPI + POSIX Threads telecom stream-processing architectures.

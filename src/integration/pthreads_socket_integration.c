@@ -5,6 +5,8 @@
 #include <pthread.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
+#include <sys/time.h>
 
 #define BUFFER_SIZE 10
 #define PORT 8080
@@ -13,7 +15,10 @@
 // 1. Packet structure matching the architectural workflow
 typedef struct {
     int packet_id;
-    char payload[64];
+    int priority;
+    char source[50];
+    char destination[50];
+    char payload[100];
 } TelecomPacket;
 
 // 2. Bounded Shared Buffer structure
@@ -29,6 +34,14 @@ typedef struct {
 
 SharedBuffer buffer;
 int client_socket = -1;
+
+int packets_generated = 0;
+int packets_sent = 0;
+
+int buffer_full_events = 0;
+int buffer_empty_events = 0;
+
+struct timeval start_time, end_time;
 
 // Thread function declarations
 void* producer_thread_func(void* arg);
@@ -54,8 +67,11 @@ int main() {
         perror("Socket creation failed");
         exit(EXIT_FAILURE);
     }
-    setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt));
-    
+    if (setsockopt(server_fd, SOL_SOCKET,SO_REUSEADDR | SO_REUSEPORT,&opt, sizeof(opt)) < 0)
+        {
+            perror("setsockopt");
+            exit(EXIT_FAILURE);
+        }
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port = htons(PORT);
@@ -75,7 +91,8 @@ int main() {
         exit(EXIT_FAILURE);
     }
     printf("[SERVER] Client connected successfully!\n");
-
+    
+    gettimeofday(&start_time, NULL);
     // Spawn the threads
     pthread_create(&producer_tid, NULL, producer_thread_func, NULL);
     pthread_create(&sender_tid, NULL, sender_thread_func, NULL);
@@ -84,7 +101,28 @@ int main() {
     pthread_join(producer_tid, NULL);
     pthread_join(sender_tid, NULL);
 
+    gettimeofday(&end_time, NULL);
     // Cleanup resources
+
+    double execution_time = (end_time.tv_sec - start_time.tv_sec) +(end_time.tv_usec - start_time.tv_usec)/1000000.0;
+    double throughput = 0.0;
+
+    if(execution_time > 0)
+    {
+        throughput = packets_sent / execution_time;
+    }
+
+    printf("\n========== Integration Statistics ==========\n");
+
+    printf("Packets Generated    : %d\n",packets_generated);
+    printf("Packets Sent         : %d\n",packets_sent);
+    printf("Buffer Full Events   : %d\n",buffer_full_events);
+    printf("Buffer Empty Events  : %d\n",buffer_empty_events);
+    printf("Execution Time     : %.3f sec\n",execution_time);
+    printf("Send Throughput    : %.2f packets/sec\n",throughput);
+
+    printf("============================================\n");
+
     close(client_socket);
     close(server_fd);
     pthread_mutex_destroy(&buffer.lock);
@@ -102,23 +140,34 @@ void* producer_thread_func(void* arg) {
 
         // Block if buffer is full
         while (buffer.count == BUFFER_SIZE) {
+            buffer_full_events++;
             pthread_cond_wait(&buffer.not_full, &buffer.lock);
         }
 
         // Add packet data to buffer
         buffer.data[buffer.tail].packet_id = i;
-        sprintf(buffer.data[buffer.tail].payload, "Telecom Data Stream Packet #%d", i);
+        buffer.data[buffer.tail].priority = 1;
+
+        strcpy(buffer.data[buffer.tail].source, "DES-1");
+        strcpy(buffer.data[buffer.tail].destination, "CLIENT-1");
+
+        sprintf(buffer.data[buffer.tail].payload,"Telecom Data Stream Packet #%d", i);
         
-        printf("[PRODUCER] Created & Buffered Packet ID: %d\n", i);
+        
+        printf("[PRODUCER] Packet ID=%d Source=%s Destination=%s Buffered\n",
+        buffer.data[buffer.tail].packet_id,
+        buffer.data[buffer.tail].source,
+        buffer.data[buffer.tail].destination);
         
         buffer.tail = (buffer.tail + 1) % BUFFER_SIZE;
         buffer.count++;
+        packets_generated++;
 
         // Alert the waiting Sender Thread
         pthread_cond_signal(&buffer.not_empty);
         pthread_mutex_unlock(&buffer.lock);
 
-        usleep(50000); // Simulate processing latency (50ms)
+        usleep(1000); // Simulate processing latency (50ms)
     }
     return NULL;
 }
@@ -130,6 +179,7 @@ void* sender_thread_func(void* arg) {
 
         // Block if buffer is empty
         while (buffer.count == 0) {
+            buffer_empty_events++;
             pthread_cond_wait(&buffer.not_empty, &buffer.lock);
         }
 
@@ -143,8 +193,21 @@ void* sender_thread_func(void* arg) {
         pthread_mutex_unlock(&buffer.lock);
 
         // Network Transmission via Socket API
-        printf("[SENDER] Pulling Packet ID %d from buffer and transmitting...\n", packet_to_send.packet_id);
-        send(client_socket, &packet_to_send, sizeof(TelecomPacket), 0);
+        printf("[SENDER] Sending Packet ID=%d From=%s To=%s\n",
+        packet_to_send.packet_id,
+        packet_to_send.source,
+        packet_to_send.destination);
+        
+        ssize_t bytes_sent = send(client_socket,&packet_to_send,sizeof(TelecomPacket),0);
+
+        if(bytes_sent <= 0)
+        {
+            perror("Send failed");
+        }
+        else
+        {
+            packets_sent++;
+        }
     }
     return NULL;
 }

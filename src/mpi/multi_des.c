@@ -4,7 +4,7 @@
 #include <sys/time.h>
 
 #define DES_COUNT 3
-#define PACKETS_PER_DES 100
+#define PACKETS_PER_DES 10
 
 typedef struct
 {

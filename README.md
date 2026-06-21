@@ -28,7 +28,8 @@ The primary objectives of this project are:
 * C / C++
 * POSIX Threads (Pthreads)
 * TCP Socket Programming
-* MPI (Planned)
+* MPI Distributed Processing
+* Multi-DES MPI Processing
 * Hybrid MPI + Pthreads (Planned)
 * Ubuntu Linux
 * GCC
@@ -166,6 +167,79 @@ Packet Logging
        ↓
 Statistics Collection
 ```
+## 4. MPI Distributed Processing Module
+
+Location:
+
+```text
+src/mpi/
+```
+
+Features:
+
+* MPI Master Process
+* MPI Worker Processes
+* Telecom Packet Structure
+* MPI_Send Communication
+* MPI_Recv Communication
+* Round-Robin Packet Distribution
+* Distributed Packet Processing
+* Communication Success Rate Measurement
+* Throughput Measurement
+* Performance Monitoring
+
+Workflow:
+
+```text
+Master Process (DES)
+         ↓
+MPI Communication Layer
+         ↓
+Worker Processes
+         ↓
+Distributed Packet Processing
+         ↓
+Statistics Collection
+```
+## 5. Multi-DES MPI Distributed Processing Module
+
+Location:
+
+```text
+src/mpi/
+```
+
+Features:
+
+* Multiple Data Extraction Servers (DES)
+* MPI Master Process
+* MPI Worker Processes
+* Telecom Packet Structure
+* DES-to-Master Communication
+* Master-to-Worker Communication
+* Round-Robin Packet Distribution
+* Packet Logging
+* Distributed Statistics Collection
+* Worker Load Analysis
+* Throughput Measurement
+* Communication Success Rate Measurement
+
+Workflow:
+
+```text
+DES-1 ─┐
+DES-2 ─┼──► Master Process
+DES-3 ─┘
+              │
+              ▼
+        Worker Processes
+              │
+              ▼
+      Distributed Processing
+              │
+              ▼
+       Statistics Collection
+```
 
 # Build & Run Instructions
 
@@ -277,6 +351,57 @@ Run:
 ```bash
 ./client
 ```
+## MPI Distributed Processing Module
+
+Navigate to:
+
+```bash
+cd src/mpi
+```
+
+Compile:
+
+```bash
+mpicc mpi_stream.c -o mpi_stream
+```
+
+Run (2 Processes):
+
+```bash
+mpirun -np 2 ./mpi_stream
+```
+
+Run (4 Processes):
+
+```bash
+mpirun -np 4 ./mpi_stream
+```
+
+Run (8 Processes):
+
+```bash
+mpirun -np 8 ./mpi_stream
+```
+## Multi-DES MPI Module
+
+Navigate to:
+
+```bash
+cd src/mpi
+```
+
+Compile:
+
+```bash
+mpicc multi_des.c -o multi_des
+```
+
+Run:
+
+```bash
+mpirun -np 12 ./multi_des
+```
+
 ---
 
 # Repository Structure
@@ -298,16 +423,21 @@ telecom-stream-processing-framework/
 │   └── testing/
 │
 ├── logs/
-│   └── received_packets.log
-│
+│   ├── multi_des_packets.log
+│   └── single_des_packets.log
+|
 ├── reports/
-├── GROUP-E_posix_threads/
-├── GROUP-E_sockets/
-└── GROUP-E_integration/
-│
+│   ├── GROUP-E_posix_threads/
+│   ├── GROUP-E_sockets/
+│   ├── GROUP-E_integration/
+│   └── GROUP-E_mpi/
+│       ├── multi-des/
+│       └── single-des/
+|
 ├── src/
 │   ├── pthreads/
 │   ├── sockets/
+|   ├── integration/
 │   ├── mpi/
 │   └── hybrid/
 │
@@ -324,7 +454,7 @@ A reusable testing and validation framework has been developed to support:
 
 * Internal implementation validation
 * Comparative evaluation
-* Future MPI validation
+* MPI validation
 * Future Hybrid framework validation
 
 Validation Components:
@@ -445,6 +575,77 @@ Performance Highlights:
 * Total Packets Received = 10,000
 * Delivery Success Rate = 100%
 
+# MPI Distributed Processing Validation Results
+
+Executed Test Cases:
+
+* MC-01 Functional Test
+* MC-02 Multiple Worker Test
+* MC-03 Medium Workload Test
+* MC-04 High Workload Test
+* MC-05 High Throughput Test
+* MC-06 Stress Test
+
+Results:
+
+✅ MPI communication successful
+
+✅ Master–Worker coordination verified
+
+✅ Round-Robin packet distribution verified
+
+✅ Balanced workload allocation verified
+
+✅ Packet ordering preserved
+
+✅ Zero packet loss observed
+
+✅ Stable distributed execution confirmed
+
+Performance Highlights:
+
+* Maximum Packets Tested = 10,000
+* Maximum Processes Tested = 8
+* Maximum Workers Tested = 7
+* Peak Throughput ≈ 507,614 packets/sec
+* Communication Success Rate = 100%
+
+# Multi-DES MPI Validation Results
+
+Executed Test Cases:
+
+* MD-01 Functional Test
+* MD-02 Single Worker Test
+* MD-03 Multiple Worker Test
+* MD-04 Load Balancing Test
+* MD-05 High Workload Test
+* MD-06 Scalability Test
+* MD-07 Stress Test
+
+Results:
+
+✅ Multi-DES communication successful
+
+✅ DES-to-Master communication verified
+
+✅ Master-to-Worker communication verified
+
+✅ Load balancing verified
+
+✅ Worker utilization verified
+
+✅ Zero packet loss observed
+
+✅ Stable distributed execution confirmed
+
+Performance Highlights:
+
+* Maximum Total Packets Tested = 30,000
+* Maximum Workers Tested = 8
+* Maximum Processes Tested = 12
+* Peak Throughput ≈ 1,188,683 packets/sec
+* Communication Success Rate = 100%
+
 # Current Project Status
 
 ## Completed
@@ -471,41 +672,32 @@ Performance Highlights:
 
 ✅ Integration Testing & Validation Framework
 
----
+✅ MPI Distributed Processing Module
 
-## Current Phase
+✅ Master–Worker Communication Framework
 
-### MPI-Based Distributed Processing
+✅ Round-Robin Packet Distribution
 
-Planned Activities:
+✅ MPI Testing & Validation Framework
 
-* MPI Study and Concept Understanding
-* MPI Architecture Design
-* Message Passing Implementation
-* Distributed Packet Processing
-* MPI Testing and Validation
-* Performance Evaluation
+✅ Distributed Performance Monitoring
 
-Target Workflow:
+✅ MPI Stress Testing & Analysis
 
-```text
-Data Extraction Server 1
-           │
-           ▼
-Data Extraction Server 2
-           │
-           ▼
-Data Extraction Server N
-           │
-           ▼
-MPI Communication Layer
-           │
-           ▼
-Distributed Packet Processing
-           │
-           ▼
-Statistics Collection
-```
+✅ Multi-DES MPI Distributed Processing Framework
+
+✅ DES-to-Master Communication Framework
+
+✅ Master-to-Worker Communication Framework
+
+✅ Packet Logging Framework
+
+✅ Load Balancing Framework
+
+✅ Multi-DES Testing & Validation Framework
+
+✅ Multi-DES Stress Testing & Analysis
+
 ---
 
 ## Future Phases

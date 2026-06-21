@@ -547,3 +547,339 @@ An integration test is considered successful if:
 * Throughput is successfully calculated.
 * Execution completes without crashes.
 * End-to-end communication remains stable throughout the test.
+
+# MPI Distributed Processing Test Cases
+
+The following test cases will be used to validate the MPI-based Distributed Processing module.
+
+## MC-01 Functional Test
+
+### Objective
+
+Validate basic MPI communication between the Master Process and a Worker Process.
+
+### Configuration
+
+* Total Packets: 12
+* Processes: 2
+* Workers: 1
+* Distribution Method: Direct Communication
+
+### Expected Result
+
+* Successful packet transmission
+* Successful packet reception
+* Communication Success Rate = 100%
+* Stable execution
+
+---
+
+## MC-02 Multiple Worker Test
+
+### Objective
+
+Validate packet distribution across multiple Worker Processes.
+
+### Configuration
+
+* Total Packets: 12
+* Processes: 4
+* Workers: 3
+* Distribution Method: Round Robin
+
+### Expected Result
+
+* Packets distributed among all workers
+* Successful packet reception
+* Balanced workload distribution
+* Stable execution
+
+---
+
+## MC-03 Medium Workload Test
+
+### Objective
+
+Validate MPI communication under moderate workload conditions.
+
+### Configuration
+
+* Total Packets: 100
+* Processes: 4
+* Workers: 3
+* Distribution Method: Round Robin
+
+### Expected Result
+
+* Successful packet distribution
+* Communication Success Rate = 100%
+* Stable throughput
+* No packet loss
+
+---
+
+## MC-04 High Workload Test
+
+### Objective
+
+Evaluate MPI performance under increased workload.
+
+### Configuration
+
+* Total Packets: 1000
+* Processes: 4
+* Workers: 3
+* Distribution Method: Round Robin
+
+### Expected Result
+
+* Successful packet processing
+* Stable distributed execution
+* Increased throughput
+* No communication failures
+
+---
+
+## MC-05 High Throughput Test
+
+### Objective
+
+Measure maximum communication throughput of the MPI implementation.
+
+### Configuration
+
+* Total Packets: 10000
+* Processes: 4
+* Workers: 3
+* Distribution Method: Round Robin
+
+### Expected Result
+
+* High throughput
+* Stable communication
+* Communication Success Rate = 100%
+* No packet loss
+
+---
+
+## MC-06 Stress Test
+
+### Objective
+
+Validate MPI stability under heavy distributed processing workload.
+
+### Configuration
+
+* Total Packets: 10000
+* Processes: 8
+* Workers: 7
+* Distribution Method: Round Robin
+
+### Expected Result
+
+* Successful packet distribution
+* Successful packet reception
+* Stable execution under stress conditions
+* No crashes or communication failures
+
+---
+
+# MPI Module Pass Criteria
+
+An MPI test is considered successful if:
+
+* MPI compilation succeeds.
+* MPI execution completes successfully.
+* Packets Generated = Packets Sent.
+* Communication Success Rate = 100%.
+* All workers receive assigned packets.
+* Packet distribution behaves as expected.
+* No communication failures occur.
+* Throughput is successfully calculated.
+* Execution completes without crashes.
+* Distributed processing remains stable throughout the test.
+
+# Multi-DES MPI Distributed Processing Test Cases
+
+The following test cases will be used to validate the Multi-DES MPI Distributed Processing module.
+
+## MD-01 Functional Test
+
+### Objective
+
+Validate basic Multi-DES packet generation and communication.
+
+### Configuration
+
+* DES Processes: 3
+* Worker Processes: 1
+* Total Processes: 5
+* Packets Per DES: 10
+* Total Packets: 30
+
+### Expected Result
+
+* All DES processes generate packets successfully
+* Master receives all packets
+* Worker processes all packets
+* Packet Loss = 0
+* Communication Success Rate = 100%
+
+---
+
+## MD-02 Single Worker Test
+
+### Objective
+
+Validate Multi-DES operation with a single Worker Process.
+
+### Configuration
+
+* DES Processes: 3
+* Worker Processes: 1
+* Total Processes: 5
+* Packets Per DES: 100
+* Total Packets: 300
+
+### Expected Result
+
+* Successful packet collection
+* Successful packet processing
+* Stable execution
+* Packet Loss = 0
+
+---
+
+## MD-03 Multiple Worker Test
+
+### Objective
+
+Validate packet distribution across multiple Worker Processes.
+
+### Configuration
+
+* DES Processes: 3
+* Worker Processes: 4
+* Total Processes: 8
+* Packets Per DES: 100
+* Total Packets: 300
+
+### Expected Result
+
+* Packets distributed among all Workers
+* Successful packet processing
+* Balanced workload distribution
+* Stable execution
+
+---
+
+## MD-04 Load Balancing Test
+
+### Objective
+
+Verify Round-Robin load distribution across Workers.
+
+### Configuration
+
+* DES Processes: 3
+* Worker Processes: 4
+* Total Processes: 8
+* Packets Per DES: 100
+* Total Packets: 300
+
+### Expected Result
+
+* Average Worker load remains balanced
+* All Workers participate
+* No Worker starvation
+* Load Distribution Verified
+
+---
+
+## MD-05 High Workload Test
+
+### Objective
+
+Evaluate performance under increased packet volume.
+
+### Configuration
+
+* DES Processes: 3
+* Worker Processes: 4
+* Total Processes: 8
+* Packets Per DES: 1000
+* Total Packets: 3000
+
+### Expected Result
+
+* Successful packet processing
+* Stable distributed execution
+* Increased throughput
+* Packet Loss = 0
+
+---
+
+## MD-06 Scalability Test
+
+### Objective
+
+Evaluate scalability with additional Worker Processes.
+
+### Configuration
+
+* DES Processes: 3
+* Worker Processes: 8
+* Total Processes: 12
+* Packets Per DES: 1000
+* Total Packets: 3000
+
+### Expected Result
+
+* Successful distributed execution
+* Stable load distribution
+* Improved scalability
+* Communication Success Rate = 100%
+
+---
+
+## MD-07 Stress Test
+
+### Objective
+
+Validate stability under heavy Multi-DES workload.
+
+### Configuration
+
+* DES Processes: 3
+* Worker Processes: 8
+* Total Processes: 12
+* Packets Per DES: 10000
+* Total Packets: 30000
+
+### Expected Result
+
+* Successful packet processing
+* Stable execution under stress
+* No communication failures
+* No crashes
+* Packet Loss = 0
+
+---
+
+# Multi-DES MPI Module Pass Criteria
+
+A Multi-DES MPI test is considered successful if:
+
+* MPI compilation succeeds.
+* MPI execution completes successfully.
+* All DES processes generate packets successfully.
+* Packets Generated = Packets Received.
+* Packets Received = Packets Distributed.
+* Packets Distributed = Packets Processed.
+* Packet Loss = 0.
+* Communication Success Rate = 100%.
+* Load Distribution is verified.
+* Throughput is successfully calculated.
+* Execution completes without crashes.
+* Distributed processing remains stable throughout the test.
+

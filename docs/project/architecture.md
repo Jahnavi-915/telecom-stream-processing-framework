@@ -366,14 +366,143 @@ The integrated architecture will establish a complete telecom packet streaming w
 
 This architecture will serve as the foundation for future MPI-based communication, Multiple Data Extraction Server (DES) architectures, and Hybrid MPI + POSIX Threads processing frameworks.
 
+# MPI Distributed Processing Architecture
+
+## Overview
+
+The MPI Distributed Processing Architecture extends the Telecom Stream Processing Framework from shared-memory processing to distributed-memory parallel processing.
+
+The architecture introduces a Master–Worker communication model in which a Master Process coordinates packet distribution while multiple Worker Processes perform distributed packet processing.
+
+### Workflow
+
+```text
+Data Extraction Server (DES)
+            │
+            ▼
+      Master Process
+            │
+            ▼
+   MPI Communication Layer
+            │
+    ┌───────┼───────┐
+    ▼       ▼       ▼
+ Worker 1 Worker 2 Worker 3
+            │
+            ▼
+ Distributed Processing
+            │
+            ▼
+     Statistics Collection
+```
+
+### Purpose
+
+The MPI architecture provides:
+
+* Distributed packet communication
+* Process-level parallelism
+* Scalable workload distribution
+* Distributed performance evaluation
+* Foundation for Multi-DES processing
+
+### Detailed Design Documentation
+
+Detailed information regarding:
+
+* Master–Worker architecture
+* Packet distribution strategy
+* MPI communication mechanisms
+* Statistics collection framework
+* Validation methodology
+* Performance analysis
+
+is maintained separately in:
+
+```text
+docs/design/mpi_design.md
+```
+
+### Expected Outcome
+
+A distributed processing framework capable of reliable packet communication, scalable workload allocation, and distributed telecom stream processing.
+
+---
+
+# Multi-DES MPI Architecture
+
+## Overview
+
+The Multi-DES Architecture extends the MPI framework by introducing multiple Data Extraction Servers operating simultaneously within the distributed processing environment.
+
+Each DES independently generates telecom packets, which are collected and distributed through the MPI communication layer for parallel processing.
+
+### Workflow
+
+```text
+           DES-1
+             │
+             ▼
+           DES-2
+             │
+             ▼
+           DES-3
+             │
+             ▼
+    Master Coordinator
+             │
+             ▼
+    MPI Communication Layer
+             │
+      ┌──────┼──────┐
+      ▼      ▼      ▼
+   Worker1 Worker2 Worker3
+             │
+             ▼
+    Statistics Collection
+```
+
+### Purpose
+
+The Multi-DES architecture provides:
+
+* Multiple telecom traffic sources
+* Concurrent packet generation
+* Distributed packet collection
+* Improved scalability
+* Realistic telecom stream simulation
+* Foundation for large-scale telecom analytics
+
+### Detailed Design Documentation
+
+Detailed information regarding:
+
+* DES process architecture
+* Master Coordinator responsibilities
+* Worker Process design
+* Packet aggregation workflow
+* Load balancing strategy
+* Distributed statistics collection
+
+is maintained separately in:
+
+```text
+docs/design/multi_des_design.md
+```
+
+### Expected Outcome
+
+A scalable distributed telecom stream-processing architecture capable of collecting packets from multiple Data Extraction Servers and processing them efficiently across multiple Worker Processes.
+
 
 ## Future Expansion
 
 The architecture will evolve to support:
 
-* Multiple Data Extraction Servers
-* Real-time packet streams
-* Client-Server communication
-* MPI-based distributed processing
-* Hybrid parallel processing frameworks
+* Hybrid MPI + POSIX Threads processing
+* Dynamic load balancing
+* Telecom packet classification
+* Distributed statistics aggregation
+* Fault tolerance mechanisms
+* Large-scale multi-node deployment
 

@@ -23,3 +23,5 @@ server
 client
 server_app
 client_app
+mpi_stream
+multi_des

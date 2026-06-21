@@ -545,3 +545,397 @@ The implementation successfully demonstrated:
 The Pthreads + Socket Integration Module has been successfully implemented, tested, validated, and documented.
 
 This module serves as the foundation for future Multiple DES, MPI-based, and Hybrid MPI + POSIX Threads telecom stream-processing architectures.
+
+# MPI Distributed Processing Module
+
+## Overview
+
+The MPI Distributed Processing Module extends the Telecom Stream Processing Framework from shared-memory and socket-based communication to distributed-memory parallel processing.
+
+The implementation follows a Master–Worker architecture in which a Master Process simulates a Data Extraction Server (DES) and distributes telecom packets among multiple Worker Processes using MPI message-passing mechanisms.
+
+The module validates distributed communication, packet distribution strategies, scalability, performance monitoring, and distributed workload management.
+
+---
+
+## Source Files
+
+```text
+src/mpi/mpi_stream.c
+    MPI Distributed Processing Implementation
+
+reports/GROUP-E_mpi/
+    MPI Test Results
+    MPI Validation Report
+    MPI Observations Report
+```
+
+---
+
+## Implementation Overview
+
+The MPI module was implemented using a Master–Worker architecture. One MPI process acts as the Master Process (Rank 0) and simulates a Data Extraction Server (DES), while the remaining MPI processes act as Worker Processes responsible for receiving and processing telecom packets.
+
+The implementation was developed using OpenMPI and the MPI message-passing model to support distributed packet communication and workload distribution.
+
+---
+
+## MPI Initialization
+
+The MPI environment is initialized using:
+
+```c
+MPI_Init(&argc, &argv);
+```
+
+Each process obtains its rank and the total number of participating processes using:
+
+```c
+MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+MPI_Comm_size(MPI_COMM_WORLD, &size);
+```
+
+Rank 0 is designated as the Master Process, while all remaining ranks operate as Worker Processes.
+
+---
+
+## Telecom Packet Structure
+
+The following packet structure was implemented:
+
+```c
+typedef struct {
+    int packet_id;
+    int priority;
+    char source[50];
+    char destination[50];
+    char payload[100];
+} TelecomPacket;
+```
+
+The structure stores packet identification, routing information, and payload data used during communication between the Master and Worker Processes.
+
+---
+
+## Packet Generation
+
+Packet generation is performed by the Master Process.
+
+For each packet:
+
+* Packet ID is assigned.
+* Priority value is assigned.
+* Source information is populated.
+* Destination Worker information is populated.
+* Payload information is generated.
+
+Implementation:
+
+```c
+packet.packet_id = i;
+packet.priority = 1;
+
+strcpy(packet.source, "DES-1");
+
+sprintf(packet.destination,
+        "Worker-%d",
+        worker_rank);
+
+sprintf(packet.payload,
+        "Telecom Packet #%d",
+        i);
+```
+
+---
+
+## Packet Distribution
+
+Packets are distributed using a Round-Robin scheduling strategy.
+
+Implementation:
+
+```c
+worker_rank++;
+
+if(worker_rank >= size)
+{
+    worker_rank = 1;
+}
+```
+
+This ensures balanced workload allocation among all available Worker Processes.
+
+Example:
+
+```text
+Packet 1 → Worker 1
+Packet 2 → Worker 2
+Packet 3 → Worker 3
+Packet 4 → Worker 1
+...
+```
+
+---
+
+## MPI Communication
+
+Packet transmission is implemented using:
+
+```c
+MPI_Send(
+    &packet,
+    sizeof(TelecomPacket),
+    MPI_BYTE,
+    worker_rank,
+    0,
+    MPI_COMM_WORLD
+);
+```
+
+Worker Processes receive packets using:
+
+```c
+MPI_Recv(
+    &packet,
+    sizeof(TelecomPacket),
+    MPI_BYTE,
+    0,
+    0,
+    MPI_COMM_WORLD,
+    MPI_STATUS_IGNORE
+);
+```
+
+The implementation uses blocking communication to ensure reliable packet delivery.
+
+---
+
+## Worker Processing
+
+Each Worker Process continuously receives packets from the Master Process.
+
+For each received packet:
+
+* Packet information is extracted.
+* Statistics are updated.
+* Packet details are displayed.
+
+Workers continue processing until a termination packet is received.
+
+---
+
+## Termination Mechanism
+
+A special packet ID value is used to terminate Worker Processes:
+
+```c
+packet.packet_id = -1;
+```
+
+After transmitting all packets, the Master Process sends one termination packet to every Worker Process.
+
+Workers terminate when:
+
+```c
+if(packet.packet_id == -1)
+{
+    break;
+}
+```
+
+This mechanism ensures clean and controlled shutdown of all MPI processes.
+
+---
+
+## Statistics Collection
+
+### Master Process Statistics
+
+The Master Process collects:
+
+* Packets Generated
+* Packets Sent
+* Execution Time
+* Throughput
+* Communication Success Rate
+
+### Worker Process Statistics
+
+Each Worker Process collects:
+
+* Packets Received
+* Processing Status
+
+### Communication Statistics
+
+* Packet Distribution Verification
+* Load Distribution Verification
+* Communication Success Rate
+* Packet Ordering Verification
+
+---
+
+## Performance Measurement
+
+Execution time is measured using:
+
+```c
+gettimeofday()
+```
+
+Throughput is calculated as:
+
+```text
+Throughput = Packets Sent / Execution Time
+```
+
+Communication Success Rate is calculated as:
+
+```text
+Success Rate =
+(Packets Sent / Packets Generated) × 100
+```
+
+---
+
+## Validation Outcome
+
+The implementation was validated using six MPI test cases:
+
+* MC-01 Functional Test
+* MC-02 Multiple Worker Test
+* MC-03 Medium Workload Test
+* MC-04 High Workload Test
+* MC-05 High Throughput Test
+* MC-06 Stress Test
+
+The results demonstrated:
+
+* Correct MPI communication
+* Successful Master–Worker coordination
+* Balanced Round-Robin packet distribution
+* Stable distributed execution
+* Zero packet loss
+* 100% Communication Success Rate
+
+---
+
+## Current Limitations
+
+The current implementation supports:
+
+* Single DES source
+* One Master Process
+* Multiple Worker Processes
+* Static Round-Robin packet distribution
+
+Workers currently perform packet reception and basic processing only.
+
+---
+
+## Multi-DES MPI Implementation
+
+The Multi-DES MPI module extends the single-DES MPI implementation by introducing multiple Data Extraction Server (DES) processes that generate telecom packets concurrently.
+
+### Source Files
+
+```text
+src/mpi/multi_des.c
+    Multi-DES MPI implementation
+
+logs/multi_des_packets.log
+    Packet log generated by the Master Process
+```
+
+### Implemented Features
+
+* Multiple DES Processes
+* Master–Worker Communication
+* Telecom Packet Generation
+* Round-Robin Packet Distribution
+* Packet Logging
+* Worker Load Collection
+* Performance Monitoring
+* Distributed Statistics Collection
+
+### Process Responsibilities
+
+**Master Process (Rank 0)**
+
+* Receives packets from all DES processes
+* Logs packet information
+* Distributes packets to Workers
+* Collects Worker statistics
+* Generates global statistics
+
+**DES Processes (Ranks 1–3)**
+
+* Generate telecom packets
+* Populate packet metadata
+* Send packets to the Master Process
+
+**Worker Processes**
+
+* Receive packets from the Master Process
+* Process assigned packets
+* Report workload statistics
+
+### Implemented Statistics
+
+* Packets Generated
+* Packets Received
+* Packets Distributed
+* Packets Processed
+* Execution Time
+* Throughput
+* Packet Loss
+* Communication Success Rate
+* Average Worker Load
+* Maximum Worker Load
+* Minimum Worker Load
+
+### Logging
+
+The Master Process records all received packets in:
+
+```text
+logs/multi_des_packets.log
+```
+
+for communication verification and validation purposes.
+
+### Validation Summary
+
+The implementation was validated using:
+
+* MD-01 Functional Test
+* MD-02 Single Worker Test
+* MD-03 Multiple Worker Test
+* MD-04 Load Balancing Test
+* MD-05 High Workload Test
+* MD-06 Scalability Test
+* MD-07 Stress Test
+
+Results:
+
+* Communication Success Rate = 100%
+* Packet Loss = 0
+* Balanced Worker Utilization
+* Successful Processing of 30,000 Packets
+
+```
+```
+
+
+## Future Enhancements
+
+Planned improvements include:
+
+* Multiple DES simulation
+* Dynamic load balancing
+* Telecom packet classification
+* Worker-to-Master result aggregation
+* Distributed statistics collection
+* Hybrid MPI + POSIX Threads integration
+
+These enhancements will extend the framework toward large-scale telecom stream-processing environments.

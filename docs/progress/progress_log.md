@@ -253,13 +253,13 @@ Completed Deliverables:
 
 The project now possesses validated threading and communication foundations required for future telecom stream-processing and distributed computing implementations.
 
-# Week 2
+## Week 2
 
-## Day 1
+### Day 1
 
 **Status:** Completed
 
-### Progress
+**Progress**
 
 * Studied integration of the POSIX Threads Producer–Consumer architecture with TCP Socket communication.
 * Reviewed Week 1 POSIX Threads implementation.
@@ -269,7 +269,7 @@ The project now possesses validated threading and communication foundations requ
 * Created Integration Design documentation.
 * Updated architecture diagrams and workflow documentation.
 
-### Observations
+**Observations**
 
 * The integration architecture combines synchronization and communication into a unified workflow.
 * Sender Thread replaces the traditional Consumer and forwards packets through TCP communication.
@@ -277,11 +277,11 @@ The project now possesses validated threading and communication foundations requ
 
 ---
 
-## Day 2
+### Day 2
 
 **Status:** Completed
 
-### Progress
+**Progress**
 
 * Defined Telecom Packet data structure.
 * Designed packet metadata fields including Packet ID, Priority, Source, Destination, and Payload.
@@ -290,7 +290,7 @@ The project now possesses validated threading and communication foundations requ
 * Prepared implementation plan for the integrated model.
 * Designed testing and validation strategy for the integration phase.
 
-### Observations
+**Observations**
 
 * Structured packets improve extensibility for future telecom stream processing.
 * Packet metadata enables easier tracking, logging, and debugging.
@@ -298,11 +298,11 @@ The project now possesses validated threading and communication foundations requ
 
 ---
 
-## Day 3
+### Day 3
 
 **Status:** Completed
 
-### Progress
+**Progress**
 
 * Implemented Pthreads + Socket Integration prototype.
 * Implemented Producer Thread.
@@ -327,7 +327,7 @@ The project now possesses validated threading and communication foundations requ
 * Validated packet transmission and reception workflow.
 * Generated integration testing and validation reports.
 
-### Key Results
+**Key Results**
 
 * Maximum Send Throughput Achieved: ~927 packets/sec
 * Maximum Receive Throughput Achieved: ~927 packets/sec
@@ -336,7 +336,7 @@ The project now possesses validated threading and communication foundations requ
 * Packet Loss: 0
 * Delivery Success Rate: 100%
 
-### Observations
+**Observations**
 
 * Producer and Sender synchronized correctly.
 * End-to-end packet transmission was achieved successfully.
@@ -348,24 +348,167 @@ The project now possesses validated threading and communication foundations requ
 
 ---
 
-## Current Status
+### Day 4
 
-### Completed Deliverables
+**Status:** Completed
 
-1. Integration Design Documentation
-2. Telecom Packet Structure
-3. Pthreads + Socket Integration Prototype
-4. Packet Logging Framework
-5. Performance Monitoring Framework
-6. Integration Test Results Report
-7. Integration Observations Report
-8. Integration Validation Checklist
-9. Integration Validation Report
+**Progress**
 
-### Next Steps
+* Studied MPI communication mechanisms.
+* Studied MPI process management and execution model.
+* Studied MPI_Send() and MPI_Recv() operations.
+* Designed Master–Worker communication architecture.
+* Designed telecom packet distribution workflow.
+* Created MPI architecture documentation.
+* Prepared MPI implementation plan.
 
-* Study MPI communication mechanisms.
-* Design MPI communication architecture.
-* Implement MPI-based packet distribution model.
-* Execute MPI testing and validation.
-* Prepare Hybrid MPI + Pthreads architecture for future project phases.
+**Observations**
+
+* MPI provides a scalable distributed communication framework.
+* Message passing is suitable for distributed telecom stream processing.
+* Master–Worker architecture simplifies workload management.
+* MPI communication can be extended to support Multiple DES architectures.
+
+---
+
+### Day 5
+
+**Status:** Completed
+
+**Progress**
+
+* Implemented MPI Distributed Processing prototype.
+* Implemented Master Process.
+* Implemented Worker Processes.
+* Implemented telecom packet structure.
+* Implemented packet generation and distribution.
+* Implemented Round-Robin Worker allocation.
+* Added packet transmission statistics.
+* Added communication success rate measurement.
+* Added execution time measurement.
+* Added throughput calculation.
+* Executed MPI functional and performance tests.
+* Generated MPI testing and validation reports.
+
+**Key Results**
+
+* Maximum Packets Tested: 10,000
+* Maximum Processes Tested: 8
+* Maximum Workers Tested: 7
+* Communication Success Rate: 100%
+* Packet Loss: 0
+
+**Observations**
+
+* MPI communication operated correctly.
+* Round-Robin distribution balanced workloads effectively.
+* Worker participation was verified.
+* No communication failures were observed.
+* Distributed execution remained stable.
+
+---
+
+### Day 6
+
+**Status:** Completed
+
+**Progress**
+
+* Designed Multiple Data Extraction Server (Multi-DES) architecture.
+* Extended telecom packet structure with DES identification.
+* Implemented multiple DES packet generation.
+* Implemented DES-to-Master communication.
+* Implemented packet logging framework.
+* Implemented Worker load monitoring.
+* Implemented global statistics collection.
+* Implemented Multi-DES performance monitoring.
+* Updated architecture and implementation documentation.
+
+**Observations**
+
+* Multiple DES processes successfully generated packets concurrently.
+* Packet aggregation at the Master Process operated correctly.
+* Packet logging improved validation and traceability.
+* The architecture supports future large-scale telecom stream simulations.
+
+---
+
+### Day 7
+
+**Status:** Completed
+
+**Progress**
+* Executed Multi-DES validation test suite.
+* Executed load balancing tests.
+* Executed scalability tests.
+* Executed stress tests.
+* Generated Multi-DES observations report.
+* Generated Multi-DES validation checklist.
+* Generated Multi-DES validation report.
+* Updated README and project documentation.
+* Completed Week 2 deliverables.
+
+**Key Results**
+
+* Maximum Total Packets Tested: 30,000
+* Maximum Workers Tested: 8
+* Maximum Processes Tested: 12
+* Peak Throughput: ~1,188,683 packets/sec
+* Communication Success Rate: 100%
+* Packet Loss: 0
+
+**Observations**
+
+* DES-to-Master communication remained reliable.
+* Worker utilization remained balanced.
+* Round-Robin distribution achieved equal workload allocation.
+* No packet loss was observed.
+* No crashes or deadlocks occurred.
+* The implementation remained stable under stress workloads.
+
+---
+
+## End of Week Summary
+
+### Achievements
+
+* Successfully implemented the Pthreads + Socket Integration framework.
+* Implemented telecom packet structure.
+* Implemented packet logging framework.
+* Implemented performance monitoring framework.
+* Executed integration validation and stress testing.
+* Implemented MPI Distributed Processing framework.
+* Implemented Master–Worker communication architecture.
+* Implemented Round-Robin packet distribution.
+* Executed MPI validation and performance testing.
+* Implemented Multi-DES MPI Distributed Processing framework.
+* Implemented DES-to-Master communication.
+* Implemented Worker load analysis framework.
+* Implemented distributed packet logging.
+* Executed Multi-DES validation, scalability, and stress testing.
+* Generated implementation, testing, observation, and validation documentation.
+
+### Challenges Faced
+
+* Understanding MPI communication workflow.
+* Designing balanced packet distribution strategies.
+* Coordinating multiple DES processes.
+* Measuring distributed processing performance accurately.
+* Managing large-scale test execution and validation.
+
+### Week 2 Outcome
+
+Week 2 objectives were successfully completed.
+
+Completed Deliverables:
+
+1. Pthreads + Socket Integration Prototype
+2. Integration Validation Framework
+3. MPI Distributed Processing Module
+4. MPI Testing and Validation Framework
+5. Multi-DES MPI Distributed Processing Framework
+6. Multi-DES Validation Framework
+7. Performance Monitoring Framework
+8. Project Documentation and Architecture Updates
+
+The project now possesses validated shared-memory, network communication, distributed processing, and multi-source telecom packet processing foundations required for Hybrid MPI + POSIX Threads development.

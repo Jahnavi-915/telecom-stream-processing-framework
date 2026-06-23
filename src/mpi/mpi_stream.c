@@ -3,7 +3,7 @@
 #include <mpi.h>
 #include <sys/time.h>
 
-#define TOTAL_PACKETS 10000
+#define TOTAL_PACKETS 10
 
 typedef struct {
     int packet_id;

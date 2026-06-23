@@ -800,3 +800,330 @@ Finalize:
 
 This section will be expanded as the project progresses and new phases, implementation approaches, evaluation criteria, and project milestones are introduced.
 
+# Week 3
+
+## Overall Objective
+
+Validate the Group-F POSIX Threads framework, integrate it with the Group-E MPI communication framework, and develop a real-time Hybrid MPI + POSIX Threads telecom stream processing architecture capable of distributed packet reception, multithreaded packet processing, performance monitoring, and scalability evaluation.
+
+---
+
+# Day 1 – Group-F Validation and Architecture Analysis
+
+## Team Member 1 (Jahnavi)
+
+### Focus Areas
+
+* Group-F Architecture Review
+* Validation Framework
+* Integration Planning
+
+### Tasks
+
+* Review Group-F architecture and workflow
+* Analyze shared buffer APIs
+* Analyze producer-consumer interfaces
+* Identify Hybrid integration points
+* Prepare validation checklist
+* Prepare observation templates
+
+---
+
+## Team Member 2 (Sreeja)
+
+### Focus Areas
+
+* Functional Validation
+
+### Tasks
+
+* Compile Group-F implementation
+* Execute provided test cases
+* Verify synchronization behavior
+* Verify producer-consumer functionality
+* Verify buffer operations
+* Record execution results
+
+---
+
+## Joint Goal
+
+Validate the correctness and reusability of the Group-F framework for Hybrid integration.
+
+---
+
+# Day 2 – Hybrid Architecture Design
+
+## Team Member 1 (Jahnavi)
+
+### Focus Areas
+
+* MPI Integration Design
+* Statistics Framework
+* Logging Framework
+
+### Tasks
+
+* Design MPI-to-Buffer workflow
+* Design statistics collection framework
+* Design performance monitoring framework
+* Design logging architecture
+* Create Hybrid workflow diagrams
+* Update architecture documentation
+
+---
+
+## Team Member 2 (Sreeja)
+
+### Focus Areas
+
+* Thread Integration Design
+
+### Tasks
+
+* Analyze thread pool architecture
+* Analyze shared buffer integration
+* Design worker-thread workflow
+* Prepare implementation strategy
+
+---
+
+## Joint Goal
+
+Design:
+
+```text
+Multiple DES
+      │
+      ▼
+MPI Communication Layer
+      │
+      ▼
+Master Process
+      │
+      ▼
+Shared Buffer
+      │
+      ▼
+Worker Thread Pool
+      │
+      ▼
+Packet Processing
+      │
+      ▼
+Statistics & Logging
+```
+
+---
+
+# Day 3 – Hybrid Framework Implementation
+
+## Team Member 1 (Jahnavi)
+
+### Focus Areas
+
+* Distributed Processing Layer
+
+### Tasks
+
+* Implement MPI packet reception module
+* Implement Master process workflow
+* Implement packet buffering interface
+* Implement packet logging module
+* Implement statistics collection module
+
+---
+
+## Team Member 2 (Sreeja)
+
+### Focus Areas
+
+* Thread Processing Layer
+
+### Tasks
+
+* Integrate Group-F shared buffer
+* Integrate worker thread pool
+* Connect packet processing module
+* Implement synchronization support
+* Connect thread processing workflow
+
+---
+
+## Joint Goal
+
+Implement the first working Hybrid MPI + POSIX Threads framework.
+
+---
+
+# Day 4 – Real-Time Streaming Implementation
+
+## Team Member 1 (Jahnavi)
+
+### Focus Areas
+
+* Monitoring Framework
+
+### Tasks
+
+* Implement throughput monitoring
+* Implement execution-time monitoring
+* Implement worker-utilization monitoring
+* Implement load-distribution analysis
+
+---
+
+## Team Member 2 (Sreeja)
+
+### Focus Areas
+
+* Continuous Processing
+
+### Tasks
+
+* Implement continuous packet generation
+* Implement continuous packet processing
+* Implement streaming execution mode
+* Optimize thread execution workflow
+
+---
+
+## Joint Goal
+
+Develop a real-time telecom packet streaming framework.
+
+---
+
+# Day 5 – Hybrid Testing Framework
+
+## Team Member 1 (Jahnavi)
+
+### Focus Areas
+
+* Testing & Validation Framework
+
+### Tasks
+
+* Create Hybrid test plan
+* Create Hybrid test case catalog
+* Create validation checklist
+* Create observation templates
+* Create validation report template
+
+---
+
+## Team Member 2 (Sreeja)
+
+### Focus Areas
+
+* Test Environment Preparation
+
+### Tasks
+
+* Configure execution scenarios
+* Configure workload profiles
+* Configure scalability tests
+* Configure stress tests
+
+---
+
+## Joint Goal
+
+Prepare complete Hybrid testing and validation infrastructure.
+
+---
+
+# Day 6 – Hybrid Validation and Performance Analysis
+
+## Team Member 1 (Jahnavi)
+
+### Focus Areas
+
+* Validation
+* Performance Analysis
+
+### Tasks
+
+* Execute Hybrid test suite
+* Analyze throughput
+* Analyze worker utilization
+* Analyze load balancing
+* Generate observation report
+* Generate performance report
+
+---
+
+## Team Member 2 (Sreeja)
+
+### Focus Areas
+
+* Functional Verification
+
+### Tasks
+
+* Verify packet correctness
+* Verify synchronization behavior
+* Verify communication success
+* Verify packet loss statistics
+* Verify thread execution stability
+* Support bug fixing
+
+---
+
+## Joint Goal
+
+Validate correctness, stability, scalability, and performance of the Hybrid framework.
+
+---
+
+# Day 7 – Documentation and Week Closure
+
+## Team Member 1 (Jahnavi)
+
+### Tasks
+
+* Update README
+* Update Architecture Documentation
+* Update Implementation Details
+* Update Progress Log
+* Prepare Week 3 Progress Report
+
+---
+
+## Team Member 2 (Sreeja)
+
+### Tasks
+
+* Organize source code
+* Organize testing artifacts
+* Review repository structure
+* Verify final implementation
+
+---
+
+## Joint Goal
+
+Finalize:
+
+* Group-F Validation Reports
+* Hybrid MPI + POSIX Threads Framework
+* Real-Time Telecom Stream Processing Framework
+* Hybrid Validation Reports
+* Hybrid Performance Analysis Reports
+* Week 3 Documentation
+
+---
+
+# End of Week Deliverables
+
+1. Group-F Validation Report
+2. Group-F Observation Report
+3. Hybrid MPI + POSIX Threads Framework
+4. Real-Time Telecom Stream Processing Framework
+5. Hybrid Test Plan
+6. Hybrid Validation Checklist
+7. Hybrid Observation Report
+8. Hybrid Validation Report
+9. Hybrid Performance Analysis Report
+10. Updated Project Documentation
+11. Week 3 Progress Report

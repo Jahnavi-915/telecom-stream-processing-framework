@@ -822,3 +822,432 @@ For shared files, each team member should update only their designated sections 
 7. Keep documentation synchronized with implementation.
 8. Complete testing and validation before merging into development.
 
+# Git Workflow and Branch Strategy
+
+# WEEK-3
+
+## Repository Branch Structure
+
+```text
+main
+│
+└── development
+     │
+     ├── feature/groupf-validation
+     │
+     └── feature/hybrid
+```
+
+### Branch Purpose
+
+#### main
+
+Contains:
+
+* Stable weekly milestones
+* Validated implementations
+* Approved documentation
+* Completed deliverables
+
+Only stable and tested work should be merged into this branch.
+
+---
+
+#### development
+
+Contains:
+
+* Current week's integrated work
+* Documentation updates
+* Testing artifacts
+* Validation reports
+* Architecture updates
+* Weekly deliverables before final release
+
+Acts as the central working branch.
+
+---
+
+#### feature/groupf-validation
+
+Contains:
+
+* Group-F implementation analysis
+* Functional validation
+* Synchronization validation
+* Observation reports
+* Comparative evaluation reports
+
+---
+
+#### feature/hybrid
+
+Contains:
+
+* Hybrid MPI + POSIX Threads implementation
+* MPI integration layer
+* Shared buffer integration
+* Thread pool integration
+* Real-time packet streaming
+* Hybrid testing and validation
+
+---
+
+# Initial Setup
+
+## Step 1
+
+Ensure development branch is up to date.
+
+```bash
+git checkout development
+git pull origin development
+```
+
+---
+
+## Step 2
+
+Jahnavi creates Group-F Validation branch:
+
+```bash
+git checkout development
+git checkout -b feature/groupf-validation
+git push -u origin feature/groupf-validation
+```
+
+---
+
+## Step 3
+
+Sreeja gets the branch:
+
+```bash
+git fetch
+git checkout feature/groupf-validation
+```
+
+---
+
+# Daily Workflow (Both Team Members)
+
+## Before Starting Work
+
+Always synchronize your repository.
+
+```bash
+git checkout <current-branch>
+git pull origin <current-branch>
+```
+
+Example:
+
+```bash
+git checkout feature/groupf-validation
+git pull origin feature/groupf-validation
+```
+
+---
+
+## During Work
+
+* Work only on assigned tasks.
+* Commit frequently.
+* Avoid modifying the same files simultaneously.
+* Update documentation together with implementation.
+* Record validation results immediately after execution.
+
+---
+
+## Before Ending Work
+
+Check changes:
+
+```bash
+git status
+```
+
+Add changes:
+
+```bash
+git add .
+```
+
+Commit:
+
+```bash
+git commit -m "Meaningful description of work"
+```
+
+Examples:
+
+```bash
+git commit -m "Validate Group-F producer consumer framework"
+git commit -m "Add Group-F observation report"
+git commit -m "Design hybrid architecture"
+git commit -m "Implement MPI to buffer integration"
+git commit -m "Add hybrid performance monitoring"
+```
+
+Push:
+
+```bash
+git push origin <current-branch>
+```
+
+---
+
+## If Push Fails
+
+Run:
+
+```bash
+git pull origin <current-branch>
+```
+
+Resolve conflicts.
+
+Then:
+
+```bash
+git push origin <current-branch>
+```
+
+---
+
+# Day-wise Branch Usage
+
+## Day 1
+
+### Branch
+
+feature/groupf-validation
+
+### Team Members
+
+* Jahnavi
+* Sreeja
+
+### Activities
+
+* Group-F Architecture Review
+* API Analysis
+* Functional Validation
+* Synchronization Validation
+* Observation Collection
+
+---
+
+## Day 2
+
+### Branch
+
+feature/groupf-validation
+
+### Team Members
+
+* Jahnavi
+* Sreeja
+
+### Activities
+
+* Execute Group-F Test Cases
+* Generate Validation Reports
+* Comparative Analysis
+* Integration Planning
+
+---
+
+## End of Day 2
+
+Merge Group-F Validation work into development.
+
+Jahnavi:
+
+```bash
+git checkout development
+git pull origin development
+git merge feature/groupf-validation
+git push origin development
+```
+
+---
+
+## Day 3
+
+### Create Hybrid Branch
+
+Jahnavi creates:
+
+```bash
+git checkout development
+git checkout -b feature/hybrid
+git push -u origin feature/hybrid
+```
+
+---
+
+### Sreeja gets the branch
+
+```bash
+git fetch
+git checkout feature/hybrid
+```
+
+Now both work on:
+
+```text
+feature/hybrid
+```
+
+---
+
+## Day 3 - Day 5
+
+### Working Branch
+
+feature/hybrid
+
+### Team Members
+
+* Jahnavi
+* Sreeja
+
+### Activities
+
+* Hybrid Architecture Implementation
+* MPI Integration
+* Shared Buffer Integration
+* Thread Pool Integration
+* Statistics Framework
+* Logging Framework
+* Real-Time Streaming Development
+
+---
+
+## Day 6
+
+### Branch
+
+feature/hybrid
+
+### Team Members
+
+* Jahnavi
+* Sreeja
+
+### Activities
+
+* Hybrid Testing
+* Validation
+* Performance Analysis
+* Scalability Evaluation
+
+---
+
+## End of Day 6
+
+Merge Hybrid work into development.
+
+Jahnavi:
+
+```bash
+git checkout development
+git pull origin development
+git merge feature/hybrid
+git push origin development
+```
+
+---
+
+## Day 7
+
+### Branch
+
+development
+
+### Team Members
+
+* Jahnavi
+* Sreeja
+
+### Activities
+
+* Documentation Updates
+* README Updates
+* Architecture Updates
+* Progress Log Updates
+* Week 3 Report Preparation
+* Repository Review
+
+---
+
+# End of Week Integration
+
+After:
+
+* Group-F Validation
+* Hybrid MPI + POSIX Threads Framework
+* Real-Time Telecom Stream Processing Framework
+* Hybrid Testing & Validation
+* Performance Analysis
+* Documentation Updates
+
+Jahnavi merges development into main:
+
+```bash
+git checkout main
+git pull origin main
+git merge development
+git push origin main
+```
+
+This becomes the official Week 3 milestone.
+
+---
+
+# File Ownership Guidelines
+
+## Primarily Maintained by Jahnavi
+
+* README.md
+* docs/project/architecture.md
+* docs/project/implementation_details.md
+* docs/project/ROADMAP.md
+* docs/testing/*
+* reports/*
+* logs/*
+* src/hybrid/statistics/*
+* src/hybrid/logging/*
+
+---
+
+## Primarily Maintained by Sreeja
+
+* src/hybrid/shared_buffer/*
+* src/hybrid/thread_pool/*
+* src/hybrid/packet_processing/*
+* src/hybrid/streaming/*
+
+---
+
+## Shared Files
+
+* docs/progress/progress_log.md
+* src/hybrid/hybrid_main.c
+
+For shared files, each team member should update only their designated sections whenever possible.
+
+---
+
+# Important Rules
+
+1. Pull before starting work.
+2. Push after completing work.
+3. Use meaningful commit messages.
+4. Do not work directly on main.
+5. Do not delete another team member's changes.
+6. Resolve conflicts through communication.
+7. Keep documentation synchronized with implementation.
+8. Complete validation before merging into development.
+9. Complete Hybrid testing before merging into main.

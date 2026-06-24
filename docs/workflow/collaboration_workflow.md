@@ -822,432 +822,426 @@ For shared files, each team member should update only their designated sections 
 7. Keep documentation synchronized with implementation.
 8. Complete testing and validation before merging into development.
 
-# Git Workflow and Branch Strategy
+# Hybrid Development Git Workflow
 
-# WEEK-3
-
-## Repository Branch Structure
+## Branch Structure
 
 ```text
 main
 │
 └── development
-     │
-     ├── feature/groupf-validation
-     │
-     └── feature/hybrid
+    │
+    ├── feature-hybrid-integration   (Jahnavi)
+    ├── feature-database             (Sreeja)
+    ├── feature-graph                (Sreeja)
+    └── feature-analytics            (Sreeja)
 ```
 
-### Branch Purpose
+### Branch Responsibilities
 
 #### main
 
-Contains:
-
-* Stable weekly milestones
-* Validated implementations
-* Approved documentation
-* Completed deliverables
-
-Only stable and tested work should be merged into this branch.
-
----
+* Stable release branch
+* Final project submission branch
+* No direct development
 
 #### development
 
-Contains:
+* Integration branch
+* All feature branches merge here first
+* Used for testing, debugging, validation, and final integration
 
-* Current week's integrated work
-* Documentation updates
-* Testing artifacts
-* Validation reports
-* Architecture updates
-* Weekly deliverables before final release
+#### feature-hybrid-integration
 
-Acts as the central working branch.
+Owned by: Jahnavi
+
+Responsibilities:
+
+* MPI Integration
+* Multi-DES Integration
+* Shared Buffer Integration
+* Worker Thread Integration
+* Monitoring Framework
+* Hybrid Main Controller
+* Build System
+* End-to-End Integration
+
+#### feature-database
+
+Owned by: Sreeja
+
+Responsibilities:
+
+* Berkeley DB Module
+* Database APIs
+* Storage Integration
+
+#### feature-graph
+
+Owned by: Sreeja
+
+Responsibilities:
+
+* Graph Construction
+* Vertex Management
+* Edge Management
+* Graph Statistics
+
+#### feature-analytics
+
+Owned by: Sreeja
+
+Responsibilities:
+
+* Traffic Analytics
+* Graph Analytics
+* Performance Analytics
+* Report Generation
 
 ---
 
-#### feature/groupf-validation
+# Daily Development Workflow
 
-Contains:
-
-* Group-F implementation analysis
-* Functional validation
-* Synchronization validation
-* Observation reports
-* Comparative evaluation reports
-
----
-
-#### feature/hybrid
-
-Contains:
-
-* Hybrid MPI + POSIX Threads implementation
-* MPI integration layer
-* Shared buffer integration
-* Thread pool integration
-* Real-time packet streaming
-* Hybrid testing and validation
-
----
-
-# Initial Setup
-
-## Step 1
-
-Ensure development branch is up to date.
+## Start of Day
 
 ```bash
 git checkout development
 git pull origin development
 ```
 
----
-
-## Step 2
-
-Jahnavi creates Group-F Validation branch:
+Switch to assigned feature branch:
 
 ```bash
-git checkout development
-git checkout -b feature/groupf-validation
-git push -u origin feature/groupf-validation
+git checkout feature-hybrid-integration
+```
+
+or
+
+```bash
+git checkout feature-database
 ```
 
 ---
 
-## Step 3
+## During Development
 
-Sreeja gets the branch:
-
-```bash
-git fetch
-git checkout feature/groupf-validation
-```
-
----
-
-# Daily Workflow (Both Team Members)
-
-## Before Starting Work
-
-Always synchronize your repository.
-
-```bash
-git checkout <current-branch>
-git pull origin <current-branch>
-```
-
-Example:
-
-```bash
-git checkout feature/groupf-validation
-git pull origin feature/groupf-validation
-```
-
----
-
-## During Work
-
-* Work only on assigned tasks.
-* Commit frequently.
-* Avoid modifying the same files simultaneously.
-* Update documentation together with implementation.
-* Record validation results immediately after execution.
-
----
-
-## Before Ending Work
-
-Check changes:
-
-```bash
-git status
-```
-
-Add changes:
-
-```bash
-git add .
-```
-
-Commit:
-
-```bash
-git commit -m "Meaningful description of work"
-```
+Commit frequently using logical commits.
 
 Examples:
 
 ```bash
-git commit -m "Validate Group-F producer consumer framework"
-git commit -m "Add Group-F observation report"
-git commit -m "Design hybrid architecture"
-git commit -m "Implement MPI to buffer integration"
-git commit -m "Add hybrid performance monitoring"
+git add .
+git commit -m "Implemented TelecomPacket structure"
+
+git add .
+git commit -m "Integrated MPI with shared buffer"
+
+git add .
+git commit -m "Added Berkeley DB packet storage APIs"
 ```
 
-Push:
+Push changes regularly:
 
 ```bash
-git push origin <current-branch>
+git push origin <branch-name>
 ```
 
 ---
 
-## If Push Fails
+## End of Day
 
-Run:
-
-```bash
-git pull origin <current-branch>
-```
-
-Resolve conflicts.
-
-Then:
-
-```bash
-git push origin <current-branch>
-```
+1. Push latest changes.
+2. Update meeting notes.
+3. Update hybrid progress log.
+4. Document major implementation decisions.
+5. Record issues and blockers.
 
 ---
 
 # Day-wise Branch Usage
 
-## Day 1
+## Day 1 – Architecture Freeze
 
-### Branch
-
-feature/groupf-validation
-
-### Team Members
-
-* Jahnavi
-* Sreeja
-
-### Activities
-
-* Group-F Architecture Review
-* API Analysis
-* Functional Validation
-* Synchronization Validation
-* Observation Collection
-
----
-
-## Day 2
-
-### Branch
-
-feature/groupf-validation
-
-### Team Members
-
-* Jahnavi
-* Sreeja
-
-### Activities
-
-* Execute Group-F Test Cases
-* Generate Validation Reports
-* Comparative Analysis
-* Integration Planning
-
----
-
-## End of Day 2
-
-Merge Group-F Validation work into development.
-
-Jahnavi:
-
-```bash
-git checkout development
-git pull origin development
-git merge feature/groupf-validation
-git push origin development
-```
-
----
-
-## Day 3
-
-### Create Hybrid Branch
-
-Jahnavi creates:
-
-```bash
-git checkout development
-git checkout -b feature/hybrid
-git push -u origin feature/hybrid
-```
-
----
-
-### Sreeja gets the branch
-
-```bash
-git fetch
-git checkout feature/hybrid
-```
-
-Now both work on:
+### Jahnavi
 
 ```text
-feature/hybrid
+feature-hybrid-integration
 ```
+
+Tasks:
+
+* Finalize Hybrid Architecture
+* Finalize Hybrid Design
+* Create Hybrid Source Structure
+* Define Integration Strategy
+
+### Sreeja
+
+```text
+feature-database
+```
+
+Tasks:
+
+* Berkeley DB Study
+* Database Design
+* Storage Schema Design
 
 ---
 
-## Day 3 - Day 5
+## Day 2 – Core Framework
 
-### Working Branch
+### Jahnavi
 
-feature/hybrid
+```text
+feature-hybrid-integration
+```
 
-### Team Members
+Tasks:
 
-* Jahnavi
-* Sreeja
-
-### Activities
-
-* Hybrid Architecture Implementation
-* MPI Integration
+* TelecomPacket Structure
+* Configuration Framework
 * Shared Buffer Integration
-* Thread Pool Integration
+
+### Sreeja
+
+```text
+feature-database
+```
+
+Tasks:
+
+* Database Module Skeleton
+* Database Initialization
+
+---
+
+## Day 3 – MPI Integration
+
+### Jahnavi
+
+```text
+feature-hybrid-integration
+```
+
+Tasks:
+
+* MPI Integration
+* Multi-DES Integration
+* MPI → Shared Buffer Pipeline
+
+### Sreeja
+
+```text
+feature-database
+```
+
+Tasks:
+
+* Packet Storage APIs
+* Packet Retrieval APIs
+
+---
+
+## Day 4 – Thread Integration
+
+### Jahnavi
+
+```text
+feature-hybrid-integration
+```
+
+Tasks:
+
+* Worker Thread Integration
+* Packet Processing Pipeline
+
+### Sreeja
+
+```text
+feature-graph
+```
+
+Tasks:
+
+* Graph Data Structures
+* Vertex Management
+
+---
+
+## Day 5 – Monitoring & Graph Construction
+
+### Jahnavi
+
+```text
+feature-hybrid-integration
+```
+
+Tasks:
+
+* Logger Framework
 * Statistics Framework
-* Logging Framework
-* Real-Time Streaming Development
+* Monitoring Framework
 
----
+### Sreeja
 
-## Day 6
-
-### Branch
-
-feature/hybrid
-
-### Team Members
-
-* Jahnavi
-* Sreeja
-
-### Activities
-
-* Hybrid Testing
-* Validation
-* Performance Analysis
-* Scalability Evaluation
-
----
-
-## End of Day 6
-
-Merge Hybrid work into development.
-
-Jahnavi:
-
-```bash
-git checkout development
-git pull origin development
-git merge feature/hybrid
-git push origin development
+```text
+feature-graph
 ```
 
+Tasks:
+
+* Edge Management
+* Graph Construction
+* Graph Statistics
+
 ---
 
-## Day 7
+## Day 6 – Database Integration
 
-### Branch
+### Jahnavi
 
+```text
+feature-hybrid-integration
+```
+
+Tasks:
+
+* Integrate Database with Pipeline
+* Data Flow Validation
+
+### Sreeja
+
+```text
+feature-graph
+```
+
+Tasks:
+
+* Graph Framework Completion
+* Graph Validation
+
+---
+
+## Day 7 – Analytics Integration
+
+### Jahnavi
+
+```text
+feature-hybrid-integration
+```
+
+Tasks:
+
+* Hybrid Main Controller
+* End-to-End Integration
+
+### Sreeja
+
+```text
+feature-analytics
+```
+
+Tasks:
+
+* Traffic Analytics
+* Graph Analytics
+* Performance Analytics
+
+---
+
+## Day 8 – Functional & System Testing
+
+### Both
+
+```text
 development
-
-### Team Members
-
-* Jahnavi
-* Sreeja
-
-### Activities
-
-* Documentation Updates
-* README Updates
-* Architecture Updates
-* Progress Log Updates
-* Week 3 Report Preparation
-* Repository Review
-
----
-
-# End of Week Integration
-
-After:
-
-* Group-F Validation
-* Hybrid MPI + POSIX Threads Framework
-* Real-Time Telecom Stream Processing Framework
-* Hybrid Testing & Validation
-* Performance Analysis
-* Documentation Updates
-
-Jahnavi merges development into main:
-
-```bash
-git checkout main
-git pull origin main
-git merge development
-git push origin main
 ```
 
-This becomes the official Week 3 milestone.
+Tasks:
+
+* Functional Testing
+* System Testing
+* Validation Execution
+* Bug Fixing
 
 ---
 
-# File Ownership Guidelines
+## Day 9 – Performance & Cluster Testing
 
-## Primarily Maintained by Jahnavi
+### Both
 
-* README.md
-* docs/project/architecture.md
-* docs/project/implementation_details.md
-* docs/project/ROADMAP.md
-* docs/testing/*
-* reports/*
-* logs/*
-* src/hybrid/statistics/*
-* src/hybrid/logging/*
+```text
+development
+```
 
----
+Tasks:
 
-## Primarily Maintained by Sreeja
-
-* src/hybrid/shared_buffer/*
-* src/hybrid/thread_pool/*
-* src/hybrid/packet_processing/*
-* src/hybrid/streaming/*
+* Performance Testing
+* Stress Testing
+* Scalability Testing
+* Cluster Testing
+* Performance Evaluation
 
 ---
 
-## Shared Files
+## Day 10 – Finalization
 
-* docs/progress/progress_log.md
-* src/hybrid/hybrid_main.c
+### Both
 
-For shared files, each team member should update only their designated sections whenever possible.
+```text
+development
+```
+
+Tasks:
+
+* Final Validation
+* Documentation Updates
+* User Manual
+* Technical Manual
+* PPT Preparation
+* Repository Cleanup
+
+---
+
+# Merge Policy
+
+```text
+Feature Branch
+      ↓
+Development
+      ↓
+Testing & Validation
+      ↓
+Development
+      ↓
+Main
+```
+
+---
+
+# Pull Request Checklist
+
+Before merging into development:
+
+* Code compiles successfully
+* Unit tests pass
+* Module tests pass
+* Documentation updated
+* No debug code remains
+* No unnecessary files committed
 
 ---
 
 # Important Rules
 
-1. Pull before starting work.
-2. Push after completing work.
-3. Use meaningful commit messages.
-4. Do not work directly on main.
-5. Do not delete another team member's changes.
-6. Resolve conflicts through communication.
-7. Keep documentation synchronized with implementation.
-8. Complete validation before merging into development.
-9. Complete Hybrid testing before merging into main.
+* Never commit directly to main.
+* Avoid committing directly to development except during integration and testing phases.
+* Pull latest development before every merge.
+* Keep commits small and meaningful.
+* Use descriptive commit messages.
+* Resolve conflicts immediately.
+* Maintain clean and readable code.
+* Add comments where necessary.
+* Update documentation only when major milestones are completed.
+* All final testing and validation must be performed on development before merging to main.

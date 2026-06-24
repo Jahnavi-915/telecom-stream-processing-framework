@@ -784,346 +784,557 @@ Finalize:
 
 ---
 
-# Future Roadmap
+# Week 3 Roadmap – Hybrid Telecom Stream Processing Framework
 
-## Week 3 (Planned)
+## Objective
 
-* Multiple Data Extraction Server (DES) Architecture
-* Multi-DES Communication Design
-* Multi-DES Prototype Implementation
-* Advanced MPI Communication
-* Hybrid MPI + POSIX Threads Exploration
-* Comparative Performance Analysis
+Develop a production-quality Hybrid Telecom Stream Processing Framework capable of operating on both a single machine and a distributed cluster environment.
 
+The framework will integrate:
 
-# Future Roadmap
+* MPI-based distributed communication
+* POSIX Thread-based parallel processing
+* Berkeley DB storage
+* Graph construction and analytics
+* Monitoring and performance analysis
+* Existing testing and validation framework
 
-This section will be expanded as the project progresses and new phases, implementation approaches, evaluation criteria, and project milestones are introduced.
-
-# Week 3
-
-## Overall Objective
-
-Validate the Group-F POSIX Threads framework, integrate it with the Group-E MPI communication framework, and develop a real-time Hybrid MPI + POSIX Threads telecom stream processing architecture capable of distributed packet reception, multithreaded packet processing, performance monitoring, and scalability evaluation.
+The final system should be modular, maintainable, well-documented, thoroughly tested, and deployment-ready.
 
 ---
 
-# Day 1 – Group-F Validation and Architecture Analysis
+# Team Responsibilities
 
-## Team Member 1 (Jahnavi)
+## Jahnavi (Team Lead & Integration Owner)
 
-### Focus Areas
+### Primary Responsibilities
 
-* Group-F Architecture Review
-* Validation Framework
-* Integration Planning
+* Hybrid framework architecture
+* MPI integration
+* Multi-DES integration
+* Shared buffer integration
+* Thread pool integration
+* Monitoring framework
+* Build system
+* End-to-end integration
+* Testing coordination
+* Performance evaluation
+* Final documentation integration
+* Repository management
+* Presentation preparation
 
-### Tasks
-
-* Review Group-F architecture and workflow
-* Analyze shared buffer APIs
-* Analyze producer-consumer interfaces
-* Identify Hybrid integration points
-* Prepare validation checklist
-* Prepare observation templates
-
----
-
-## Team Member 2 (Sreeja)
-
-### Focus Areas
-
-* Functional Validation
-
-### Tasks
-
-* Compile Group-F implementation
-* Execute provided test cases
-* Verify synchronization behavior
-* Verify producer-consumer functionality
-* Verify buffer operations
-* Record execution results
-
----
-
-## Joint Goal
-
-Validate the correctness and reusability of the Group-F framework for Hybrid integration.
-
----
-
-# Day 2 – Hybrid Architecture Design
-
-## Team Member 1 (Jahnavi)
-
-### Focus Areas
-
-* MPI Integration Design
-* Statistics Framework
-* Logging Framework
-
-### Tasks
-
-* Design MPI-to-Buffer workflow
-* Design statistics collection framework
-* Design performance monitoring framework
-* Design logging architecture
-* Create Hybrid workflow diagrams
-* Update architecture documentation
-
----
-
-## Team Member 2 (Sreeja)
-
-### Focus Areas
-
-* Thread Integration Design
-
-### Tasks
-
-* Analyze thread pool architecture
-* Analyze shared buffer integration
-* Design worker-thread workflow
-* Prepare implementation strategy
-
----
-
-## Joint Goal
-
-Design:
+### Owned Modules
 
 ```text
-Multiple DES
-      │
-      ▼
-MPI Communication Layer
-      │
-      ▼
-Master Process
-      │
-      ▼
+src/hybrid/
+├── hybrid_main.c
+├── mpi/
+├── processing/
+├── monitoring/
+└── Makefile
+```
+
+### Testing Ownership
+
+* MPI unit testing
+* Shared buffer unit testing
+* Thread pool unit testing
+* Integration testing
+* System testing
+* Performance testing
+* Stress testing
+* Scalability testing
+* Cluster testing
+* Final validation
+
+---
+
+## Sreeja
+
+### Primary Responsibilities
+
+* Berkeley DB integration
+* Graph framework
+* Analytics framework
+* Module-level testing
+* Module documentation
+
+### Owned Modules
+
+```text
+src/hybrid/
+├── database/
+├── graph/
+└── analytics/
+```
+
+### Testing Ownership
+
+* Database unit testing
+* Graph unit testing
+* Analytics unit testing
+* Functional testing support
+* Module validation
+
+---
+
+# Day 1 – Architecture Freeze & Project Setup
+
+## Jahnavi
+
+* Finalize Hybrid Architecture
+* Finalize Hybrid Design
+* Create Hybrid source structure
+* Review Group-F implementation
+* Identify reusable APIs
+* Define integration strategy
+* Create implementation roadmap
+
+## Sreeja
+
+* Study Berkeley DB APIs
+* Study graph representations
+* Study analytics requirements
+* Prepare module design
+
+### Deliverables
+
+* Hybrid architecture finalized
+* Hybrid design finalized
+* Hybrid source structure created
+* Integration strategy documented
+
+---
+
+# Day 2 – Core Framework Setup
+
+## Jahnavi
+
+### Implementation
+
+* Create TelecomPacket structure
+* Create configuration framework
+* Integrate Group-F shared buffer
+* Refactor shared buffer APIs
+
+### Unit Testing
+
+* Buffer initialization
+* Buffer enqueue
+* Buffer dequeue
+* Buffer overflow handling
+* Buffer underflow handling
+
+## Sreeja
+
+### Implementation
+
+* Design Berkeley DB schema
+* Create database module skeleton
+* Implement database initialization
+
+### Unit Testing
+
+* Database initialization
+
+### Deliverables
+
+```text
+TelecomPacket
 Shared Buffer
-      │
-      ▼
-Worker Thread Pool
-      │
-      ▼
-Packet Processing
-      │
-      ▼
-Statistics & Logging
+Database Skeleton
 ```
 
 ---
 
-# Day 3 – Hybrid Framework Implementation
+# Day 3 – MPI Integration
 
-## Team Member 1 (Jahnavi)
+## Jahnavi
 
-### Focus Areas
+### Implementation
 
-* Distributed Processing Layer
+* Integrate MPI framework
+* Integrate Multi-DES framework
+* Connect MPI to shared buffer
 
-### Tasks
+```text
+MPI
+ ↓
+Shared Buffer
+```
 
-* Implement MPI packet reception module
-* Implement Master process workflow
-* Implement packet buffering interface
-* Implement packet logging module
-* Implement statistics collection module
+### Unit Testing
+
+* MPI initialization
+* Packet send
+* Packet receive
+* Packet distribution
+* Multi-DES communication
+
+## Sreeja
+
+### Implementation
+
+* Packet storage APIs
+* Packet retrieval APIs
+
+### Unit Testing
+
+* Packet insertion
+* Packet retrieval
+
+### Deliverables
+
+```text
+MPI → Shared Buffer
+```
+
+working successfully
 
 ---
 
-## Team Member 2 (Sreeja)
+# Day 4 – Thread Integration
 
-### Focus Areas
+## Jahnavi
 
-* Thread Processing Layer
+### Implementation
 
-### Tasks
-
-* Integrate Group-F shared buffer
 * Integrate worker thread pool
-* Connect packet processing module
-* Implement synchronization support
-* Connect thread processing workflow
+* Integrate packet processing
+* Connect threads to shared buffer
+
+```text
+MPI
+ ↓
+Buffer
+ ↓
+Threads
+```
+
+### Unit Testing
+
+* Thread creation
+* Synchronization
+* Packet processing
+* Multi-thread execution
+
+## Sreeja
+
+### Implementation
+
+* Graph data structures
+* Vertex management
+
+### Unit Testing
+
+* Vertex creation
+* Vertex lookup
+
+### Deliverables
+
+```text
+MPI → Buffer → Threads
+```
+
+working successfully
 
 ---
 
-## Joint Goal
+# Day 5 – Monitoring & Graph Framework
 
-Implement the first working Hybrid MPI + POSIX Threads framework.
+## Jahnavi
 
----
+### Implementation
 
-# Day 4 – Real-Time Streaming Implementation
+* Logger framework
+* Statistics framework
+* Throughput measurement
+* Runtime monitoring
 
-## Team Member 1 (Jahnavi)
+### Unit Testing
 
-### Focus Areas
+* Logging
+* Statistics updates
+* Throughput calculations
 
-* Monitoring Framework
+## Sreeja
 
-### Tasks
+### Implementation
 
-* Implement throughput monitoring
-* Implement execution-time monitoring
-* Implement worker-utilization monitoring
-* Implement load-distribution analysis
+* Edge management
+* Graph construction
+* Graph statistics
 
----
+### Unit Testing
 
-## Team Member 2 (Sreeja)
+* Edge creation
+* Edge updates
+* Graph statistics
 
-### Focus Areas
+### Deliverables
 
-* Continuous Processing
-
-### Tasks
-
-* Implement continuous packet generation
-* Implement continuous packet processing
-* Implement streaming execution mode
-* Optimize thread execution workflow
-
----
-
-## Joint Goal
-
-Develop a real-time telecom packet streaming framework.
+* Monitoring framework operational
+* Graph framework operational
 
 ---
 
-# Day 5 – Hybrid Testing Framework
+# Day 6 – Database Integration
 
-## Team Member 1 (Jahnavi)
+## Jahnavi
 
-### Focus Areas
+### Implementation
 
-* Testing & Validation Framework
+Integrate:
 
-### Tasks
+```text
+MPI
+ ↓
+Buffer
+ ↓
+Threads
+ ↓
+Database
+```
 
-* Create Hybrid test plan
-* Create Hybrid test case catalog
-* Create validation checklist
-* Create observation templates
-* Create validation report template
+### Integration Testing
 
----
+* Data flow validation
+* Packet consistency validation
 
-## Team Member 2 (Sreeja)
+## Sreeja
 
-### Focus Areas
+### Implementation
 
-* Test Environment Preparation
+* Complete Berkeley DB integration
+* Complete graph framework
+* Begin analytics framework
 
-### Tasks
+### Unit Testing
 
-* Configure execution scenarios
-* Configure workload profiles
-* Configure scalability tests
-* Configure stress tests
+* Database consistency testing
 
----
+### Deliverables
 
-## Joint Goal
+```text
+MPI → Buffer → Threads → Database
+```
 
-Prepare complete Hybrid testing and validation infrastructure.
-
----
-
-# Day 6 – Hybrid Validation and Performance Analysis
-
-## Team Member 1 (Jahnavi)
-
-### Focus Areas
-
-* Validation
-* Performance Analysis
-
-### Tasks
-
-* Execute Hybrid test suite
-* Analyze throughput
-* Analyze worker utilization
-* Analyze load balancing
-* Generate observation report
-* Generate performance report
+working successfully
 
 ---
 
-## Team Member 2 (Sreeja)
+# Day 7 – Analytics Integration & Integration Testing
 
-### Focus Areas
+## Jahnavi
 
-* Functional Verification
+### Integration Testing
 
-### Tasks
+Validate:
 
-* Verify packet correctness
-* Verify synchronization behavior
-* Verify communication success
-* Verify packet loss statistics
-* Verify thread execution stability
-* Support bug fixing
+```text
+MPI
+ ↓
+Buffer
+ ↓
+Threads
+```
 
----
+Check:
 
-## Joint Goal
+* Packet flow correctness
+* Synchronization correctness
+* No packet loss
+* No deadlocks
+* No race conditions
 
-Validate correctness, stability, scalability, and performance of the Hybrid framework.
+## Sreeja
 
----
+### Implementation
 
-# Day 7 – Documentation and Week Closure
+* Traffic analytics
+* Graph analytics
+* Performance analytics
 
-## Team Member 1 (Jahnavi)
+### Unit Testing
 
-### Tasks
+* Analytics calculations
+* Statistics generation
 
-* Update README
-* Update Architecture Documentation
-* Update Implementation Details
-* Update Progress Log
-* Prepare Week 3 Progress Report
+### Deliverables
 
----
+```text
+MPI
+ ↓
+Buffer
+ ↓
+Threads
+ ↓
+Database
+ ↓
+Graph
+ ↓
+Analytics
+```
 
-## Team Member 2 (Sreeja)
-
-### Tasks
-
-* Organize source code
-* Organize testing artifacts
-* Review repository structure
-* Verify final implementation
-
----
-
-## Joint Goal
-
-Finalize:
-
-* Group-F Validation Reports
-* Hybrid MPI + POSIX Threads Framework
-* Real-Time Telecom Stream Processing Framework
-* Hybrid Validation Reports
-* Hybrid Performance Analysis Reports
-* Week 3 Documentation
+pipeline operational
 
 ---
 
-# End of Week Deliverables
+# Day 8 – Functional Testing & System Testing
 
-1. Group-F Validation Report
-2. Group-F Observation Report
-3. Hybrid MPI + POSIX Threads Framework
-4. Real-Time Telecom Stream Processing Framework
-5. Hybrid Test Plan
-6. Hybrid Validation Checklist
-7. Hybrid Observation Report
-8. Hybrid Validation Report
-9. Hybrid Performance Analysis Report
-10. Updated Project Documentation
-11. Week 3 Progress Report
+Using Existing Testing Framework:
+
+* Test Plan
+* Test Case Catalog
+* Validation Checklist
+* Observation Templates
+
+## Both
+
+### Functional Testing
+
+Validate:
+
+* Packet ingestion
+* Packet processing
+* Database storage
+* Graph generation
+* Analytics generation
+
+### System Testing
+
+Validate:
+
+* Single-machine deployment
+* Multi-DES deployment
+* End-to-end execution
+
+### Deliverables
+
+* Functional testing completed
+* System testing completed
+
+---
+
+# Day 9 – Performance, Stress & Scalability Testing
+
+Using Existing Performance Framework.
+
+## Both
+
+### Performance Testing
+
+Measure:
+
+* Throughput
+* Execution time
+* Worker utilization
+* Database performance
+
+### Stress Testing
+
+Execute:
+
+```text
+10,000 packets
+50,000 packets
+100,000 packets
+```
+
+Measure:
+
+* Stability
+* Resource usage
+* Packet loss
+
+### Scalability Testing
+
+Evaluate:
+
+```text
+1 Worker
+2 Workers
+4 Workers
+8 Workers
+```
+
+and
+
+```text
+1 DES
+2 DES
+4 DES
+```
+
+### Deliverables
+
+* Performance results
+* Stress testing results
+* Scalability analysis
+
+---
+
+# Day 10 – Cluster Testing, Validation & Finalization
+
+## Both
+
+### Cluster Testing
+
+Validate:
+
+* Multi-node MPI execution
+* Distributed processing
+* Data consistency
+* Cluster communication
+
+### Validation
+
+Generate:
+
+* Validation Report
+* Performance Report
+* Test Results
+* Observations
+
+### Documentation
+
+* README update
+* Technical Manual
+* User Manual
+* Final Report
+* PPT
+
+### Repository Cleanup
+
+* Remove unused files
+* Remove debug code
+* Add comments
+* Verify build instructions
+
+### Deliverables
+
+* Final Hybrid Framework
+* Final Documentation
+* Final Reports
+* Final Presentation
+* Submission-Ready Repository
+
+---
+
+# Testing Strategy
+
+The project will follow the previously developed testing framework and execute:
+
+1. Unit Testing
+2. Module Testing
+3. Integration Testing
+4. Functional Testing
+5. System Testing
+6. Performance Testing
+7. Stress Testing
+8. Scalability Testing
+9. Cluster Testing
+10. Validation & Comparative Evaluation
+
+All testing results will be documented using the existing testing and validation framework developed during Weeks 1 and 2.
+

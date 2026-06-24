@@ -2,405 +2,340 @@
 
 ## Overview
 
-The Telecom Stream Processing Framework is a parallel and distributed systems project focused on designing, implementing, validating, and evaluating frameworks for real-time telecom data stream processing.
+The Telecom Stream Processing Framework is a parallel and distributed systems project focused on the design, implementation, testing, validation, and evaluation of scalable telecom data processing architectures.
 
-Modern telecommunication infrastructures continuously generate large volumes of traffic data from geographically distributed Data Extraction Servers (DES). Efficient collection, transmission, synchronization, processing, and analysis of these streams are critical for network monitoring, traffic engineering, anomaly detection, and large-scale telecom analytics.
+The project aims to develop a Hybrid Telecom Stream Processing Framework capable of processing telecom traffic streams in real time while supporting both single-machine and cluster-based deployment environments.
 
-This project investigates multiple processing approaches including POSIX Threads, Socket Programming, MPI, and Hybrid Parallel Processing models.
+The framework integrates:
+
+* MPI-based distributed processing
+* POSIX Thread-based parallel processing
+* Berkeley DB persistent storage
+* Graph construction and analytics
+* Monitoring and performance evaluation
+* Comprehensive testing and validation
+
+The final objective is to build a modular, scalable, and maintainable telecom data processing platform that can ingest, process, store, analyze, and visualize telecom traffic streams.
 
 ---
 
-# Project Goals
+# Project Objectives
 
-The primary objectives of this project are:
-
-* Process continuous telecom traffic streams.
-* Design scalable stream-processing architectures.
-* Evaluate synchronization and communication mechanisms.
-* Measure throughput, latency, and resource utilization.
-* Compare shared-memory and distributed-processing approaches.
+* Process telecom traffic streams in real time.
+* Support both single-machine and distributed cluster deployments.
+* Integrate process-level and thread-level parallelism.
+* Store processed telecom data using Berkeley DB.
+* Construct communication graphs from telecom traffic.
+* Generate traffic and performance analytics.
+* Evaluate throughput, scalability, latency, and resource utilization.
+* Follow professional software engineering practices.
 * Develop reusable testing and validation methodologies.
+* Provide comprehensive documentation and deployment support.
+
+---
+
+# Final System Architecture
+
+```text
+Real-Time Traffic Source
+          │
+          ▼
+Data Extraction Servers (DES)
+          │
+          ▼
+MPI Communication Layer
+          │
+          ▼
+Shared Buffer
+          │
+          ▼
+Worker Thread Pool
+          │
+          ▼
+Packet Processing Engine
+          │
+          ▼
+Graph Construction Engine
+          │
+          ▼
+Berkeley DB Storage
+          │
+          ▼
+Analytics Engine
+          │
+          ▼
+Reports & Visualization
+```
+
+---
+
+# Deployment Models
+
+## Single Machine Deployment
+
+The framework can execute on a single machine for:
+
+* Development
+* Testing
+* Validation
+* Performance Evaluation
+
+```text
+DES
+ ↓
+MPI
+ ↓
+Shared Buffer
+ ↓
+Worker Threads
+ ↓
+Database
+ ↓
+Analytics
+```
+
+---
+
+## Cluster Deployment
+
+The framework is designed to support execution across multiple machines connected through a network.
+
+```text
+DES Nodes
+      ↓
+MPI Cluster
+      ↓
+Hybrid Processing Nodes
+      ↓
+Storage Layer
+      ↓
+Analytics Layer
+```
+
+Features:
+
+* Distributed execution
+* Parallel processing
+* Scalable architecture
+* Cluster-ready deployment
+
+---
+
+# Core Components
+
+## Communication Layer
+
+Responsibilities:
+
+* MPI Communication
+* Multi-DES Communication
+* Packet Distribution
+* Distributed Coordination
+
+---
+
+## Processing Layer
+
+Responsibilities:
+
+* Shared Buffer Management
+* Worker Thread Management
+* Synchronization
+* Packet Processing
+
+---
+
+## Storage Layer
+
+Responsibilities:
+
+* Berkeley DB Integration
+* Packet Storage
+* Metadata Storage
+* Persistent Data Management
+
+---
+
+## Graph Construction Layer
+
+Responsibilities:
+
+* Vertex Management
+* Edge Management
+* Communication Graph Generation
+* Graph Statistics
+
+---
+
+## Analytics Layer
+
+Responsibilities:
+
+* Traffic Analysis
+* Communication Pattern Analysis
+* Graph Analytics
+* Performance Evaluation
+
+---
+
+## Monitoring Layer
+
+Responsibilities:
+
+* Runtime Logging
+* Statistics Collection
+* Throughput Measurement
+* Performance Monitoring
+
+---
+
+# System Input
+
+Supported input sources include:
+
+* Real-time telecom traffic
+* Telecom traffic traces
+* Network traffic traces
+* CSV datasets
+* Simulated telecom streams
+
+Example packet attributes:
+
+```text
+Packet ID
+Timestamp
+Source
+Destination
+Priority
+Traffic Type
+Payload
+```
+
+---
+
+# System Output
+
+The framework generates:
+
+### Processed Packet Records
+
+Processed telecom packet information.
+
+### Berkeley DB Records
+
+Persistent packet and metadata storage.
+
+### Traffic Graphs
+
+Communication graphs representing traffic relationships.
+
+### Analytics Reports
+
+Traffic and communication analysis.
+
+### Performance Reports
+
+Execution statistics and performance metrics.
+
+### Validation Reports
+
+Testing and verification artifacts.
 
 ---
 
 # Technologies Used
 
-* C / C++
+* C
 * POSIX Threads (Pthreads)
+* MPI
+* Berkeley DB
 * TCP Socket Programming
-* MPI Distributed Processing
-* Multi-DES MPI Processing
-* Hybrid MPI + Pthreads (Planned)
 * Ubuntu Linux
 * GCC
-* Git & GitHub
+* Git
+* GitHub
 
 ---
 
-# System Architecture
+# Project Evolution
 
-```text
-Multiple Data Extraction Servers (DES)
-                 │
-                 ▼
-        Communication Layer
-      (Sockets / MPI Frameworks)
-                 │
-                 ▼
-         Stream Processing Layer
-      (Pthreads / MPI / Hybrid)
-                 │
-                 ▼
-      Synchronization & Buffering
-                 │
-                 ▼
-         Analytics & Processing
-                 │
-                 ▼
-              Results
-```
+The project has evolved through multiple implementation phases, with each phase focusing on a specific parallel or distributed computing concept.
+
+Every phase was independently implemented, tested, validated, documented, and evaluated before progressing to the next stage.
+
+Detailed implementation history, design evolution, testing artifacts, validation reports, and performance analysis are available under the `docs/evolution/` directory(Phase 1 to Phase 5).
+
+## Phase 1 – POSIX Threads Producer–Consumer Framework
+
+Implemented a multithreaded producer–consumer architecture using POSIX Threads. This phase focused on shared memory communication, synchronization mechanisms, shared buffers, mutexes, condition variables, and runtime statistics collection.
+
+**Key Outcomes:**
+
+* Shared Buffer Implementation
+* Producer–Consumer Synchronization
+* Thread Management
+* Performance Monitoring
 
 ---
 
-# Implemented Modules
+## Phase 2 – TCP Socket Communication Framework
 
-## 1. POSIX Threads Producer–Consumer Prototype
+Implemented a client–server communication model using TCP sockets to enable packet transmission between distributed components.
 
-Location:
+**Key Outcomes:**
 
-```text
-src/pthreads/
-```
-
-Features:
-
-* Producer Thread
-* Consumer Thread
-* Circular Shared Buffer
-* Mutex Synchronization
-* Condition Variables
-* Execution Time Measurement
-* Throughput Measurement
-* Average Buffer Occupancy Analysis
-* Buffer Utilization Analysis
-
-Workflow:
-
-```text
-Producer Thread
-       ↓
-Shared Buffer
-       ↓
-Consumer Thread
-```
-
----
-
-## 2. TCP Socket Communication Prototype
-
-Location:
-
-```text
-src/sockets/
-```
-
-Features:
-
-* TCP Server
-* TCP Client
+* TCP Client and Server
 * Packet Transmission
 * Packet Reception
-* Packet Logging
-* Throughput Measurement
-* Delivery Statistics
-
-Workflow:
-
-```text
-DES Server
-      ↓
-TCP Socket Connection
-      ↓
-Client
-      ↓
-Packet Logging
-      ↓
-Statistics Collection
-```
+* Communication Validation
 
 ---
-## 3. Pthreads + Socket Integration Prototype
 
-Location:
+## Phase 3 – Pthreads and Socket Integration Framework
 
-```text
-src/hybrid/pthreads_socket_integration/
-```
+Combined thread-based processing with socket communication to create a complete packet generation, transmission, and reception pipeline.
 
-Features:
+**Key Outcomes:**
 
-* Producer Thread
-* Shared Circular Buffer
-* Sender Thread
-* TCP Server
-* TCP Client
-* Telecom Packet Structure
-* Packet Logging
-* Performance Monitoring
-* Throughput Measurement
-* Delivery Success Rate Measurement
+* End-to-End Packet Flow
+* Producer–Sender Architecture
+* Receiver–Consumer Architecture
+* Integrated Performance Evaluation
 
-Workflow:
+---
 
-```text
-Producer Thread
-       ↓
-Shared Buffer
-       ↓
-Sender Thread
-       ↓
-TCP Socket
-       ↓
-Client Receiver
-       ↓
-Packet Logging
-       ↓
-Statistics Collection
-```
-## 4. MPI Distributed Processing Module
+## Phase 4 – MPI Distributed Processing Framework
 
-Location:
+Introduced process-level parallelism using MPI. Implemented a distributed master–worker architecture for packet distribution and processing.
 
-```text
-src/mpi/
-```
+**Key Outcomes:**
 
-Features:
-
-* MPI Master Process
-* MPI Worker Processes
-* Telecom Packet Structure
-* MPI_Send Communication
-* MPI_Recv Communication
-* Round-Robin Packet Distribution
-* Distributed Packet Processing
-* Communication Success Rate Measurement
-* Throughput Measurement
-* Performance Monitoring
-
-Workflow:
-
-```text
-Master Process (DES)
-         ↓
-MPI Communication Layer
-         ↓
-Worker Processes
-         ↓
-Distributed Packet Processing
-         ↓
-Statistics Collection
-```
-## 5. Multi-DES MPI Distributed Processing Module
-
-Location:
-
-```text
-src/mpi/
-```
-
-Features:
-
-* Multiple Data Extraction Servers (DES)
-* MPI Master Process
-* MPI Worker Processes
-* Telecom Packet Structure
-* DES-to-Master Communication
-* Master-to-Worker Communication
-* Round-Robin Packet Distribution
-* Packet Logging
+* MPI Communication
+* Distributed Packet Distribution
+* Master–Worker Processing Model
 * Distributed Statistics Collection
-* Worker Load Analysis
-* Throughput Measurement
-* Communication Success Rate Measurement
-
-Workflow:
-
-```text
-DES-1 ─┐
-DES-2 ─┼──► Master Process
-DES-3 ─┘
-              │
-              ▼
-        Worker Processes
-              │
-              ▼
-      Distributed Processing
-              │
-              ▼
-       Statistics Collection
-```
-
-# Build & Run Instructions
-
-## POSIX Threads Module
-
-Navigate to:
-
-```bash
-cd src/pthreads
-```
-
-Compile:
-
-```bash
-gcc stream.c -o stream -lpthread
-```
-
-Run:
-
-```bash
-./stream
-```
 
 ---
 
-## Socket Server
+## Phase 5 – Multi-DES MPI Framework
 
-Navigate to:
+Extended the MPI framework to support multiple Data Extraction Servers (DES), enabling concurrent packet generation and distributed processing from multiple traffic sources.
 
-```bash
-cd src/sockets
-```
+**Key Outcomes:**
 
-Compile:
-
-```bash
-gcc server.c -o server
-```
-
-Run:
-
-```bash
-./server
-```
+* Multiple DES Sources
+* Distributed Load Distribution
+* Scalability Evaluation
+* Multi-Source Traffic Processing
 
 ---
 
-## Socket Client
+## Phase 6 – Hybrid Telecom Stream Processing Framework (Current Project)
 
-Open another terminal.
+The Hybrid Telecom Stream Processing Framework integrates the concepts, components, and lessons learned from all previous phases into a unified end-to-end telecom data processing platform.
 
-Navigate to:
+This phase serves as the primary project deliverable and represents the culmination of the project's evolution from individual parallel and distributed computing prototypes to a complete telecom stream processing framework.
 
-```bash
-cd src/sockets
-```
-
-Compile:
-
-```bash
-gcc client.c -o client
-```
-
-Run:
-
-```bash
-./client
-```
-## Pthreads + Socket Integration Server
-
-Navigate to:
-
-```bash
-cd src/hybrid/pthreads_socket_integration
-```
-
-Compile:
-
-```bash
-gcc server.c -o server -lpthread
-```
-
-Run:
-
-```bash
-./server
-```
-
----
-
-## Pthreads + Socket Integration Client
-
-Open another terminal.
-
-Navigate to:
-
-```bash
-cd src/hybrid/pthreads_socket_integration
-```
-
-Compile:
-
-```bash
-gcc client.c -o client
-```
-
-Run:
-
-```bash
-./client
-```
-## MPI Distributed Processing Module
-
-Navigate to:
-
-```bash
-cd src/mpi
-```
-
-Compile:
-
-```bash
-mpicc mpi_stream.c -o mpi_stream
-```
-
-Run (2 Processes):
-
-```bash
-mpirun -np 2 ./mpi_stream
-```
-
-Run (4 Processes):
-
-```bash
-mpirun -np 4 ./mpi_stream
-```
-
-Run (8 Processes):
-
-```bash
-mpirun -np 8 ./mpi_stream
-```
-## Multi-DES MPI Module
-
-Navigate to:
-
-```bash
-cd src/mpi
-```
-
-Compile:
-
-```bash
-mpicc multi_des.c -o multi_des
-```
-
-Run:
-
-```bash
-mpirun -np 12 ./multi_des
-```
 
 ---
 
@@ -410,34 +345,27 @@ mpirun -np 12 ./multi_des
 telecom-stream-processing-framework/
 │
 ├── diagrams/
-│   ├── producer_consumer_workflow.md
-│   ├── shared_buffer_diagram.md
-│   ├── socket_workflow.md
-│   ├── system_architecture.md
-│   └── testing_workflow.md
 │
 ├── docs/
-│   ├── design/
-│   ├── progress/
+│   ├── evolution/
+│   │   ├── design/
+│   │   └── testing/
+│   │
 │   ├── project/
-│   └── testing/
+│   │   ├── design/
+│   │   └── testing/
+│   │
+│   ├── progress/
+│   └── workflow/
 │
 ├── logs/
-│   ├── multi_des_packets.log
-│   └── single_des_packets.log
-|
+│
 ├── reports/
-│   ├── GROUP-E_posix_threads/
-│   ├── GROUP-E_sockets/
-│   ├── GROUP-E_integration/
-│   └── GROUP-E_mpi/
-│       ├── multi-des/
-│       └── single-des/
-|
+│
 ├── src/
 │   ├── pthreads/
 │   ├── sockets/
-|   ├── integration/
+│   ├── integration/
 │   ├── mpi/
 │   └── hybrid/
 │
@@ -448,271 +376,108 @@ telecom-stream-processing-framework/
 
 ---
 
+# Hybrid Framework Structure
+
+```text
+src/hybrid/
+│
+├── include/
+├── mpi/
+├── processing/
+├── database/
+├── graph/
+├── analytics/
+├── monitoring/
+│
+├── Makefile
+└── hybrid_main.c
+```
+
+### Module Responsibilities
+
+| Module      | Responsibility                                        |
+| ----------- | ----------------------------------------------------- |
+| include     | Common structures, configuration, and constants       |
+| mpi         | MPI communication and Multi-DES coordination          |
+| processing  | Shared buffer, synchronization, and packet processing |
+| database    | Berkeley DB integration and persistent storage        |
+| graph       | Telecom graph construction and graph statistics       |
+| analytics   | Traffic analytics and performance evaluation          |
+| monitoring  | Logging, statistics, and runtime monitoring           |
+| hybrid_main | System orchestration and lifecycle management         |
+
+---
+
 # Testing & Validation Framework
 
-A reusable testing and validation framework has been developed to support:
+The project includes a reusable testing and validation framework.
 
-* Internal implementation validation
-* Comparative evaluation
-* MPI validation
-* Future Hybrid framework validation
+Testing activities include:
 
-Validation Components:
+* Unit Testing
+* Module Testing
+* Integration Testing
+* Functional Testing
+* System Testing
+* Performance Testing
+* Stress Testing
+* Scalability Testing
+* Cluster Testing
+* Validation & Comparative Evaluation
 
-* Test Plan
-* Test Case Catalog
-* Validation Checklist
+Testing artifacts include:
+
+* Test Plans
+* Test Case Catalogs
+* Validation Checklists
 * Observation Templates
-* Bug Report Framework
-* Performance Analysis Framework
+* Validation Reports
+* Performance Reports
 
 ---
 
-# POSIX Threads Validation Results
+# Build Instructions
 
-Executed Test Cases:
+> To be updated during Hybrid Framework implementation.
 
-* TC-01 Balanced Baseline
-* TC-02 Small Buffer
-* TC-03 Large Buffer
-* TC-04 Fast Producer
-* TC-05 Fast Consumer
-* TC-06 High Volume
-* TC-07 Slow System
-* TC-08 Fast System
-* TC-09 Maximum Throughput
-* TC-10 Producer Burst
-* TC-11 Consumer Burst
-
-Results:
-
-✅ No frame loss
-
-✅ No frame duplication
-
-✅ No race conditions
-
-✅ No deadlocks
-
-✅ No crashes
-
-✅ Stable synchronization behavior
-
-Performance Highlight:
-
-* Maximum throughput exceeded **29,000 frames/sec**
+```bash
+# Build commands will be added here
+```
 
 ---
 
-# Socket Communication Validation Results
+# Run Instructions
 
-Executed Test Cases:
+> To be updated during Hybrid Framework implementation.
 
-* SC-01 Functional Test
-* SC-02 Small Stream Test
-* SC-03 Medium Stream Test
-* SC-04 High Rate Stream Test
-* SC-05 High Throughput Test
-* SC-06 Stress Test
-
-Results:
-
-✅ TCP connection established successfully
-
-✅ Packet transmission successful
-
-✅ Packet reception successful
-
-✅ Packet ordering preserved
-
-✅ Packet logging successful
-
-✅ Zero packet loss observed
-
-Performance Highlight:
-
-* Maximum sustained throughput ≈ **904 packets/sec**
-* Delivery Success Rate = **100%**
+```bash
+# Execution commands will be added here
+```
 
 ---
 
-# Pthreads + Socket Integration Validation Results
-
-Executed Test Cases:
-
-* IC-01 Functional Test
-* IC-02 Small Stream Test
-* IC-03 Medium Stream Test
-* IC-04 High Rate Stream Test
-* IC-05 High Throughput Test
-* IC-06 Stress Test
-
-Results:
-
-✅ Producer–Sender synchronization successful
-
-✅ TCP communication successful
-
-✅ Packet transmission successful
-
-✅ Packet reception successful
-
-✅ Packet ordering preserved
-
-✅ Packet logging successful
-
-✅ Zero packet loss observed
-
-✅ No race conditions observed
-
-✅ No deadlocks observed
-
-Performance Highlights:
-
-* Maximum Send Throughput ≈ 927 packets/sec
-* Maximum Receive Throughput ≈ 927 packets/sec
-* Total Packets Sent = 10,000
-* Total Packets Received = 10,000
-* Delivery Success Rate = 100%
-
-# MPI Distributed Processing Validation Results
-
-Executed Test Cases:
-
-* MC-01 Functional Test
-* MC-02 Multiple Worker Test
-* MC-03 Medium Workload Test
-* MC-04 High Workload Test
-* MC-05 High Throughput Test
-* MC-06 Stress Test
-
-Results:
-
-✅ MPI communication successful
-
-✅ Master–Worker coordination verified
-
-✅ Round-Robin packet distribution verified
-
-✅ Balanced workload allocation verified
-
-✅ Packet ordering preserved
-
-✅ Zero packet loss observed
-
-✅ Stable distributed execution confirmed
-
-Performance Highlights:
-
-* Maximum Packets Tested = 10,000
-* Maximum Processes Tested = 8
-* Maximum Workers Tested = 7
-* Peak Throughput ≈ 507,614 packets/sec
-* Communication Success Rate = 100%
-
-# Multi-DES MPI Validation Results
-
-Executed Test Cases:
-
-* MD-01 Functional Test
-* MD-02 Single Worker Test
-* MD-03 Multiple Worker Test
-* MD-04 Load Balancing Test
-* MD-05 High Workload Test
-* MD-06 Scalability Test
-* MD-07 Stress Test
-
-Results:
-
-✅ Multi-DES communication successful
-
-✅ DES-to-Master communication verified
-
-✅ Master-to-Worker communication verified
-
-✅ Load balancing verified
-
-✅ Worker utilization verified
-
-✅ Zero packet loss observed
-
-✅ Stable distributed execution confirmed
-
-Performance Highlights:
-
-* Maximum Total Packets Tested = 30,000
-* Maximum Workers Tested = 8
-* Maximum Processes Tested = 12
-* Peak Throughput ≈ 1,188,683 packets/sec
-* Communication Success Rate = 100%
-
-# Current Project Status
+# Current Status
 
 ## Completed
 
-✅ POSIX Threads Producer–Consumer Prototype
+* POSIX Threads Framework
+* Shared Buffer Framework
+* Socket Communication Framework
+* Pthreads + Socket Integration Framework
+* MPI Distributed Processing Framework
+* Multi-DES MPI Framework
+* Testing & Validation Framework
+* Performance Monitoring Framework
+* Architecture & Design Documentation
 
-✅ Shared Buffer Synchronization Framework
-
-✅ Performance Monitoring Framework
-
-✅ Testing & Validation Framework
-
-✅ TCP Socket Communication Prototype
-
-✅ Packet Logging Framework
-
-✅ Socket Validation Framework
-
-✅ Stress Testing & Performance Analysis
-
-✅ Pthreads + Socket Integration Prototype
-
-✅ Integration Performance Monitoring Framework
-
-✅ Integration Testing & Validation Framework
-
-✅ MPI Distributed Processing Module
-
-✅ Master–Worker Communication Framework
-
-✅ Round-Robin Packet Distribution
-
-✅ MPI Testing & Validation Framework
-
-✅ Distributed Performance Monitoring
-
-✅ MPI Stress Testing & Analysis
-
-✅ Multi-DES MPI Distributed Processing Framework
-
-✅ DES-to-Master Communication Framework
-
-✅ Master-to-Worker Communication Framework
-
-✅ Packet Logging Framework
-
-✅ Load Balancing Framework
-
-✅ Multi-DES Testing & Validation Framework
-
-✅ Multi-DES Stress Testing & Analysis
-
----
-
-## Future Phases
-
-### Phase 4
+## In Progress
 
 * Hybrid MPI + POSIX Threads Framework
-* Distributed Multi-Threaded Processing
-* Scalability Evaluation
-
-### Phase 5
-
-* Comparative Performance Analysis
-* Benchmarking
-* Final Framework Evaluation
+* Berkeley DB Integration
+* Graph Construction Framework
+* Analytics Framework
+* Cluster Deployment Support
+* End-to-End Testing & Validation
 
 ---
 
@@ -727,10 +492,12 @@ Performance Highlights:
 
 # Acknowledgement
 
-This project is being developed as part of the MPPLAB Telecom Data Extraction initiative under the guidance of **Dr. V. C. V. Rao**, focusing on the design, implementation, validation, and evaluation of parallel and distributed approaches for large-scale telecom stream processing.
+This project is being developed as part of the MPPLAB Telecom Data Extraction initiative under the guidance of **Dr. V. C. V. Rao**.
+
+The project focuses on scalable parallel and distributed approaches for telecom data extraction, processing, storage, analytics, and evaluation.
 
 ---
 
 # License
 
-This repository is intended for academic research, experimentation, and educational purposes.
+This repository is intended for academic, research, and educational purposes.

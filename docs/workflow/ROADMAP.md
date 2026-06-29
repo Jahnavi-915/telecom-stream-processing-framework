@@ -784,557 +784,325 @@ Finalize:
 
 ---
 
-# Week 3 Roadmap – Hybrid Telecom Stream Processing Framework
+# Week Roadmap – Group-E Communication Prototype
 
-## Objective
+## Week Objective
 
-Develop a production-quality Hybrid Telecom Stream Processing Framework capable of operating on both a single machine and a distributed cluster environment.
+Develop and validate the Group-E Communication Prototype based on Sir's implementation roadmap.
 
-The framework will integrate:
+This phase focuses on:
 
-* MPI-based distributed communication
-* POSIX Thread-based parallel processing
-* Berkeley DB storage
-* Graph construction and analytics
-* Monitoring and performance analysis
-* Existing testing and validation framework
+- One Client → One Server communication
+- Delay Injection and Queue (Bucket) validation
+- Multiple Client → One Server communication
+- Communication testing and validation
+- Validation of Group-F Processing Prototype
 
-The final system should be modular, maintainable, well-documented, thoroughly tested, and deployment-ready.
-
----
-
-# Team Responsibilities
-
-## Jahnavi (Team Lead & Integration Owner)
-
-### Primary Responsibilities
-
-* Hybrid framework architecture
-* MPI integration
-* Multi-DES integration
-* Shared buffer integration
-* Thread pool integration
-* Monitoring framework
-* Build system
-* End-to-end integration
-* Testing coordination
-* Performance evaluation
-* Final documentation integration
-* Repository management
-* Presentation preparation
-
-### Owned Modules
-
-```text
-src/hybrid/
-├── hybrid_main.c
-├── mpi/
-├── processing/
-├── monitoring/
-└── Makefile
-```
-
-### Testing Ownership
-
-* MPI unit testing
-* Shared buffer unit testing
-* Thread pool unit testing
-* Integration testing
-* System testing
-* Performance testing
-* Stress testing
-* Scalability testing
-* Cluster testing
-* Final validation
+Hybrid integration will begin only after both prototypes are independently completed and validated.
 
 ---
 
-## Sreeja
+# Existing Implementations
 
-### Primary Responsibilities
+The following implementations are already completed and documented under `docs/evolution/` and should be reused wherever applicable:
 
-* Berkeley DB integration
-* Graph framework
-* Analytics framework
-* Module-level testing
-* Module documentation
+- POSIX Threads Producer–Consumer Framework
+- TCP Socket Communication
+- Pthreads + Socket Integration
+- MPI Communication
+- Multi-DES MPI Framework
 
-### Owned Modules
-
-```text
-src/hybrid/
-├── database/
-├── graph/
-└── analytics/
-```
-
-### Testing Ownership
-
-* Database unit testing
-* Graph unit testing
-* Analytics unit testing
-* Functional testing support
-* Module validation
+The objective of this phase is to extend these implementations into a reusable Hybrid Communication Prototype.
 
 ---
 
-# Day 1 – Architecture Freeze & Project Setup
+# Work Distribution
 
 ## Jahnavi
 
-* Finalize Hybrid Architecture
-* Finalize Hybrid Design
-* Create Hybrid source structure
-* Review Group-F implementation
-* Identify reusable APIs
-* Define integration strategy
-* Create implementation roadmap
+### Communication Prototype Development
+
+Responsibilities
+
+- Review MPI and Multi-DES implementations
+- Finalize TelecomPacket structure
+- Finalize communication algorithm
+- Implement Traffic Generator
+- Implement MPI Client
+- Implement MPI Server
+- Implement Queue Interface
+- Implement Packet Serialization
+- Implement Communication Statistics
+- Implement Delay Injection
+- Implement Multiple Client support
+- Prepare API documentation
+- Review implementation
+
+Deliverables
+
+- Communication Prototype
+- Communication Algorithm
+- API Documentation
+- Performance Results
+
+---
 
 ## Sreeja
 
-* Study Berkeley DB APIs
-* Study graph representations
-* Study analytics requirements
-* Prepare module design
+### Testing & Validation
 
-### Deliverables
+Responsibilities
 
-* Hybrid architecture finalized
-* Hybrid design finalized
-* Hybrid source structure created
-* Integration strategy documented
+### Test Group-E Communication Prototype
 
----
+- Unit Testing
+- Module Testing
+- Functional Testing
+- Delay Injection Testing
+- Stress Testing
+- Failure Injection
+- Scalability Testing
+- Regression Testing
+- Performance Testing
 
-# Day 2 – Core Framework Setup
+### Validate Group-F Prototype
 
-## Jahnavi
+- Review architecture
+- Execute prototype
+- Validate outputs
+- Validate queue behaviour
+- Validate synchronization
+- Record observations
+- Prepare validation report
 
-### Implementation
+Deliverables
 
-* Create TelecomPacket structure
-* Create configuration framework
-* Integrate Group-F shared buffer
-* Refactor shared buffer APIs
-
-### Unit Testing
-
-* Buffer initialization
-* Buffer enqueue
-* Buffer dequeue
-* Buffer overflow handling
-* Buffer underflow handling
-
-## Sreeja
-
-### Implementation
-
-* Design Berkeley DB schema
-* Create database module skeleton
-* Implement database initialization
-
-### Unit Testing
-
-* Database initialization
-
-### Deliverables
-
-```text
-TelecomPacket
-Shared Buffer
-Database Skeleton
-```
+- Test Cases
+- Test Reports
+- Validation Reports
+- Performance Reports
+- Group-F Validation Report
 
 ---
 
-# Day 3 – MPI Integration
+# Daily Plan
 
-## Jahnavi
+## Day 1 — One Client → One Server Design
 
-### Implementation
+### Jahnavi
 
-* Integrate MPI framework
-* Integrate Multi-DES framework
-* Connect MPI to shared buffer
+- Review previous MPI implementation.
+- Freeze TelecomPacket structure.
+- Finalize communication algorithm.
+- Set up communication framework.
+- Prepare Traffic Generator design.
 
-```text
-MPI
- ↓
-Shared Buffer
-```
+### Sreeja
 
-### Unit Testing
+- Study Group-F implementation.
+- Prepare communication testing framework.
+- Design unit and functional test cases.
+- Prepare validation checklist.
 
-* MPI initialization
-* Packet send
-* Packet receive
-* Packet distribution
-* Multi-DES communication
+Deliverable
 
-## Sreeja
-
-### Implementation
-
-* Packet storage APIs
-* Packet retrieval APIs
-
-### Unit Testing
-
-* Packet insertion
-* Packet retrieval
-
-### Deliverables
-
-```text
-MPI → Shared Buffer
-```
-
-working successfully
+- Communication design completed.
+- Testing framework ready.
 
 ---
 
-# Day 4 – Thread Integration
+## Day 2 — One Client → One Server Prototype
 
-## Jahnavi
+### Jahnavi
 
-### Implementation
+Implement:
 
-* Integrate worker thread pool
-* Integrate packet processing
-* Connect threads to shared buffer
+- Traffic Generator
+- MPI Client
+- MPI Server
+- Packet Serialization
+- One Client → One Server communication
 
-```text
-MPI
- ↓
-Buffer
- ↓
-Threads
-```
-
-### Unit Testing
-
-* Thread creation
-* Synchronization
-* Packet processing
-* Multi-thread execution
-
-## Sreeja
-
-### Implementation
-
-* Graph data structures
-* Vertex management
-
-### Unit Testing
-
-* Vertex creation
-* Vertex lookup
-
-### Deliverables
-
-```text
-MPI → Buffer → Threads
-```
-
-working successfully
-
----
-
-# Day 5 – Monitoring & Graph Framework
-
-## Jahnavi
-
-### Implementation
-
-* Logger framework
-* Statistics framework
-* Throughput measurement
-* Runtime monitoring
-
-### Unit Testing
-
-* Logging
-* Statistics updates
-* Throughput calculations
-
-## Sreeja
-
-### Implementation
-
-* Edge management
-* Graph construction
-* Graph statistics
-
-### Unit Testing
-
-* Edge creation
-* Edge updates
-* Graph statistics
-
-### Deliverables
-
-* Monitoring framework operational
-* Graph framework operational
-
----
-
-# Day 6 – Database Integration
-
-## Jahnavi
-
-### Implementation
-
-Integrate:
-
-```text
-MPI
- ↓
-Buffer
- ↓
-Threads
- ↓
-Database
-```
-
-### Integration Testing
-
-* Data flow validation
-* Packet consistency validation
-
-## Sreeja
-
-### Implementation
-
-* Complete Berkeley DB integration
-* Complete graph framework
-* Begin analytics framework
-
-### Unit Testing
-
-* Database consistency testing
-
-### Deliverables
-
-```text
-MPI → Buffer → Threads → Database
-```
-
-working successfully
-
----
-
-# Day 7 – Analytics Integration & Integration Testing
-
-## Jahnavi
-
-### Integration Testing
-
-Validate:
-
-```text
-MPI
- ↓
-Buffer
- ↓
-Threads
-```
-
-Check:
-
-* Packet flow correctness
-* Synchronization correctness
-* No packet loss
-* No deadlocks
-* No race conditions
-
-## Sreeja
-
-### Implementation
-
-* Traffic analytics
-* Graph analytics
-* Performance analytics
-
-### Unit Testing
-
-* Analytics calculations
-* Statistics generation
-
-### Deliverables
-
-```text
-MPI
- ↓
-Buffer
- ↓
-Threads
- ↓
-Database
- ↓
-Graph
- ↓
-Analytics
-```
-
-pipeline operational
-
----
-
-# Day 8 – Functional Testing & System Testing
-
-Using Existing Testing Framework:
-
-* Test Plan
-* Test Case Catalog
-* Validation Checklist
-* Observation Templates
-
-## Both
-
-### Functional Testing
-
-Validate:
-
-* Packet ingestion
-* Packet processing
-* Database storage
-* Graph generation
-* Analytics generation
-
-### System Testing
-
-Validate:
-
-* Single-machine deployment
-* Multi-DES deployment
-* End-to-end execution
-
-### Deliverables
-
-* Functional testing completed
-* System testing completed
-
----
-
-# Day 9 – Performance, Stress & Scalability Testing
-
-Using Existing Performance Framework.
-
-## Both
-
-### Performance Testing
-
-Measure:
-
-* Throughput
-* Execution time
-* Worker utilization
-* Database performance
-
-### Stress Testing
+### Sreeja
 
 Execute:
 
-```text
-10,000 packets
-50,000 packets
-100,000 packets
-```
+- Unit Testing
+- Functional Testing
+- Communication Validation
 
-Measure:
+Deliverable
 
-* Stability
-* Resource usage
-* Packet loss
-
-### Scalability Testing
-
-Evaluate:
-
-```text
-1 Worker
-2 Workers
-4 Workers
-8 Workers
-```
-
-and
-
-```text
-1 DES
-2 DES
-4 DES
-```
-
-### Deliverables
-
-* Performance results
-* Stress testing results
-* Scalability analysis
+Working One Client → One Server prototype.
 
 ---
 
-# Day 10 – Cluster Testing, Validation & Finalization
+## Day 3 — Queue & Delay Injection
 
-## Both
+### Jahnavi
 
-### Cluster Testing
+Implement:
 
-Validate:
+- Shared Packet Queue (Bucket)
+- Queue Interface
+- Client Delay Injection
+- Server Delay Injection
+- Communication Statistics
 
-* Multi-node MPI execution
-* Distributed processing
-* Data consistency
-* Cluster communication
+### Sreeja
 
-### Validation
+Execute:
 
-Generate:
+- Queue Validation
+- Delay Injection Testing
+- Throughput Testing
+- Packet Loss Testing
 
-* Validation Report
-* Performance Report
-* Test Results
-* Observations
+Deliverable
 
-### Documentation
-
-* README update
-* Technical Manual
-* User Manual
-* Final Report
-* PPT
-
-### Repository Cleanup
-
-* Remove unused files
-* Remove debug code
-* Add comments
-* Verify build instructions
-
-### Deliverables
-
-* Final Hybrid Framework
-* Final Documentation
-* Final Reports
-* Final Presentation
-* Submission-Ready Repository
+Queue validation and communication statistics.
 
 ---
 
-# Testing Strategy
+## Day 4 — Multiple Client Prototype
 
-The project will follow the previously developed testing framework and execute:
+### Jahnavi
 
-1. Unit Testing
-2. Module Testing
-3. Integration Testing
-4. Functional Testing
-5. System Testing
-6. Performance Testing
-7. Stress Testing
-8. Scalability Testing
-9. Cluster Testing
-10. Validation & Comparative Evaluation
+Extend communication to:
 
-All testing results will be documented using the existing testing and validation framework developed during Weeks 1 and 2.
+- 2 Clients → One Server
+- 4 Clients → One Server
+- 8 Clients → One Server
 
+Implement:
+
+- Round-Robin communication
+- Multi-client communication handling
+
+### Sreeja
+
+Execute:
+
+- Functional Testing
+- Stress Testing
+- Scalability Testing
+- Multi-client Validation
+
+Deliverable
+
+Validated Multiple Client → One Server prototype.
+
+---
+
+## Day 5 — Group-F Prototype Validation
+
+### Jahnavi
+
+- Review communication prototype.
+- Resolve communication issues.
+- Improve logging.
+- Improve error handling.
+- Update documentation.
+
+### Sreeja
+
+Validate Group-F prototype.
+
+Activities
+
+- Execute prototype.
+- Validate queue behaviour.
+- Validate synchronization.
+- Verify outputs.
+- Record observations.
+- Prepare validation report.
+
+Deliverable
+
+Validated Group-F Processing Prototype.
+
+---
+
+## Day 6 — Communication Testing & Prototype Freeze
+
+### Jahnavi
+
+- Resolve testing issues.
+- Finalize communication prototype.
+- Freeze APIs.
+- Finalize communication algorithm.
+
+### Sreeja
+
+Execute:
+
+- Regression Testing
+- Performance Testing
+- Validation Review
+
+Deliverable
+
+Communication Prototype ready for exchange.
+
+---
+
+## Day 7 — Documentation & Prototype Exchange
+
+### Jahnavi
+
+Prepare:
+
+- Communication Prototype
+- Communication Algorithm
+- API Documentation
+- Updated Documentation
+
+### Sreeja
+
+Prepare:
+
+- Test Reports
+- Validation Reports
+- Performance Reports
+- Group-F Evaluation Report
+
+Joint Activities
+
+- Review both prototypes.
+- Exchange algorithms.
+- Freeze interfaces.
+- Prepare Hybrid integration plan.
+
+Deliverable
+
+Communication Prototype completed and validated.
+
+---
+
+# End-of-Week Deliverables
+
+## Group-E
+
+- One Client → One Server Prototype
+- Multiple Client → One Server Prototype
+- Delay Injection Framework
+- Shared Packet Queue
+- Communication Algorithm
+- API Documentation
+- Test Reports
+- Performance Results
+
+## Group-F
+
+- Processing Prototype (Validated)
+
+---
+
+# Next Week
+
+- Group-F validates the Group-E Communication Prototype.
+- Both groups exchange algorithms and APIs.
+- Finalize the Hybrid communication-processing interface.
+- Integrate the Communication and Processing prototypes.
+- Perform end-to-end Hybrid testing.
+- Begin Berkeley DB, Graph Construction, Analytics, and Monitoring after successful Hybrid integration.

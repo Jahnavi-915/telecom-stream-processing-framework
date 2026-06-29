@@ -15,6 +15,12 @@ The framework integrates:
 * Performance monitoring and validation frameworks
 * Comprehensive testing and validation framework
 
+## Current Development Phase
+
+This document describes the **target architecture** of the Hybrid Telecom Stream Processing Framework.
+
+The project follows an incremental development approach. Individual communication and processing prototypes are developed, tested, and validated independently before being integrated into the complete Hybrid framework. Storage, graph construction, analytics, and cluster deployment are implemented after successful Hybrid integration.
+
 ---
 
 # Architectural Principles
@@ -36,7 +42,9 @@ The Hybrid Telecom Stream Processing Framework is designed according to the foll
 
 # System Overview
 
-The system receives telecom traffic streams from multiple Data Extraction Servers (DES), distributes traffic using MPI, processes packets using a multithreaded framework, stores processed information in Berkeley DB, constructs communication graphs, and generates analytics reports.
+The completed Hybrid Telecom Stream Processing Framework receives telecom traffic streams from multiple Data Extraction Servers (DES), distributes packets using MPI, processes them through a multithreaded processing framework, stores processed information in Berkeley DB, constructs communication graphs, and generates analytics reports.
+
+The architecture supports incremental implementation while preserving the same end-to-end system design.
 
 ---
 
@@ -73,6 +81,9 @@ Analytics Engine
 Reports & Visualization
 ```
 
+### Implementation Status
+
+The communication layer (MPI and Multi-DES) and the processing layer (Pthreads and shared-memory processing) are currently being developed and validated as independent prototypes. The remaining layers will be integrated after successful communication and processing validation.
 ---
 
 # Deployment Models
@@ -370,19 +381,19 @@ Data Extraction Servers
 MPI Communication
       │
       ▼
-Shared Buffer
+Shared Packet Queue
       │
       ▼
-Worker Threads
+Worker Thread Pool
       │
       ▼
-Packet Processing
+Packet Processing Engine
       │
       ▼
-Graph Construction
+Berkeley DB Storage
       │
       ▼
-Berkeley DB
+Graph Construction Engine
       │
       ▼
 Analytics
@@ -390,6 +401,37 @@ Analytics
       ▼
 Reports & Visualization
 ```
+
+---
+
+# Development Strategy
+
+The framework is developed incrementally using a modular software engineering approach.
+
+### Phase 1
+- POSIX Threads Prototype
+- TCP Socket Prototype
+- Pthreads + Socket Integration
+- MPI Communication
+- Multi-DES Framework
+
+### Phase 2
+- Communication Prototype (Group-E)
+- Processing Prototype (Group-F)
+- Independent Testing and Validation
+- Cross Validation
+
+### Phase 3
+- Hybrid MPI-Pthreads Integration
+- Unified Hybrid Algorithm
+- End-to-End Hybrid Testing
+
+### Phase 4
+- Berkeley DB Integration
+- Graph Construction
+- Analytics Engine
+- Monitoring Framework
+- Cluster Deployment
 
 ---
 
@@ -429,3 +471,4 @@ The framework is used to verify correctness, stability, scalability, and perform
 * Extensibility
 * Comprehensive Testing and Validation
 * Professional Documentation and Reporting
+

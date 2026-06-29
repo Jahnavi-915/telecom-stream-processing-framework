@@ -259,3 +259,122 @@ Reports and Visualization
 ```
 
 The team will now proceed with implementation of the Hybrid Telecom Stream Processing Framework according to the finalized architecture and roadmap.
+
+# Meeting Notes – Supervisor Email and Follow-up Discussion
+
+**Date:** 25 June 2026
+
+## Discussion Summary
+
+The supervisor clarified the development strategy for both project groups through email and follow-up discussions. The emphasis shifted from developing independent implementations to building reusable prototypes that will later be integrated into a unified Hybrid Telecom Stream Processing Framework.
+
+---
+
+## Key Discussion Points
+
+### 1. Independent Prototype Development
+
+Both project groups should first complete their respective prototypes independently.
+
+**Group-E**
+
+* Develop the communication prototype.
+* Implement MPI-based client-server communication.
+* Support one-client/one-server communication.
+* Extend to multiple MPI clients communicating with one server.
+* Develop communication APIs and algorithms.
+
+**Group-F**
+
+* Develop the multithreaded processing prototype.
+* Implement shared-memory packet processing using POSIX Threads.
+* Generate synthetic telecom traffic.
+* Finalize packet processing workflow.
+
+---
+
+### 2. Prototype Validation
+
+Each prototype should be independently tested and validated before integration.
+
+Validation activities include:
+
+* Functional testing
+* Unit testing
+* Module testing
+* Stress testing
+* Performance testing
+* Failure injection
+* Scalability testing
+
+Both groups should also understand the implementation developed by the other group.
+
+---
+
+### 3. Communication Prototype Requirements
+
+The supervisor specified that the communication prototype should support:
+
+* One Client → One Server communication.
+* Delay injection at the client or server.
+* Continuous packet reception.
+* A shared packet queue (bucket) to accumulate incoming packets.
+* Multiple MPI clients communicating with a single MPI server.
+* Support for future cluster deployment.
+
+---
+
+### 4. Processing Prototype Requirements
+
+The processing prototype should provide:
+
+* Shared-memory packet buffering.
+* Producer–Consumer implementation.
+* Read/Write lock synchronization.
+* Parallel packet processing using worker threads.
+* Packet processing statistics.
+
+---
+
+### 5. Hybrid Integration Strategy
+
+Hybrid integration will begin only after:
+
+* Communication prototype completion.
+* Processing prototype completion.
+* Independent testing and validation.
+* Prototype exchange between both groups.
+
+Both teams should exchange:
+
+* Algorithms
+* API specifications
+* Prototype implementations
+* Validation reports
+
+before integrating both systems into the Hybrid framework.
+
+---
+
+## Immediate Action Items
+
+### Group-E
+
+* Complete the communication prototype.
+* Implement one-client/one-server communication.
+* Extend to multiple MPI clients.
+* Implement queue interface and delay injection.
+* Prepare communication APIs and documentation.
+
+### Group-F
+
+* Complete the multithreaded processing prototype.
+* Finalize packet processing framework.
+* Generate synthetic telecom traffic.
+* Prepare processing APIs and documentation.
+
+---
+
+## Outcome
+
+Both groups will independently complete and validate their respective prototypes during the current development phase. Hybrid MPI–Pthreads integration, Berkeley DB, graph construction, analytics, and monitoring will begin only after successful prototype exchange and interface finalization.

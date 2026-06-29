@@ -822,81 +822,95 @@ For shared files, each team member should update only their designated sections 
 7. Keep documentation synchronized with implementation.
 8. Complete testing and validation before merging into development.
 
-# Hybrid Development Git Workflow
+# Phase 1 – Communication Prototype Git Workflow
 
-## Branch Structure
+## Objective
+
+This phase focuses on the independent development of the **Group-E Communication Prototype** and the validation of the completed **Group-F Processing Prototype**.
+
+The objective is to produce a stable, tested communication module before beginning Hybrid integration.
+
+---
+
+# Branch Structure
 
 ```text
 main
 │
 └── development
     │
-    ├── feature-hybrid-integration   (Jahnavi)
-    ├── feature-database             (Sreeja)
-    ├── feature-graph                (Sreeja)
-    └── feature-analytics            (Sreeja)
+    ├── feature-communication         (Jahnavi)
+    └── feature-testing-validation    (Sreeja)
 ```
 
-### Branch Responsibilities
+---
 
-#### main
+# Branch Responsibilities
+
+## main
 
 * Stable release branch
-* Final project submission branch
+* Final submission branch
 * No direct development
 
-#### development
+---
 
-* Integration branch
-* All feature branches merge here first
-* Used for testing, debugging, validation, and final integration
+## development
 
-#### feature-hybrid-integration
+- Central development branch
+- Integration of completed feature branches
+- Prototype validation
+- Documentation updates
+- Stable weekly milestone before merging into main
 
-Owned by: Jahnavi
+---
 
-Responsibilities:
+## feature-communication
 
-* MPI Integration
-* Multi-DES Integration
-* Shared Buffer Integration
-* Worker Thread Integration
-* Monitoring Framework
-* Hybrid Main Controller
-* Build System
-* End-to-End Integration
+**Owner:** Jahnavi
 
-#### feature-database
+### Responsibilities
 
-Owned by: Sreeja
+* Communication Architecture
+* Traffic Generator
+* MPI Client
+* MPI Server
+* One Client → One Server Communication
+* Multiple Client → One Server Communication
+* Packet Serialization
+* Delay Injection
+* Communication Statistics
+* API Documentation
+- Shared Packet Queue (Bucket) Interface
+- Queue Integration APIs
 
-Responsibilities:
+---
 
-* Berkeley DB Module
-* Database APIs
-* Storage Integration
+## feature-testing-validation
 
-#### feature-graph
+**Owner:** Sreeja
 
-Owned by: Sreeja
+### Responsibilities
 
-Responsibilities:
+#### Group-E Prototype Testing
 
-* Graph Construction
-* Vertex Management
-* Edge Management
-* Graph Statistics
+* Unit Testing
+* Module Testing
+* Functional Testing
+* Stress Testing
+* Delay Injection Testing
+* Failure Injection
+* Performance Testing
+* Regression Testing
 
-#### feature-analytics
+#### Group-F Prototype Validation
 
-Owned by: Sreeja
-
-Responsibilities:
-
-* Traffic Analytics
-* Graph Analytics
-* Performance Analytics
-* Report Generation
+* Functional Validation
+* Queue Validation
+* Thread Synchronization Verification
+* Output Verification
+* Observation Reports
+* Validation Reports
 
 ---
 
@@ -904,43 +918,51 @@ Responsibilities:
 
 ## Start of Day
 
+Update local repository.
+
 ```bash
 git checkout development
 git pull origin development
 ```
 
-Switch to assigned feature branch:
+Switch to your feature branch.
 
 ```bash
-git checkout feature-hybrid-integration
+git checkout feature-communication
 ```
 
 or
 
 ```bash
-git checkout feature-database
+git checkout feature-testing-validation
 ```
 
 ---
 
 ## During Development
 
-Commit frequently using logical commits.
+Commit frequently.
 
 Examples:
 
 ```bash
 git add .
-git commit -m "Implemented TelecomPacket structure"
+git commit -m "Implemented MPI client initialization"
 
 git add .
-git commit -m "Integrated MPI with shared buffer"
+git commit -m "Added One Client-One Server communication"
 
 git add .
-git commit -m "Added Berkeley DB packet storage APIs"
+git commit -m "Completed communication statistics module"
+
+git add .
+git commit -m "Added functional test cases"
+
+git add .
+git commit -m "Validated Group-F processing prototype"
 ```
 
-Push changes regularly:
+Push regularly.
 
 ```bash
 git push origin <branch-name>
@@ -950,298 +972,288 @@ git push origin <branch-name>
 
 ## End of Day
 
-1. Push latest changes.
-2. Update meeting notes.
-3. Update hybrid progress log.
-4. Document major implementation decisions.
-5. Record issues and blockers.
+* Push latest changes.
+* Update Progress Log.
+* Update Meeting Notes.
+* Update Implementation Notes.
+* Record Issues and Blockers.
+* Update Test Reports (if applicable).
 
 ---
 
 # Day-wise Branch Usage
 
-## Day 1 – Architecture Freeze
+## Day 1 – Planning & Interface Finalization
 
 ### Jahnavi
 
 ```text
-feature-hybrid-integration
+feature-communication
 ```
 
-Tasks:
+Tasks
 
-* Finalize Hybrid Architecture
-* Finalize Hybrid Design
-* Create Hybrid Source Structure
-* Define Integration Strategy
+* Review previous MPI implementation.
+* Review Multi-DES implementation.
+* Freeze TelecomPacket structure.
+* Finalize communication algorithm.
+* Prepare communication framework.
+
+---
 
 ### Sreeja
 
 ```text
-feature-database
+feature-testing-validation
 ```
 
-Tasks:
+Tasks
 
-* Berkeley DB Study
-* Database Design
-* Storage Schema Design
+* Study Group-F implementation.
+* Design testing strategy.
+* Prepare validation checklist.
+* Develop unit and functional test cases.
 
 ---
 
-## Day 2 – Core Framework
+## Day 2 – Communication Prototype
 
 ### Jahnavi
 
 ```text
-feature-hybrid-integration
+feature-communication
 ```
 
-Tasks:
+Tasks
 
-* TelecomPacket Structure
-* Configuration Framework
-* Shared Buffer Integration
+* Traffic Generator
+* MPI Client
+* MPI Server
+* One Client → One Server Prototype
+
+---
 
 ### Sreeja
 
 ```text
-feature-database
+feature-testing-validation
 ```
 
-Tasks:
+Tasks
 
-* Database Module Skeleton
-* Database Initialization
-
----
-
-## Day 3 – MPI Integration
-
-### Jahnavi
-
-```text
-feature-hybrid-integration
-```
-
-Tasks:
-
-* MPI Integration
-* Multi-DES Integration
-* MPI → Shared Buffer Pipeline
-
-### Sreeja
-
-```text
-feature-database
-```
-
-Tasks:
-
-* Packet Storage APIs
-* Packet Retrieval APIs
-
----
-
-## Day 4 – Thread Integration
-
-### Jahnavi
-
-```text
-feature-hybrid-integration
-```
-
-Tasks:
-
-* Worker Thread Integration
-* Packet Processing Pipeline
-
-### Sreeja
-
-```text
-feature-graph
-```
-
-Tasks:
-
-* Graph Data Structures
-* Vertex Management
-
----
-
-## Day 5 – Monitoring & Graph Construction
-
-### Jahnavi
-
-```text
-feature-hybrid-integration
-```
-
-Tasks:
-
-* Logger Framework
-* Statistics Framework
-* Monitoring Framework
-
-### Sreeja
-
-```text
-feature-graph
-```
-
-Tasks:
-
-* Edge Management
-* Graph Construction
-* Graph Statistics
-
----
-
-## Day 6 – Database Integration
-
-### Jahnavi
-
-```text
-feature-hybrid-integration
-```
-
-Tasks:
-
-* Integrate Database with Pipeline
-* Data Flow Validation
-
-### Sreeja
-
-```text
-feature-graph
-```
-
-Tasks:
-
-* Graph Framework Completion
-* Graph Validation
-
----
-
-## Day 7 – Analytics Integration
-
-### Jahnavi
-
-```text
-feature-hybrid-integration
-```
-
-Tasks:
-
-* Hybrid Main Controller
-* End-to-End Integration
-
-### Sreeja
-
-```text
-feature-analytics
-```
-
-Tasks:
-
-* Traffic Analytics
-* Graph Analytics
-* Performance Analytics
-
----
-
-## Day 8 – Functional & System Testing
-
-### Both
-
-```text
-development
-```
-
-Tasks:
-
+* Unit Testing
 * Functional Testing
-* System Testing
-* Validation Execution
-* Bug Fixing
+* Logging Validation
 
 ---
 
-## Day 9 – Performance & Cluster Testing
+## Day 3 – Extended Communication
 
-### Both
+### Jahnavi
 
 ```text
-development
+feature-communication
 ```
 
-Tasks:
+Tasks
 
-* Performance Testing
+Tasks
+
+- Shared Packet Queue (Bucket)
+- Client Delay Injection
+- Server Delay Injection
+- Communication Statistics
+
+---
+
+### Sreeja
+
+```text
+feature-testing-validation
+```
+
+Tasks
+
 * Stress Testing
-* Scalability Testing
-* Cluster Testing
-* Performance Evaluation
+* Delay Injection Testing
+* Failure Injection
+* Communication Validation
 
 ---
 
-## Day 10 – Finalization
+## Day 4 – Prototype Validation
 
-### Both
+### Jahnavi
+
+```text
+feature-communication
+```
+
+Tasks
+
+Tasks
+
+- Extend to 2 Clients → One Server
+- Extend to 4 Clients → One Server
+- Extend to 8 Clients → One Server
+- Round-Robin Communication
+
+---
+
+### Sreeja
+
+```text
+feature-testing-validation
+```
+
+Tasks
+
+* Execute Group-F Prototype
+* Validate Queue Behaviour
+* Validate Thread Synchronization
+* Prepare Validation Report
+
+---
+
+## Day 5 – Bug Fixing & Improvements
+
+### Jahnavi
+
+```text
+feature-communication
+```
+
+Tasks
+
+- Resolve issues identified during testing
+- Improve communication robustness
+- Improve logging
+- Improve error handling
+- Update API documentation
+
+---
+
+### Sreeja
+
+```text
+feature-testing-validation
+```
+
+Tasks
+
+* Regression Testing
+* Performance Evaluation
+* Final Validation Report
+
+---
+
+## Day 6 – Prototype Review
+
+### Jahnavi
+
+```text
+feature-communication
+```
+
+Tasks
+
+* Code Review
+* Documentation Review
+* API Documentation
+* Prepare Prototype for Exchange
+
+---
+
+### Sreeja
+
+```text
+feature-testing-validation
+```
+
+Tasks
+
+* Review Test Coverage
+* Verify Reports
+* Finalize Test Documentation
+
+---
+
+## Day 7 – Phase Completion
+
+Both developers switch to:
 
 ```text
 development
 ```
 
-Tasks:
+Tasks
 
-* Final Validation
-* Documentation Updates
-* User Manual
-* Technical Manual
-* PPT Preparation
-* Repository Cleanup
+* Merge Feature Branches
+* Execute Final Prototype Testing
+* Freeze Communication Prototype
+* Finalize Documentation
+* Prepare Prototype Exchange with Group-F
 
 ---
 
 # Merge Policy
 
 ```text
-Feature Branch
-      ↓
-Development
-      ↓
-Testing & Validation
-      ↓
-Development
-      ↓
-Main
+feature-communication
+                │
+                ▼
+           development
+                ▲
+                │
+feature-testing-validation
+                │
+                ▼
+         Prototype Validation
+                │
+                ▼
+             development
+                │
+                ▼
+               main
 ```
 
 ---
 
 # Pull Request Checklist
 
-Before merging into development:
+Before merging into **development**:
 
-* Code compiles successfully
-* Unit tests pass
-* Module tests pass
-* Documentation updated
-* No debug code remains
-* No unnecessary files committed
+* Code compiles successfully.
+* Communication prototype executes successfully.
+* Unit tests pass.
+* Functional tests pass.
+* Validation reports updated.
+* Documentation updated.
+* No debug statements remain.
+* No unnecessary files committed.
 
 ---
 
 # Important Rules
 
-* Never commit directly to main.
-* Avoid committing directly to development except during integration and testing phases.
-* Pull latest development before every merge.
+* Never commit directly to **main**.
+* Avoid committing directly to **development** except during prototype integration.
+* Pull the latest **development** branch before merging.
 * Keep commits small and meaningful.
-* Use descriptive commit messages.
-* Resolve conflicts immediately.
-* Maintain clean and readable code.
+* Write descriptive commit messages.
+* Resolve merge conflicts immediately.
+* Maintain clean and modular code.
 * Add comments where necessary.
-* Update documentation only when major milestones are completed.
-* All final testing and validation must be performed on development before merging to main.
+* Update documentation only after completing major milestones.
+* Complete testing before merging any feature branch into **development**.
+
+---
+
+# Next Phase
+
+After both groups complete and validate their independent prototypes:
+
+* Group-F validates the Group-E Communication Prototype.
+* Group-E reviews Group-F feedback.
+* Both groups exchange algorithms and APIs.
+* Hybrid integration begins in **Phase 2** using a separate Git workflow.

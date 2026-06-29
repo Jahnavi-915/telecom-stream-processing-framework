@@ -4,6 +4,37 @@
 
 This document describes the internal design of the Hybrid Telecom Stream Processing Framework.
 
+## Implementation Strategy
+
+The Hybrid Telecom Stream Processing Framework is developed incrementally using reusable modules from previous project phases.
+
+The implementation strategy consists of four stages:
+
+### Stage 1
+- POSIX Threads Prototype
+- TCP Socket Prototype
+- Pthreads + Socket Integration
+- MPI Communication
+- Multi-DES Framework
+
+### Stage 2 (Current)
+- Group-E Communication Prototype
+- Group-F Processing Prototype
+- Independent Testing and Validation
+- Cross Validation
+
+### Stage 3
+- Hybrid MPI-Pthreads Integration
+- Unified Hybrid Algorithm
+- End-to-End Testing
+
+### Stage 4
+- Berkeley DB
+- Graph Construction
+- Analytics
+- Monitoring
+- Cluster Deployment
+
 ---
 
 # Module Overview
@@ -16,10 +47,15 @@ Responsible for receiving telecom traffic from multiple Data Extraction Servers 
 
 ### Responsibilities
 
-* DES communication
-* MPI communication
-* Packet distribution
-* Cluster communication
+- Traffic generation
+- DES communication
+- MPI client-server communication
+- Packet serialization
+- Packet routing
+- Packet distribution
+- Delay injection
+- Communication statistics
+- Cluster communication support
 
 ### Input 
 
@@ -39,10 +75,11 @@ Responsible for buffering, synchronization, and parallel packet processing using
 
 ### Responsibilities
 
-* Shared buffer management
-* Thread management
-* Packet processing
-* Synchronization
+- Shared packet queue
+- Thread pool management
+- Producer-consumer synchronization
+- Read/Write lock synchronization
+- Packet processing
 
 ### Input
 
@@ -155,34 +192,37 @@ Responsible for runtime logging, statistics collection, and performance monitori
 The Hybrid Telecom Stream Processing Framework follows the data flow shown below.
 
 ```text
-Real-Time Traffic Source
-            │
-            ▼
-Data Extraction Servers (DES)
-            │
-            ▼
-MPI Communication Layer
-            │
-            ▼
-Shared Buffer
-            │
-            ▼
+Traffic Source
+        │
+        ▼
+Traffic Generator
+        │
+        ▼
+Data Extraction Servers
+        │
+        ▼
+MPI Client(s)
+        │
+        ▼
+MPI Server
+        │
+        ▼
+Shared Packet Queue
+        │
+        ▼
 Worker Thread Pool
-            │
-            ▼
+        │
+        ▼
 Packet Processing Engine
-            │
-            ▼
-Graph Construction Engine
-            │
-            ▼
-Berkeley DB Storage
-            │
-            ▼
-Analytics Engine
-            │
-            ▼
-Reports & Visualization
+        │
+        ▼
+Berkeley DB
+        │
+        ▼
+Graph Construction
+        │
+        ▼
+Analytics
 ```
 
 ## Step 1: Traffic Ingestion
@@ -201,7 +241,7 @@ Multiple DES processes generate or ingest telecom traffic and forward packets to
 
 ## Step 3: MPI Communication
 
-MPI processes distribute packets across processing nodes.
+MPI client processes receive telecom packets from one or more Data Extraction Servers (DES) and distribute them to the MPI server process for further processing. The communication layer supports both single-machine execution and future multi-node cluster deployment.
 
 Responsibilities:
 
@@ -214,7 +254,7 @@ Responsibilities:
 
 ## Step 4: Shared Buffer
 
-Packets received through MPI are inserted into a shared buffer.
+Packets received by the MPI server are inserted into the shared packet queue, which serves as the communication interface between the distributed communication layer and the multithreaded processing layer.
 
 Responsibilities:
 
@@ -226,7 +266,7 @@ Responsibilities:
 
 ## Step 5: Worker Thread Pool
 
-Consumer threads remove packets from the shared buffer and perform packet processing.
+Worker threads retrieve packets from the shared packet queue, synchronize access using shared-memory synchronization primitives, and perform packet processing in parallel.
 
 Responsibilities:
 
@@ -331,9 +371,9 @@ typedef struct
 
 ---
 
-## Shared Buffer
+## Shared Packet Queue
 
-The Shared Buffer stores TelecomPacket objects before processing.
+The Shared Packet Queue stores TelecomPacket objects received from the communication layer before processing by the worker thread pool.
 
 Responsibilities:
 
@@ -382,7 +422,7 @@ This section identifies reusable components from existing implementations and ne
 
 ---
 
-## Components Reused from Group-E
+## Components Reused from Previous Project Phases
 
 ### MPI Communication Framework
 
@@ -493,7 +533,7 @@ Responsibilities:
 
 Status:
 
-Not Implemented
+Planned
 
 ---
 
@@ -514,7 +554,7 @@ Responsibilities:
 
 Status:
 
-Not Implemented
+Planned
 
 ---
 
@@ -535,7 +575,7 @@ Responsibilities:
 
 Status:
 
-Not Implemented
+Planned
 
 ---
 
@@ -555,9 +595,33 @@ Responsibilities:
 - Coordinate Data Flow
 - Manage End-to-End Processing
 
-Status:
+Status: Planned
 
-Not Implemented
+This layer will be implemented after independent completion and validation of the communication and processing prototypes.
+
+# Current Development Status
+
+## Completed
+
+- POSIX Threads Framework
+- TCP Socket Framework
+- Pthreads + Socket Integration
+- MPI Framework
+- Multi-DES Framework
+
+## Current Phase
+
+- Group-E Communication Prototype
+- Group-F Processing Prototype
+- Independent Testing and Validation
+
+## Planned
+
+- Hybrid Integration
+- Berkeley DB Integration
+- Graph Construction
+- Analytics
+- Cluster Deployment
 
 # APIs
 
@@ -575,15 +639,53 @@ int initialize_mpi(int *argc, char ***argv);
 void finalize_mpi(void);
 ```
 
+### Traffic Generation
+
+```c
+TelecomPacket generate_packet(void);
+```
+
+### Packet Serialization
+
+```c
+int serialize_packet(TelecomPacket *packet,
+                     char *buffer);
+```
+
+### Packet Deserialization
+
+```c
+int deserialize_packet(char *buffer,
+                       TelecomPacket *packet);
+```
+
 ### Packet Distribution
 
 ```c
 int distribute_packet(TelecomPacket *packet);
 ```
 
+### Client Communication
+
+```c
+int send_packet(TelecomPacket *packet);
+```
+
+### Server Communication
+
+```c
+int receive_packet(TelecomPacket *packet);
+```
+
 ---
 
 ## Processing Module APIs
+
+### Queue Initialization
+
+```c
+int initialize_queue(void);
+```
 
 ### Shared Buffer Insert
 
@@ -597,15 +699,33 @@ int enqueue_packet(TelecomPacket *packet);
 int dequeue_packet(TelecomPacket *packet);
 ```
 
+### Queue Size
+
+```c
+int queue_size(void);
+```
+
 ### Worker Thread Creation
 
 ```c
 int create_worker_pool(int thread_count);
 ```
 
+### Worker Pool Shutdown
+
+```c
+void destroy_worker_pool(void);
+```
+
+### Queue Destruction
+
+```c
+int destroy_queue(void);
+```
+
 ---
 
-## Storage Module APIs
+## Storage Module API
 
 ### Database Initialization
 
@@ -691,4 +811,22 @@ void update_statistics(void);
 
 ```c
 void generate_runtime_report(void);
+```
+
+### Start Timer
+
+```c
+void start_timer(void);
+```
+
+### Stop Timer
+
+```c
+void stop_timer(void);
+```
+
+### Print Statistics
+
+```c
+void print_statistics(void);
 ```

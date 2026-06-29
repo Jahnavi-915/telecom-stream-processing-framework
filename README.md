@@ -46,7 +46,7 @@ Data Extraction Servers (DES)
 MPI Communication Layer
           │
           ▼
-Shared Buffer
+Shared Packet Queue
           │
           ▼
 Worker Thread Pool
@@ -257,6 +257,14 @@ Testing and verification artifacts.
 
 ---
 
+# Development Methodology
+
+The project follows an incremental software engineering methodology.
+
+Each implementation phase is independently developed, tested, validated, documented, and evaluated before progressing to the next phase. The final Hybrid Telecom Stream Processing Framework reuses and integrates the validated components developed throughout the project's evolution.
+
+---
+
 # Project Evolution
 
 The project has evolved through multiple implementation phases, with each phase focusing on a specific parallel or distributed computing concept.
@@ -332,9 +340,9 @@ Extended the MPI framework to support multiple Data Extraction Servers (DES), en
 
 ## Phase 6 – Hybrid Telecom Stream Processing Framework (Current Project)
 
-The Hybrid Telecom Stream Processing Framework integrates the concepts, components, and lessons learned from all previous phases into a unified end-to-end telecom data processing platform.
+The Hybrid Telecom Stream Processing Framework represents the final phase of the project. It incrementally integrates the reusable components developed during the previous phases into a unified telecom data processing platform.
 
-This phase serves as the primary project deliverable and represents the culmination of the project's evolution from individual parallel and distributed computing prototypes to a complete telecom stream processing framework.
+The implementation begins with independently developed communication and processing prototypes, followed by Hybrid integration, persistent storage, graph construction, analytics, monitoring, and final system validation.
 
 
 ---
@@ -359,7 +367,6 @@ telecom-stream-processing-framework/
 │   └── workflow/
 │
 ├── logs/
-│
 ├── reports/
 │
 ├── src/
@@ -381,30 +388,39 @@ telecom-stream-processing-framework/
 ```text
 src/hybrid/
 │
-├── include/
 ├── mpi/
+│   ├── include/
+│   ├── mpi_client.c
+│   ├── mpi_server.c
+│   ├── traffic_generator.c
+│   ├── packet.c
+│   ├── serialization.c
+│   ├── queue_interface.c
+│   ├── statistics.c
+│   └── config.c
+│
 ├── processing/
 ├── database/
 ├── graph/
 ├── analytics/
 ├── monitoring/
 │
-├── Makefile
-└── hybrid_main.c
+├── hybrid_main.c
+└── Makefile
 ```
+---
 
 ### Module Responsibilities
 
-| Module      | Responsibility                                        |
-| ----------- | ----------------------------------------------------- |
-| include     | Common structures, configuration, and constants       |
-| mpi         | MPI communication and Multi-DES coordination          |
-| processing  | Shared buffer, synchronization, and packet processing |
-| database    | Berkeley DB integration and persistent storage        |
-| graph       | Telecom graph construction and graph statistics       |
-| analytics   | Traffic analytics and performance evaluation          |
-| monitoring  | Logging, statistics, and runtime monitoring           |
-| hybrid_main | System orchestration and lifecycle management         |
+| Module | Responsibilities |
+|--------|------------------|
+| **mpi** | - Traffic generation<br>- MPI client/server communication<br>- Packet serialization and deserialization<br>- Queue interface<br>- Communication statistics<br>- Multi-DES coordination |
+| **processing** | - Shared packet queue management<br>- Thread synchronization<br>- Worker thread management<br>- Parallel packet processing |
+| **database** | - Berkeley DB integration<br>- Packet storage<br>- Metadata management<br>- Persistent data storage |
+| **graph** | - Communication graph construction<br>- Vertex management<br>- Edge management<br>- Graph statistics generation |
+| **analytics** | - Traffic analysis<br>- Graph analysis<br>- Performance evaluation<br>- Report generation |
+| **monitoring** | - Runtime logging<br>- Statistics collection<br>- Throughput measurement<br>- Performance monitoring |
+| **hybrid_main** | - Module initialization<br>- System orchestration<br>- Execution control<br>- Framework lifecycle management |
 
 ---
 
@@ -472,12 +488,19 @@ Testing artifacts include:
 
 ## In Progress
 
-* Hybrid MPI + POSIX Threads Framework
-* Berkeley DB Integration
-* Graph Construction Framework
-* Analytics Framework
-* Cluster Deployment Support
-* End-to-End Testing & Validation
+- Communication Prototype (Group-E)
+- Processing Prototype Validation
+- Hybrid Framework Development
+
+## Planned
+
+- Hybrid Integration
+- Berkeley DB Integration
+- Graph Construction
+- Analytics Framework
+- Monitoring Framework
+- Cluster Deployment
+- End-to-End Validation
 
 ---
 

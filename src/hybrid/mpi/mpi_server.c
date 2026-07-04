@@ -3,6 +3,7 @@
  * @brief MPI server implementation.
  */
 
+#include "../include/config.h"
 #include "../include/mpi_server.h"
 #include "../include/queue_interface.h"
 #include "../include/serialization.h"
@@ -69,15 +70,18 @@ int run_server(void)
 {
     TelecomPacket packet;
 
-    if (receive_packet(&packet) != 0)
+    for (int i = 0; i < DEFAULT_PACKETS_PER_CLIENT; i++)
     {
-        fprintf(stderr, "ERROR: Failed to receive packet.\n");
-        return -1;
+        /* Receive packet from client */
+        if (receive_packet(&packet) != 0)
+        {
+            fprintf(stderr, "ERROR: Failed to receive packet.\n");
+            return -1;
+        }
+
+        printf("\n========== SERVER : Packet %d ==========\n", i + 1);
+        printf("Received Packet %d\n", i + 1);
     }
-
-    printf("\n===== Received Packet =====\n");
-
-    print_packet(&packet);
 
     return 0;
 }

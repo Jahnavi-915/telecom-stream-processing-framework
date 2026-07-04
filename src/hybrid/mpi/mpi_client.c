@@ -9,6 +9,7 @@
 #include "../include/traffic_generator.h"
 #include "../include/serialization.h"
 
+#include <unistd.h>
 #include <mpi.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -99,17 +100,25 @@ int run_client(void)
 {
     TelecomPacket packet;
 
-    /* Generate a synthetic telecom packet */
-    generate_packet(&packet);
-
-    /* Display generated packet */
-    print_packet(&packet);
-
-    /* Send packet to server */
-    if (send_packet(&packet) != 0)
+    for (int i = 0; i < DEFAULT_PACKETS_PER_CLIENT; i++)
     {
-        fprintf(stderr, "ERROR: Failed to send packet.\n");
-        return -1;
+        /* Generate a synthetic telecom packet */
+        generate_packet(&packet);
+
+        printf("\n========== CLIENT : Packet %d ==========\n", i + 1);
+
+        /* Display generated packet */
+        printf("Sending Packet %d\n", i + 1);
+
+        /* Send packet to server */
+        if (send_packet(&packet) != 0)
+        {
+            fprintf(stderr, "ERROR: Failed to send packet.\n");
+            return -1;
+        }
+
+        /* Artificial transmission delay */
+        usleep(DEFAULT_DELAY_MS * 1000);
     }
 
     return 0;

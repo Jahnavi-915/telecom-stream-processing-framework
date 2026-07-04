@@ -118,7 +118,6 @@ int run_client(void)
         }
 
         /* Artificial transmission delay */
-        usleep(DEFAULT_DELAY_MS * 1000);
     }
 
     return 0;

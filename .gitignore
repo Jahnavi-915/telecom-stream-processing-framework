@@ -2,6 +2,8 @@
 *.o
 *.out
 *.exe
+*.a
+*.so
 
 # Logs
 *.log
@@ -16,8 +18,11 @@ bin/
 
 # Linux temporary files
 *~
+*.swp
+*.swo
 
 # Executables
+hybrid
 stream
 server
 client

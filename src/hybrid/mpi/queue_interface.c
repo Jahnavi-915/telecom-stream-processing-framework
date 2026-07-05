@@ -20,6 +20,9 @@ static TelecomPacket packet_queue[QUEUE_CAPACITY];
 static int front = 0;
 static int rear = -1;
 static int current_size = 0;
+static int maximum_size = 0;
+static int packets_enqueued = 0;
+static int packets_dequeued = 0;
 
 /* -------------------------------------------------------------------------- */
 /*                    Queue Interface Implementation                          */
@@ -30,6 +33,9 @@ bool initialize_queue_interface(void)
     front = 0;
     rear = -1;
     current_size = 0;
+    maximum_size = 0;
+    packets_enqueued = 0;
+    packets_dequeued = 0;
 
     memset(packet_queue, 0, sizeof(packet_queue));
 
@@ -61,6 +67,13 @@ bool enqueue_packet(const TelecomPacket *packet)
     /* Update queue size */
     current_size++;
 
+    packets_enqueued++;
+
+    if (current_size > maximum_size)
+    {
+        maximum_size = current_size;
+    }
+
     printf("Packet %u enqueued successfully. Queue Size: %d\n",
            packet->packet_id,
            current_size);
@@ -90,6 +103,7 @@ bool dequeue_packet(TelecomPacket *packet)
 
     /* Update queue size */
     current_size--;
+    packets_dequeued++;
 
     printf("Packet %u dequeued successfully. Queue Size: %d\n",
            packet->packet_id,
@@ -113,11 +127,32 @@ int queue_size(void)
     return current_size;
 }
 
+int max_queue_size(void)
+{
+    return maximum_size;
+}
+
+int total_packets_enqueued(void)
+{
+    return packets_enqueued;
+}
+
+int total_packets_dequeued(void)
+{
+    return packets_dequeued;
+}
+
 void destroy_queue_interface(void)
 {
     front = 0;
     rear = -1;
     current_size = 0;
+
+    printf("\n========== Queue Statistics ==========\n");
+    printf("Maximum Queue Size      : %d\n", maximum_size);
+    printf("Packets Enqueued        : %d\n", packets_enqueued);
+    printf("Packets Dequeued        : %d\n", packets_dequeued);
+    printf("======================================\n");
 
     printf("Communication queue destroyed.\n");
 }

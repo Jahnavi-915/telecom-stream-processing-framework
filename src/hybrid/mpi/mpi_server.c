@@ -89,22 +89,39 @@ int run_server(void)
         }
 
         printf("\n========== SERVER : Packet %d ==========\n", i + 1);
-
         printf("Queue Size After Enqueue : %d\n",
                queue_size());
 
-        /* Simulate processing by removing one packet */
+        /*
+         * Simulate slower processing.
+         * Process one packet after every PROCESSING_BATCH_SIZE packets.
+         */
+        if ((i + 1) % PROCESSING_BATCH_SIZE == 0)
+        {
+            if (!dequeue_packet(&processed_packet))
+            {
+                fprintf(stderr, "ERROR: Failed to dequeue packet.\n");
+                return -1;
+            }
+
+            printf("Processed Packet %u\n",
+                   processed_packet.packet_id);
+
+            printf("Queue Size After Dequeue : %d\n",
+                   queue_size());
+        }
+    }
+
+    /* Process remaining packets before shutdown */
+    while (!is_queue_empty())
+    {
         if (!dequeue_packet(&processed_packet))
         {
-            fprintf(stderr, "ERROR: Failed to dequeue packet.\n");
-            return -1;
+            break;
         }
 
-        printf("Processed Packet %u\n",
+        printf("Processed Remaining Packet %u\n",
                processed_packet.packet_id);
-
-        printf("Queue Size After Dequeue : %d\n",
-               queue_size());
     }
 
     return 0;

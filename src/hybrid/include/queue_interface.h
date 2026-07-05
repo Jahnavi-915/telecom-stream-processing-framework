@@ -16,6 +16,12 @@ bool is_queue_full(void);
 
 int queue_size(void);
 
+int max_queue_size(void);
+
+int total_packets_enqueued(void);
+
+int total_packets_dequeued(void);
+
 void destroy_queue_interface(void);
 
 #endif

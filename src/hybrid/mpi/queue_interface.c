@@ -4,43 +4,120 @@
  */
 
 #include "../include/queue_interface.h"
+#include "../include/config.h"
+
+#include <stdio.h>
+#include <string.h>
 
 /* -------------------------------------------------------------------------- */
-/*                    Queue Interface Stub Implementation                     */
+/*                      Queue Data Structure                                  */
+/* -------------------------------------------------------------------------- */
+
+#define QUEUE_CAPACITY 100
+
+static TelecomPacket packet_queue[QUEUE_CAPACITY];
+
+static int front = 0;
+static int rear = -1;
+static int current_size = 0;
+
+/* -------------------------------------------------------------------------- */
+/*                    Queue Interface Implementation                          */
 /* -------------------------------------------------------------------------- */
 
 bool initialize_queue_interface(void)
 {
+    front = 0;
+    rear = -1;
+    current_size = 0;
+
+    memset(packet_queue, 0, sizeof(packet_queue));
+
+    printf("Communication queue initialized.\n");
+
     return true;
 }
 
 bool enqueue_packet(const TelecomPacket *packet)
 {
-    (void)packet;
+    if (packet == NULL)
+    {
+        fprintf(stderr, "ERROR: Invalid packet.\n");
+        return false;
+    }
+
+    if (is_queue_full())
+    {
+        fprintf(stderr, "ERROR: Communication queue is full.\n");
+        return false;
+    }
+
+    /* Move rear to the next position */
+    rear = (rear + 1) % QUEUE_CAPACITY;
+
+    /* Store packet in queue */
+    packet_queue[rear] = *packet;
+
+    /* Update queue size */
+    current_size++;
+
+    printf("Packet %u enqueued successfully. Queue Size: %d\n",
+           packet->packet_id,
+           current_size);
+
     return true;
 }
 
 bool dequeue_packet(TelecomPacket *packet)
 {
-    (void)packet;
+    if (packet == NULL)
+    {
+        fprintf(stderr, "ERROR: Invalid packet pointer.\n");
+        return false;
+    }
+
+    if (is_queue_empty())
+    {
+        fprintf(stderr, "ERROR: Communication queue is empty.\n");
+        return false;
+    }
+
+    /* Copy packet from the front of the queue */
+    *packet = packet_queue[front];
+
+    /* Move front to the next position */
+    front = (front + 1) % QUEUE_CAPACITY;
+
+    /* Update queue size */
+    current_size--;
+
+    printf("Packet %u dequeued successfully. Queue Size: %d\n",
+           packet->packet_id,
+           current_size);
+
     return true;
 }
 
 bool is_queue_empty(void)
 {
-    return true;
+    return (current_size==0);
 }
 
 bool is_queue_full(void)
 {
-    return false;
+    return (current_size == QUEUE_CAPACITY);
 }
 
 int queue_size(void)
 {
-    return 0;
+    return current_size;
 }
 
 void destroy_queue_interface(void)
 {
+    front = 0;
+    rear = -1;
+    current_size = 0;
+
+    printf("Communication queue destroyed.\n");
 }

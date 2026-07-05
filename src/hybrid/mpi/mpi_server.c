@@ -17,6 +17,12 @@ int initialize_server(int *argc, char ***argv)
     (void)argc;
     (void)argv;
 
+    if (!initialize_queue_interface())
+    {
+        fprintf(stderr, "ERROR: Failed to initialize communication queue.\n");
+        return -1;
+    }
+
     printf("MPI Server initialized.\n");
 
     return 0;
@@ -58,10 +64,12 @@ int receive_packet(TelecomPacket *packet)
     }
 
     /* Forward packet to processing layer */
-    enqueue_packet(packet);
+    if (!enqueue_packet(packet))
+    {
+        fprintf(stderr, "ERROR: Failed to enqueue packet.\n");
+        return -1;
+    }
 
-    printf("Server: Packet %u received successfully.\n",
-       packet->packet_id);
 
     return 0;
 }
@@ -69,6 +77,7 @@ int receive_packet(TelecomPacket *packet)
 int run_server(void)
 {
     TelecomPacket packet;
+    TelecomPacket processed_packet;
 
     for (int i = 0; i < DEFAULT_PACKETS_PER_CLIENT; i++)
     {
@@ -80,7 +89,22 @@ int run_server(void)
         }
 
         printf("\n========== SERVER : Packet %d ==========\n", i + 1);
-        printf("Received Packet %d\n", i + 1);
+
+        printf("Queue Size After Enqueue : %d\n",
+               queue_size());
+
+        /* Simulate processing by removing one packet */
+        if (!dequeue_packet(&processed_packet))
+        {
+            fprintf(stderr, "ERROR: Failed to dequeue packet.\n");
+            return -1;
+        }
+
+        printf("Processed Packet %u\n",
+               processed_packet.packet_id);
+
+        printf("Queue Size After Dequeue : %d\n",
+               queue_size());
     }
 
     return 0;
@@ -88,6 +112,7 @@ int run_server(void)
 
 int finalize_server(void)
 {
+    destroy_queue_interface();
     printf("MPI Server finalized.\n");
 
     return 0;

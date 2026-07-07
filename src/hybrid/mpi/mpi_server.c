@@ -31,7 +31,14 @@ int initialize_server(int *argc, char ***argv)
 int receive_packet(TelecomPacket *packet)
 {
     char buffer[sizeof(TelecomPacket)];
-    int status;
+    MPI_Status status;
+    int mpi_status;
+
+    if (packet == NULL)
+    {
+        fprintf(stderr, "ERROR: Invalid packet pointer.\n");
+        return -1;
+    }
 
     if (packet == NULL)
     {
@@ -40,19 +47,22 @@ int receive_packet(TelecomPacket *packet)
     }
 
     /* Receive serialized packet from any client */
-    status = MPI_Recv(buffer,
+    mpi_status =  MPI_Recv(buffer,
                       sizeof(buffer),
                       MPI_BYTE,
                       MPI_ANY_SOURCE,
                       MPI_ANY_TAG,
                       MPI_COMM_WORLD,
-                      MPI_STATUS_IGNORE);
+                      &status);
 
-    if (status != MPI_SUCCESS)
+    if (mpi_status != MPI_SUCCESS)
     {
         fprintf(stderr, "ERROR: Failed to receive packet.\n");
         return -1;
     }
+
+    printf("Received packet from Client %d\n",
+       status.MPI_SOURCE);
 
     /* Deserialize packet */
     if (deserialize_packet(buffer,
@@ -79,7 +89,13 @@ int run_server(void)
     TelecomPacket packet;
     TelecomPacket processed_packet;
 
-    for (int i = 0; i < DEFAULT_PACKETS_PER_CLIENT; i++)
+    int world_size;
+    MPI_Comm_size(MPI_COMM_WORLD, &world_size);
+
+    int total_clients = world_size - 1;
+    int total_packets = total_clients * DEFAULT_PACKETS_PER_CLIENT;
+
+    for (int i = 0; i < total_packets; i++)
     {
         /* Receive packet from client */
         if (receive_packet(&packet) != 0)

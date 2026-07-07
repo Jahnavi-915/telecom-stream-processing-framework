@@ -53,6 +53,9 @@ static int transmit_packet(const TelecomPacket *packet)
     char buffer[sizeof(TelecomPacket)];
     int bytes;
 
+    int rank;
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
     /* Validate input */
     if (packet == NULL)
     {
@@ -84,7 +87,7 @@ static int transmit_packet(const TelecomPacket *packet)
     }
 
     printf("Client [%d]: Packet %u sent successfully.\n",
-       SERVER_RANK + 1,
+       rank,
        packet->packet_id);
 
     return 0;

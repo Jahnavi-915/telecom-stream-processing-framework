@@ -19,6 +19,24 @@ The final objective is to build a modular, scalable, and maintainable telecom da
 
 ---
 
+## Implementation Progress
+
+The project is being developed incrementally.
+
+Each major subsystem is independently:
+
+- Designed
+- Implemented
+- Tested
+- Validated
+- Documented
+
+before being integrated into the complete Hybrid Telecom Stream Processing Framework.
+
+The Communication Layer has been completed and serves as the foundation for subsequent hybrid integration.
+
+---
+
 # Project Objectives
 
 * Process telecom traffic streams in real time.
@@ -336,6 +354,7 @@ The Hybrid Telecom Stream Processing Framework integrates the concepts, componen
 
 This phase serves as the primary project deliverable and represents the culmination of the project's evolution from individual parallel and distributed computing prototypes to a complete telecom stream processing framework.
 
+The Hybrid Telecom Stream Processing Framework currently includes a fully implemented Communication Layer consisting of MPI-based packet communication, multi-client support, communication validation, queue stress testing, and performance evaluation. The next development milestone is the integration of the completed Communication Layer with the POSIX Threads processing framework, followed by Berkeley DB storage, graph construction, analytics, and monitoring.
 
 ---
 
@@ -351,26 +370,35 @@ telecom-stream-processing-framework/
 │   │   ├── design/
 │   │   └── testing/
 │   │
+│   ├── progress/
+│   │   ├── evolution_progress_log.md
+│   │   └── hybrid_progress_log.md
+│   │
 │   ├── project/
 │   │   ├── design/
 │   │   └── testing/
 │   │
-│   ├── progress/
 │   └── workflow/
 │
 ├── logs/
 │
 ├── reports/
+│   ├── GROUP-E_hybrid/
+│   ├── GROUP-E_integration/
+│   ├── GROUP-E_mpi/
+│   ├── GROUP-E_posix_threads/
+│   └── GROUP-E_sockets/
 │
 ├── src/
-│   ├── pthreads/
-│   ├── sockets/
+│   ├── hybrid/
 │   ├── integration/
 │   ├── mpi/
-│   └── hybrid/
+│   ├── pthreads/
+│   └── sockets/
 │
 ├── tests/
 │
+├── .gitignore
 └── README.md
 ```
 
@@ -395,16 +423,16 @@ src/hybrid/
 
 ### Module Responsibilities
 
-| Module      | Responsibility                                        |
-| ----------- | ----------------------------------------------------- |
-| include     | Common structures, configuration, and constants       |
-| mpi         | MPI communication and Multi-DES coordination          |
-| processing  | Shared buffer, synchronization, and packet processing |
-| database    | Berkeley DB integration and persistent storage        |
-| graph       | Telecom graph construction and graph statistics       |
-| analytics   | Traffic analytics and performance evaluation          |
-| monitoring  | Logging, statistics, and runtime monitoring           |
-| hybrid_main | System orchestration and lifecycle management         |
+| Module | Responsibility |
+|---------|----------------|
+| include | Common data structures, configuration files, APIs, and shared definitions |
+| mpi | MPI communication, packet transmission, serialization, traffic generation, queue management, and Multi-DES communication |
+| processing | Shared buffer management, thread synchronization, and packet processing |
+| database | Berkeley DB integration and persistent packet storage |
+| graph | Telecom graph construction, vertex and edge management, and graph statistics |
+| analytics | Traffic analysis, graph analytics, performance evaluation, and report generation |
+| monitoring | Runtime logging, statistics collection, and performance monitoring |
+| hybrid_main | Overall system initialization, module orchestration, and application lifecycle management |
 
 ---
 
@@ -438,20 +466,32 @@ Testing artifacts include:
 
 # Build Instructions
 
-> To be updated during Hybrid Framework implementation.
-
 ```bash
-# Build commands will be added here
-```
+cd src/hybrid
 
+make clean
+make
+```
 ---
 
 # Run Instructions
 
-> To be updated during Hybrid Framework implementation.
+### Single Client
 
 ```bash
-# Execution commands will be added here
+mpirun -np 2 ./hybrid
+```
+
+### Two Clients
+
+```bash
+mpirun -np 3 ./hybrid
+```
+
+### Four Clients
+
+```bash
+mpirun -np 5 ./hybrid
 ```
 
 ---
@@ -460,24 +500,41 @@ Testing artifacts include:
 
 ## Completed
 
-* POSIX Threads Framework
-* Shared Buffer Framework
-* Socket Communication Framework
-* Pthreads + Socket Integration Framework
-* MPI Distributed Processing Framework
-* Multi-DES MPI Framework
-* Testing & Validation Framework
-* Performance Monitoring Framework
-* Architecture & Design Documentation
+- POSIX Threads Producer–Consumer Framework
+- TCP Socket Communication Framework
+- Pthreads + Socket Integration Framework
+- MPI Distributed Processing Framework
+- Multi-DES MPI Framework
+- Hybrid Communication Layer
+- Architecture, Design, and Implementation Documentation
+- Communication Testing & Validation
+- Communication Performance Evaluation
 
 ## In Progress
 
-* Hybrid MPI + POSIX Threads Framework
-* Berkeley DB Integration
-* Graph Construction Framework
-* Analytics Framework
-* Cluster Deployment Support
-* End-to-End Testing & Validation
+- Hybrid Integration (MPI + POSIX Threads Shared Buffer)
+- Berkeley DB Storage Layer
+- Graph Construction Layer
+- Analytics Layer
+- Monitoring Layer
+- End-to-End Hybrid Validation
+
+---
+
+# Current Milestone
+
+The Communication Layer of the Hybrid Telecom Stream Processing Framework has been successfully implemented, tested, validated, and documented.
+
+Current capabilities include:
+
+- MPI-based communication
+- TelecomPacket serialization/deserialization
+- Multi-client communication
+- Queue validation
+- Queue stress testing
+- Communication performance benchmarking
+
+The next development milestone is the integration of the Communication Layer with the POSIX Threads Shared Buffer developed by Group-F.
 
 ---
 

@@ -86,9 +86,11 @@ static int transmit_packet(const TelecomPacket *packet)
         return -1;
     }
 
+    #if ENABLE_PACKET_LOGGING
     printf("Client [%d]: Packet %u sent successfully.\n",
        rank,
        packet->packet_id);
+    #endif
 
     return 0;
 }
@@ -108,10 +110,12 @@ int run_client(void)
         /* Generate a synthetic telecom packet */
         generate_packet(&packet);
 
+        #if ENABLE_PACKET_LOGGING
         printf("\n========== CLIENT : Packet %d ==========\n", i + 1);
 
         /* Display generated packet */
         printf("Sending Packet %d\n", i + 1);
+        #endif
 
         /* Send packet to server */
         if (send_packet(&packet) != 0)

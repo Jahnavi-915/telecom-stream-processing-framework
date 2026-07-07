@@ -74,9 +74,11 @@ bool enqueue_packet(const TelecomPacket *packet)
         maximum_size = current_size;
     }
 
+    #if ENABLE_PACKET_LOGGING
     printf("Packet %u enqueued successfully. Queue Size: %d\n",
            packet->packet_id,
            current_size);
+    #endif
 
     return true;
 }
@@ -105,9 +107,11 @@ bool dequeue_packet(TelecomPacket *packet)
     current_size--;
     packets_dequeued++;
 
+    #if ENABLE_PACKET_LOGGING
     printf("Packet %u dequeued successfully. Queue Size: %d\n",
            packet->packet_id,
            current_size);
+    #endif
 
     return true;
 }
@@ -147,12 +151,6 @@ void destroy_queue_interface(void)
     front = 0;
     rear = -1;
     current_size = 0;
-
-    printf("\n========== Queue Statistics ==========\n");
-    printf("Maximum Queue Size      : %d\n", maximum_size);
-    printf("Packets Enqueued        : %d\n", packets_enqueued);
-    printf("Packets Dequeued        : %d\n", packets_dequeued);
-    printf("======================================\n");
 
     printf("Communication queue destroyed.\n");
 }

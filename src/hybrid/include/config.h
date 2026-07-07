@@ -46,11 +46,15 @@
 
 #define ENABLE_LOGGING             1
 #define ENABLE_STATISTICS          1
+#define ENABLE_PACKET_LOGGING      1
 
 /* Communication Queue Configuration */
 #define QUEUE_CAPACITY 100
 
 /* Queue Stress Testing */
 #define PROCESSING_BATCH_SIZE 5
+
+/* Performance Evaluation */
+#define PERFORMANCE_MODE           0
 
 #endif /* CONFIG_H */

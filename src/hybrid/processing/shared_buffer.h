@@ -68,7 +68,7 @@ extern "C"
      * ========================================================= */
 
 #ifndef BUFFER_SIZE
-#define BUFFER_SIZE 20
+#define BUFFER_SIZE 100
 #endif
 
 

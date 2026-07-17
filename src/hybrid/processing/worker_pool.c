@@ -1,4 +1,5 @@
 #include "worker_pool.h"
+#include "../include/queue_interface.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,16 +15,18 @@ static void *worker_thread(void *arg)
 
     TelecomPacket packet;
 
-    while (!pool->stop)
+    while (1)
     {
         if (dequeue(pool->buffer, &packet) == BUF_OK)
         {
-            process_telecom_packet(
-                &packet,
-                worker_id);
+            increment_packets_dequeued();
+            process_telecom_packet(&packet, worker_id);
         }
         else
         {
+            if (pool->stop)
+                break;
+
             struct timespec ts = {0, 1000000}; // 1 millisecond
             nanosleep(&ts, NULL);
         }

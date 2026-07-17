@@ -7,10 +7,13 @@
 #include "../include/mpi_server.h"
 #include "../include/queue_interface.h"
 #include "../include/serialization.h"
+#include "../processing/worker_pool.h"
 
 #include <mpi.h>
 #include <stdio.h>
 #include <string.h>
+
+static WorkerPool processing_pool;
 
 int initialize_server(int *argc, char ***argv)
 {
@@ -20,6 +23,20 @@ int initialize_server(int *argc, char ***argv)
     if (!initialize_queue_interface())
     {
         fprintf(stderr, "ERROR: Failed to initialize communication queue.\n");
+        return -1;
+    }
+
+    if (worker_pool_init(&processing_pool,
+                     get_communication_buffer(),
+                     4) != 0)
+    {
+        fprintf(stderr, "ERROR: Failed to initialize worker pool.\n");
+        return -1;
+    }
+
+    if (worker_pool_start(&processing_pool) != 0)
+    {
+        fprintf(stderr, "ERROR: Failed to start worker pool.\n");
         return -1;
     }
 
@@ -85,7 +102,6 @@ int receive_packet(TelecomPacket *packet)
 int run_server(void)
 {
     TelecomPacket packet;
-    TelecomPacket processed_packet;
 
     int world_size;
     MPI_Comm_size(MPI_COMM_WORLD, &world_size);
@@ -110,56 +126,15 @@ int run_server(void)
         printf("Queue Size After Enqueue : %d\n",
                queue_size());
         #endif
-
-        #if PERFORMANCE_MODE
-
-            /* Performance mode: process every received packet */
-            if (!dequeue_packet(&processed_packet))
-            {
-                fprintf(stderr, "ERROR: Failed to dequeue packet.\n");
-                return -1;
-            }
-
-        #else
-
-            /* Stress-test mode: process one packet after every batch */
-            if ((i + 1) % PROCESSING_BATCH_SIZE == 0)
-            {
-                if (!dequeue_packet(&processed_packet))
-                {
-                    fprintf(stderr, "ERROR: Failed to dequeue packet.\n");
-                    return -1;
-                }
-
-        #if ENABLE_PACKET_LOGGING
-                printf("Processed Packet %u from DES-%u\n",
-                  processed_packet.packet_id,
-                  processed_packet.des_id);
-
-                printf("Queue Size After Dequeue : %d\n",
-                    queue_size());
-        #endif
-            }
-
-        #endif
-    }
-
-    /* Process remaining packets before shutdown */
-    while (!is_queue_empty())
-    {
-        if (!dequeue_packet(&processed_packet))
-        {
-            break;
-        }
-
-        #if ENABLE_PACKET_LOGGING
-        printf("Processed Remaining Packet %u from DES-%u\n",
-                processed_packet.packet_id,
-                processed_packet.des_id);
-        #endif
     }
 
     double end_time = MPI_Wtime();
+
+    while (total_packets_dequeued() < total_packets_enqueued())
+    {
+        struct timespec ts = {0, 1000000}; // 1 ms
+        nanosleep(&ts, NULL);
+    }
 
     double execution_time = end_time - start_time;
     double throughput = (double) total_packets / execution_time;
@@ -183,7 +158,12 @@ int run_server(void)
 
 int finalize_server(void)
 {
+    worker_pool_stop(&processing_pool);
+
+    worker_pool_destroy(&processing_pool);
+
     destroy_queue_interface();
+
     printf("MPI Server finalized.\n");
 
     return 0;

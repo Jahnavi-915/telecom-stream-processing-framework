@@ -3,6 +3,9 @@
 
 #include <stdbool.h>
 #include "telecom_packet.h"
+#include "../processing/shared_buffer.h"
+
+SharedBuffer *get_communication_buffer(void);
 
 bool initialize_queue_interface(void);
 
@@ -23,5 +26,7 @@ int total_packets_enqueued(void);
 int total_packets_dequeued(void);
 
 void destroy_queue_interface(void);
+
+void increment_packets_dequeued(void);
 
 #endif

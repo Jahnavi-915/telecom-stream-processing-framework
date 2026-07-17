@@ -4,25 +4,20 @@
  */
 
 #include "../include/queue_interface.h"
+#include "../processing/shared_buffer.h"
 #include "../include/config.h"
 
 #include <stdio.h>
-#include <string.h>
+#include <time.h>
 
 /* -------------------------------------------------------------------------- */
 /*                      Queue Data Structure                                  */
 /* -------------------------------------------------------------------------- */
 
-#define QUEUE_CAPACITY 100
-
-static TelecomPacket packet_queue[QUEUE_CAPACITY];
-
-static int front = 0;
-static int rear = -1;
-static int current_size = 0;
 static int maximum_size = 0;
 static int packets_enqueued = 0;
 static int packets_dequeued = 0;
+static SharedBuffer communication_buffer;
 
 /* -------------------------------------------------------------------------- */
 /*                    Queue Interface Implementation                          */
@@ -30,16 +25,17 @@ static int packets_dequeued = 0;
 
 bool initialize_queue_interface(void)
 {
-    front = 0;
-    rear = -1;
-    current_size = 0;
     maximum_size = 0;
     packets_enqueued = 0;
     packets_dequeued = 0;
 
-    memset(packet_queue, 0, sizeof(packet_queue));
-
     printf("Communication queue initialized.\n");
+
+    if (buffer_init(&communication_buffer) != BUF_OK)
+    {
+        fprintf(stderr, "ERROR: Failed to initialize shared buffer.\n");
+        return false;
+    }
 
     return true;
 }
@@ -51,33 +47,23 @@ bool enqueue_packet(const TelecomPacket *packet)
         fprintf(stderr, "ERROR: Invalid packet.\n");
         return false;
     }
-
-    if (is_queue_full())
+    while (enqueue(&communication_buffer, packet) == BUF_FULL)
     {
-        fprintf(stderr, "ERROR: Communication queue is full.\n");
-        return false;
+        struct timespec ts = {0, 1000000};   // 1 ms
+        nanosleep(&ts, NULL);
     }
-
-    /* Move rear to the next position */
-    rear = (rear + 1) % QUEUE_CAPACITY;
-
-    /* Store packet in queue */
-    packet_queue[rear] = *packet;
-
-    /* Update queue size */
-    current_size++;
 
     packets_enqueued++;
 
-    if (current_size > maximum_size)
+    if (communication_buffer.count > maximum_size)
     {
-        maximum_size = current_size;
+        maximum_size = communication_buffer.count;
     }
 
     #if ENABLE_PACKET_LOGGING
-    printf("Packet %u enqueued successfully. Queue Size: %d\n",
-           packet->packet_id,
-           current_size);
+    printf("Packet %u enqueued successfully. Buffer Size: %d\n",
+        packet->packet_id,
+        communication_buffer.count);
     #endif
 
     return true;
@@ -90,45 +76,38 @@ bool dequeue_packet(TelecomPacket *packet)
         fprintf(stderr, "ERROR: Invalid packet pointer.\n");
         return false;
     }
-
-    if (is_queue_empty())
+    
+    if (dequeue(&communication_buffer, packet) != BUF_OK)
     {
-        fprintf(stderr, "ERROR: Communication queue is empty.\n");
+        fprintf(stderr, "ERROR: Shared buffer is empty.\n");
         return false;
     }
 
-    /* Copy packet from the front of the queue */
-    *packet = packet_queue[front];
-
-    /* Move front to the next position */
-    front = (front + 1) % QUEUE_CAPACITY;
-
-    /* Update queue size */
-    current_size--;
     packets_dequeued++;
 
     #if ENABLE_PACKET_LOGGING
-    printf("Packet %u dequeued successfully. Queue Size: %d\n",
-           packet->packet_id,
-           current_size);
+    printf("Packet %u dequeued successfully. Buffer Size: %d\n",
+        packet->packet_id,
+        communication_buffer.count);
     #endif
 
     return true;
+
 }
 
 bool is_queue_empty(void)
 {
-    return (current_size==0);
+    return (communication_buffer.count == 0);
 }
 
 bool is_queue_full(void)
 {
-    return (current_size == QUEUE_CAPACITY);
+    return (communication_buffer.count == BUFFER_SIZE);
 }
 
 int queue_size(void)
 {
-    return current_size;
+    return communication_buffer.count;
 }
 
 int max_queue_size(void)
@@ -146,11 +125,19 @@ int total_packets_dequeued(void)
     return packets_dequeued;
 }
 
+void increment_packets_dequeued(void)
+{
+    packets_dequeued++;
+}
+
+SharedBuffer *get_communication_buffer(void)
+{
+    return &communication_buffer;
+}
+
 void destroy_queue_interface(void)
 {
-    front = 0;
-    rear = -1;
-    current_size = 0;
-
+    buffer_destroy(&communication_buffer);
+    
     printf("Communication queue destroyed.\n");
 }

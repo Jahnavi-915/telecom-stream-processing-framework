@@ -21,17 +21,19 @@ Unlike the **Architecture** and **Design** documents, which describe the target 
 | Module | Status |
 |---------|--------|
 | Communication Layer | ✅ Completed |
-| Processing Layer | ⏳ Pending Hybrid Integration |
+| Processing Layer | ✅ Completed |
 | Storage Layer | ⏳ Not Implemented |
 | Graph Construction Layer | ⏳ Not Implemented |
 | Analytics Layer | ⏳ Not Implemented |
 | Monitoring Layer | 🟡 Basic Runtime Statistics Implemented |
 
-**Current Milestone**
+Current Milestone
 
-The Communication Layer has been fully implemented, tested, validated, performance evaluated, and documented.
+The Communication Layer and Processing Layer have been successfully integrated into the Hybrid Telecom Stream Processing Framework.
 
-The next development milestone is the integration of the POSIX Threads Processing Layer developed by Group-F.
+The implementation now supports concurrent packet reception, shared buffer management, worker thread processing, runtime statistics collection, and graceful shutdown.
+
+The next development milestone is the implementation of the Berkeley DB Storage Layer.
 
 ---
 
@@ -80,7 +82,7 @@ Its responsibilities include:
 - Communication validation
 - Communication performance evaluation
 
-The Communication Layer was implemented incrementally through seven development phases.
+The Communication Layer was implemented incrementally through eight development phases.
 
 ---
 
@@ -333,54 +335,377 @@ All benchmark executions completed successfully without packet loss.
 
 ---
 
+## Phase 8 – Multi-DES Communication Enhancement
+
+### Objective
+
+Extend the Communication Layer to support multiple Data Extraction Servers (DES) while preserving the underlying MPI communication model.
+
+### Implemented Components
+
+- Added DES identifier to every TelecomPacket.
+- Extended packet generation to support multiple DES instances.
+- Each MPI client represents an independent Data Extraction Server.
+- Communication server identifies the originating DES using packet metadata.
+- Communication logging updated to display DES identifiers.
+
+### Communication Flow
+
+```text
+DES-1 ─┐
+DES-2 ─┤
+DES-3 ─┤
+DES-4 ─┘
+        │
+        ▼
+MPI Communication Server
+        │
+        ▼
+DES Identification
+        │
+        ▼
+Packet Reception
+```
+
+### Outcome
+
+The Communication Layer was successfully extended from generic MPI client communication to a telecom-oriented Multi-DES architecture.
+
+Each Data Extraction Server operates as an independent MPI client process while remaining uniquely identifiable through the DES identifier embedded within every telecom packet.
+
+Communication from multiple DES instances was successfully validated without packet loss, completing the implementation of the Communication Layer and preparing it for integration with the Processing Layer.
+
+**Status:** Completed and Validated
+
+---
+
+# Processing Layer Implementation
+
+The Processing Layer provides concurrent packet buffering and processing for the Hybrid Telecom Stream Processing Framework.
+
+Its responsibilities include:
+
+- Shared buffer management
+- Concurrent packet buffering
+- Producer-consumer synchronization
+- Worker thread management
+- Telecom packet processing
+- Runtime statistics collection
+- Graceful system shutdown
+
+The Processing Layer was implemented incrementally through six development phases.
+
+---
+
+## Phase 1 – Shared Buffer Implementation
+
+### Objective
+
+Replace the temporary communication queue with a thread-safe shared buffer suitable for concurrent packet reception and processing.
+
+### Implemented Components
+
+- SharedBuffer structure
+- Circular buffer implementation
+- Buffer initialization
+- Buffer destruction
+- Packet enqueue operation
+- Packet dequeue operation
+- Queue occupancy tracking
+
+### Shared Buffer Architecture
+
+```text
+Packet Reception
+        │
+        ▼
+Shared Buffer
+ ┌──────────────────────┐
+ │ Circular Packet Queue│
+ │ Head Pointer         │
+ │ Tail Pointer         │
+ │ Packet Counter       │
+ └──────────────────────┘
+```
+
+### Outcome
+
+A thread-safe circular shared buffer was successfully implemented to temporarily store incoming telecom packets before processing.
+
+**Status:** Completed and Validated
+
+---
+
+## Phase 2 – Producer-Consumer Synchronization
+
+### Objective
+
+Enable concurrent packet insertion and removal using POSIX synchronization mechanisms.
+
+### Implemented Components
+
+- Producer enqueue operation
+- Consumer dequeue operation
+- Read-write lock protection
+- Queue status monitoring
+- Buffer full detection
+- Buffer empty detection
+
+### Processing Flow
+
+```text
+Producer
+      │
+      ▼
+Shared Buffer
+      │
+      ▼
+Consumer
+```
+
+### Outcome
+
+Concurrent packet insertion and removal were successfully synchronized while maintaining queue consistency and packet integrity.
+
+**Status:** Completed and Validated
+
+---
+
+## Phase 3 – Worker Thread Pool
+
+### Objective
+
+Introduce multiple worker threads capable of processing packets concurrently.
+
+### Implemented Components
+
+- Worker thread creation
+- Worker pool initialization
+- Continuous worker execution
+- Packet retrieval from shared buffer
+- Worker termination
+- Thread cleanup
+
+### Worker Pool Architecture
+
+```text
+Shared Buffer
+      │
+      ├──────────────┐
+      ▼              ▼
+ Worker 1        Worker 2
+      │              │
+      └──────┬───────┘
+             ▼
+     Packet Processing
+```
+
+### Outcome
+
+Multiple worker threads successfully processed packets concurrently from the shared buffer.
+
+**Status:** Completed and Validated
+
+---
+
+## Phase 4 – Processing Layer Integration
+
+### Objective
+
+Integrate the Processing Layer with the existing MPI Communication Layer.
+
+### Implemented Components
+
+- Shared buffer initialization during server startup
+- Worker pool initialization
+- Packet transfer from MPI server to shared buffer
+- Concurrent packet processing
+- Processing statistics updates
+
+### Integrated Processing Pipeline
+
+```text
+MPI Client
+      │
+      ▼
+MPI Server
+      │
+      ▼
+Shared Buffer
+      │
+      ▼
+Worker Thread Pool
+      │
+      ▼
+Packet Processing
+```
+
+### Outcome
+
+The Communication Layer and Processing Layer were successfully integrated into a concurrent hybrid processing pipeline.
+
+**Status:** Completed and Validated
+
+---
+
+## Phase 5 – Functional Validation
+
+### Objective
+
+Verify correct processing under different workloads and concurrent execution.
+
+### Validation Cases
+
+- Single client with 10 packets
+- Single client with 25 packets
+- Single client with 100 packets
+- Four concurrent clients with 100 packets each
+
+### Observations
+
+- All packets were successfully processed.
+- No packet loss occurred.
+- No duplicate packet processing occurred.
+- Queue statistics remained consistent.
+- Graceful shutdown completed successfully after processing all packets.
+
+**Status:** Completed and Validated
+
+---
+
+## Phase 6 – Performance Evaluation
+
+### Objective
+
+Evaluate the performance of the integrated processing pipeline.
+
+### Implemented Components
+
+- Execution time measurement
+- Throughput calculation
+- Average packet processing time
+- Queue utilization monitoring
+- Runtime statistics collection
+
+### Performance Metrics
+
+Implemented metrics include:
+
+- Total Packets Processed
+- Execution Time
+- Average Processing Time
+- Throughput
+- Maximum Queue Size
+- Packets Enqueued
+- Packets Dequeued
+
+### Outcome
+
+Performance evaluation demonstrated efficient concurrent packet processing under varying workloads while maintaining packet integrity and stable throughput.
+
+**Status:** Completed and Validated
+
+---
+
+# Current Processing Layer Architecture
+
+The currently implemented processing subsystem follows the architecture shown below.
+
+```text
+MPI Communication Layer
+        │
+        ▼
+MPI Server
+        │
+        ▼
+Shared Buffer
+        │
+        ▼
+Worker Thread Pool
+        │
+        ▼
+Packet Processing Engine
+```
+
+The Processing Layer now operates concurrently with the Communication Layer, enabling asynchronous packet reception and processing.
+
+---
+
+# Processing Layer Summary
+
+The Processing Layer has been successfully:
+
+- Implemented
+- Integrated with the Communication Layer
+- Tested under multiple workloads
+- Validated for concurrent execution
+- Performance evaluated
+- Documented
+
+The completed hybrid processing pipeline now provides reliable concurrent packet buffering and processing, forming the foundation for the next implementation milestone: Berkeley DB Storage.
+
+---
+
 # Current Communication Layer Architecture
 
 The currently implemented communication subsystem follows the architecture shown below.
 
 ```text
 Traffic Generator
-        │
-        ▼
+      │
+      ▼
 MPI Client
-        │
-        ▼
+      │
+      ▼
 MPI Communication
-        │
-        ▼
+      │
+      ▼
 MPI Server
-        │
-        ▼
-Temporary Communication Queue
+      │
+      ▼
+Shared Buffer
+      │
+      ▼
+Worker Thread Pool
+      │
+      ▼
+Packet Processing Engine
 ```
 
-The temporary communication queue exists solely for communication-layer validation.
-
-It will be replaced during hybrid integration.
+The communication layer is now fully integrated with the Processing Layer. Incoming telecom packets are placed into the shared buffer, processed concurrently by the worker thread pool, and forwarded to subsequent system modules.
 
 ---
 
-# Next Development Milestone – Hybrid Integration
+# Current Milestone
 
-The next implementation milestone is the integration of the POSIX Threads implementation developed by Group-F.
+The Communication Layer and Processing Layer have been successfully integrated into the Hybrid Telecom Stream Processing Framework.
 
-During hybrid integration:
+The implementation now supports concurrent packet reception, shared buffer management, worker thread processing, runtime statistics collection, and graceful shutdown.
 
-- The temporary communication queue will be removed.
-- The POSIX Threads shared buffer will replace the temporary communication queue.
-- Packet reception and packet processing will execute concurrently.
-- Worker threads will remove packets from the shared buffer.
-- Producer-consumer synchronization will replace the temporary stress-testing implementation.
+The next development milestone is the implementation of the Berkeley DB Storage Layer.
 
-The communication pipeline will become:
+---
 
-```text
+# Next Development Milestone – Berkeley DB Storage Layer
+
+The next implementation milestone is the integration of Berkeley DB for persistent telecom packet storage.
+
+The Storage Layer will provide:
+
+- Persistent storage of processed telecom packets
+- Packet retrieval support
+- Packet metadata management
+- Storage interface for graph construction
+
+The processing pipeline will become:
+
 Traffic Source
       │
       ▼
 MPI Communication Layer
       │
       ▼
-POSIX Threads Shared Buffer
+Shared Buffer
       │
       ▼
 Worker Thread Pool
@@ -392,25 +717,22 @@ Packet Processing Engine
 Berkeley DB Storage
       │
       ▼
-Graph Construction Engine
+Graph Construction
       │
       ▼
-Analytics Engine
+Analytics
       │
       ▼
-Monitoring & Reports
-```
-
-This architecture corresponds to the target Hybrid Telecom Stream Processing Framework described in the Architecture and Design documents.
+Monitoring
 
 ---
 
 # Current Project Progress
 
 | Module | Progress |
-|---------|----------|
+|--------|----------|
 | Communication Layer | ✅ 100% |
-| Processing Layer | ⏳ Awaiting Integration |
+| Processing Layer | ✅ 100% |
 | Storage Layer | ⏳ Not Started |
 | Graph Construction Layer | ⏳ Not Started |
 | Analytics Layer | ⏳ Not Started |
@@ -420,21 +742,21 @@ This architecture corresponds to the target Hybrid Telecom Stream Processing Fra
 
 # Overall Status
 
-The Communication Layer of the Hybrid Telecom Stream Processing Framework has been successfully:
+The Communication and Processing Layers of the Hybrid Telecom Stream Processing Framework have been successfully:
 
 - Implemented
+- Integrated
 - Tested
 - Validated
 - Performance Evaluated
 - Documented
 
-The communication subsystem is considered complete and ready for hybrid integration with the POSIX Threads Processing Layer.
+The hybrid processing pipeline is now complete and provides the foundation for the remaining project modules.
 
 Subsequent development phases will focus on:
 
-- Hybrid integration
-- Packet processing
-- Berkeley DB storage
-- Graph construction
-- Analytics
-- End-to-end system validation
+- Berkeley DB Storage
+- Graph Construction
+- Analytics Engine
+- Monitoring
+- End-to-End System Validation

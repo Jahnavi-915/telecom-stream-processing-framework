@@ -22,18 +22,10 @@ Unlike the **Architecture** and **Design** documents, which describe the target 
 |---------|--------|
 | Communication Layer | ✅ Completed |
 | Processing Layer | ✅ Completed |
-| Storage Layer | ⏳ Not Implemented |
+| Storage Layer | ✅ Completed |
 | Graph Construction Layer | ⏳ Not Implemented |
 | Analytics Layer | ⏳ Not Implemented |
 | Monitoring Layer | 🟡 Basic Runtime Statistics Implemented |
-
-Current Milestone
-
-The Communication Layer and Processing Layer have been successfully integrated into the Hybrid Telecom Stream Processing Framework.
-
-The implementation now supports concurrent packet reception, shared buffer management, worker thread processing, runtime statistics collection, and graceful shutdown.
-
-The next development milestone is the implementation of the Berkeley DB Storage Layer.
 
 ---
 
@@ -646,59 +638,152 @@ The completed hybrid processing pipeline now provides reliable concurrent packet
 
 ---
 
-# Current Communication Layer Architecture
+# Storage Layer Implementation
 
-The currently implemented communication subsystem follows the architecture shown below.
+The Storage Layer provides persistent storage for processed telecom packets using Berkeley DB.
+
+Its responsibilities include:
+
+- Berkeley DB initialization
+- Packet storage
+- Packet retrieval
+- Thread-safe database access
+- Database shutdown
+
+The Storage Layer was implemented incrementally through four development phases.
+
+---
+
+## Phase 1 – Berkeley DB Integration
+
+### Objective
+
+Integrate Berkeley DB into the Hybrid Telecom Stream Processing Framework.
+
+### Implemented Components
+
+- Berkeley DB initialization
+- Database creation
+- Database opening
+- Database integration with the MPI server
+
+### Outcome
+
+Berkeley DB was successfully initialized during server startup and integrated into the existing processing pipeline.
+
+**Status:** Completed and Validated
+
+---
+
+## Phase 2 – Packet Storage
+
+### Objective
+
+Persist processed telecom packets within Berkeley DB.
+
+### Implemented Components
+
+- Packet storage API
+- Packet ID as primary key
+- Storage integration with worker threads
+
+### Storage Pipeline
 
 ```text
-Traffic Generator
+Worker Thread
       │
       ▼
-MPI Client
+Packet Processing
       │
       ▼
-MPI Communication
-      │
-      ▼
-MPI Server
-      │
-      ▼
-Shared Buffer
-      │
-      ▼
-Worker Thread Pool
-      │
-      ▼
-Packet Processing Engine
+Berkeley DB
 ```
 
-The communication layer is now fully integrated with the Processing Layer. Incoming telecom packets are placed into the shared buffer, processed concurrently by the worker thread pool, and forwarded to subsequent system modules.
+### Outcome
+
+All processed telecom packets were successfully stored in Berkeley DB.
+
+**Status:** Completed and Validated
+
+---
+
+## Phase 3 – Packet Retrieval
+
+### Objective
+
+Retrieve stored telecom packets using Packet ID.
+
+### Implemented Components
+
+- Packet retrieval API
+- Interactive packet query
+- Packet information display
+
+### Retrieval Flow
+
+```text
+Packet ID
+      │
+      ▼
+Berkeley DB
+      │
+      ▼
+Retrieved TelecomPacket
+```
+
+### Outcome
+
+Stored telecom packets were successfully retrieved and verified using Packet ID.
+
+**Status:** Completed and Validated
+
+---
+
+## Phase 4 – Thread-Safe Database Access
+
+### Objective
+
+Support concurrent database access by multiple worker threads.
+
+### Implemented Components
+
+- POSIX mutex synchronization
+- Thread-safe packet storage
+- Safe packet retrieval
+- Database cleanup
+
+### Outcome
+
+Concurrent packet storage was successfully synchronized without runtime failures or database corruption.
+
+**Status:** Completed and Validated
 
 ---
 
 # Current Milestone
 
-The Communication Layer and Processing Layer have been successfully integrated into the Hybrid Telecom Stream Processing Framework.
+The Communication Layer, Processing Layer, and Berkeley DB Storage Layer have been successfully integrated into the Hybrid Telecom Stream Processing Framework.
 
-The implementation now supports concurrent packet reception, shared buffer management, worker thread processing, runtime statistics collection, and graceful shutdown.
+The implementation now supports distributed packet communication, concurrent packet processing, persistent packet storage, interactive packet retrieval, runtime statistics collection, and graceful shutdown.
 
-The next development milestone is the implementation of the Berkeley DB Storage Layer.
+The next development milestone is the implementation of the Graph Construction Layer.
 
 ---
 
-# Next Development Milestone – Berkeley DB Storage Layer
+# Next Development Milestone – Graph Construction Layer
 
-The next implementation milestone is the integration of Berkeley DB for persistent telecom packet storage.
+The next implementation milestone is the Graph Construction Layer.
 
-The Storage Layer will provide:
+The Graph Layer will provide:
 
-- Persistent storage of processed telecom packets
-- Packet retrieval support
-- Packet metadata management
-- Storage interface for graph construction
+- Graph generation from stored telecom packets
+- Communication edge creation
+- Tower connectivity modelling
+- Graph interface for analytics
 
 The processing pipeline will become:
 
+```text
 Traffic Source
       │
       ▼
@@ -724,6 +809,7 @@ Analytics
       │
       ▼
 Monitoring
+```
 
 ---
 
@@ -733,7 +819,7 @@ Monitoring
 |--------|----------|
 | Communication Layer | ✅ 100% |
 | Processing Layer | ✅ 100% |
-| Storage Layer | ⏳ Not Started |
+| Storage Layer | ✅ 100% |
 | Graph Construction Layer | ⏳ Not Started |
 | Analytics Layer | ⏳ Not Started |
 | Monitoring Layer | 🟡 Basic Framework Available |
@@ -742,7 +828,7 @@ Monitoring
 
 # Overall Status
 
-The Communication and Processing Layers of the Hybrid Telecom Stream Processing Framework have been successfully:
+The Communication Layer, Processing Layer, and Storage Layer of the Hybrid Telecom Stream Processing Framework have been successfully:
 
 - Implemented
 - Integrated
@@ -751,12 +837,11 @@ The Communication and Processing Layers of the Hybrid Telecom Stream Processing 
 - Performance Evaluated
 - Documented
 
-The hybrid processing pipeline is now complete and provides the foundation for the remaining project modules.
+The hybrid processing pipeline now supports distributed packet communication, concurrent packet processing, persistent packet storage using Berkeley DB, packet retrieval, runtime statistics collection, and graceful system shutdown.
 
 Subsequent development phases will focus on:
 
-- Berkeley DB Storage
-- Graph Construction
+- Graph Construction Layer
 - Analytics Engine
-- Monitoring
+- Monitoring Layer
 - End-to-End System Validation

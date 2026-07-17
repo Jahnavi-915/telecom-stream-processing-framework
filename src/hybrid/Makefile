@@ -10,10 +10,10 @@ CC = mpicc
 INCLUDE_DIR = include
 MPI_DIR = mpi
 PROCESSING_DIR = processing
+DATABASE_DIR = database
 
 # Compiler Flags
-CFLAGS = -D_XOPEN_SOURCE=700 -Wall -Wextra -std=c11 -pthread -I$(INCLUDE_DIR)
-
+CFLAGS = -D_DEFAULT_SOURCE -D_XOPEN_SOURCE=700 -Wall -Wextra -std=c11 -pthread -I$(INCLUDE_DIR)
 # Target Executable
 TARGET = hybrid
 
@@ -29,6 +29,7 @@ $(MPI_DIR)/queue_interface.c \
 $(PROCESSING_DIR)/shared_buffer.c \
 $(PROCESSING_DIR)/packet_processor.c \
 $(PROCESSING_DIR)/worker_pool.c \
+$(DATABASE_DIR)/berkeley_db.c \
 $(MPI_DIR)/config.c
 
 # Object Files
@@ -41,7 +42,7 @@ OBJECTS = $(SOURCES:.c=.o)
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	$(CC) $(OBJECTS) -pthread -o $(TARGET)
+	$(CC) $(OBJECTS) -pthread -ldb -o $(TARGET)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

@@ -8,6 +8,7 @@
 #include "../include/queue_interface.h"
 #include "../include/serialization.h"
 #include "../processing/worker_pool.h"
+#include "../database/berkeley_db.h"
 
 #include <mpi.h>
 #include <stdio.h>
@@ -37,6 +38,12 @@ int initialize_server(int *argc, char ***argv)
     if (worker_pool_start(&processing_pool) != 0)
     {
         fprintf(stderr, "ERROR: Failed to start worker pool.\n");
+        return -1;
+    }
+
+    if (db_initialize("telecom.db") != 0)
+    {
+        fprintf(stderr, "ERROR: Failed to initialize Berkeley DB.\n");
         return -1;
     }
 
@@ -162,6 +169,48 @@ int finalize_server(void)
 
     worker_pool_destroy(&processing_pool);
 
+    TelecomPacket retrieved_packet;
+    uint32_t packet_id;
+
+    while (1)
+    {
+        printf("\n========== DATABASE QUERY ==========\n");
+        printf("Enter Packet ID to retrieve (1-%d) (0 to exit): ",
+            total_packets_enqueued());
+        fflush(stdout);
+
+        if (scanf("%u", &packet_id) != 1)
+        {
+            fprintf(stderr, "Invalid input.\n");
+            break;
+        }
+
+        if (packet_id == 0)
+            break;
+
+        if (packet_id > (uint32_t)total_packets_enqueued())
+        {
+            printf("Packet ID must be between 1 and %d.\n",
+                total_packets_enqueued());
+            continue;
+        }
+
+        if (db_get_packet(packet_id, &retrieved_packet) == 0)
+        {
+            printf("\n========== DATABASE QUERY RESULT ==========\n");
+            printf("Packet ID    : %u\n", retrieved_packet.packet_id);
+            printf("DES ID       : %u\n", retrieved_packet.des_id);
+            printf("Source       : %s\n", retrieved_packet.source);
+            printf("Destination  : %s\n", retrieved_packet.destination);
+            printf("Traffic Type : %s\n", retrieved_packet.traffic_type);
+            printf("Priority     : %u\n", retrieved_packet.priority);
+            printf("Packet Size  : %u\n", retrieved_packet.packet_size);
+            printf("Timestamp    : %s\n", retrieved_packet.timestamp);
+            printf("===========================================\n");
+        }
+    }
+
+    db_close();
     destroy_queue_interface();
 
     printf("MPI Server finalized.\n");

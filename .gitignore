@@ -22,7 +22,7 @@ bin/
 *.swo
 
 # Executables
-hybrid
+/src/hybrid/hybrid
 stream
 server
 client

@@ -173,10 +173,10 @@ Worker Thread Pool
 Packet Processing Engine
             │
             ▼
-Graph Construction Engine
+Berkeley DB Storage
             │
             ▼
-Berkeley DB Storage
+Graph Construction Engine
             │
             ▼
 Analytics Engine
@@ -236,7 +236,19 @@ Responsibilities:
 
 ---
 
-## Step 6: Graph Construction
+## Step 6: Berkeley DB Storage
+
+Processed packet records and graph information are stored persistently.
+
+Responsibilities:
+
+- Packet storage
+- Metadata storage
+- Graph storage
+
+---
+
+## Step 7: Graph Construction
 
 Processed packets are converted into graph structures.
 
@@ -247,18 +259,6 @@ Source Node ─────► Destination Node
 ```
 
 Edge weights represent traffic volume.
-
----
-
-## Step 7: Berkeley DB Storage
-
-Processed packet records and graph information are stored persistently.
-
-Responsibilities:
-
-- Packet storage
-- Metadata storage
-- Graph storage
 
 ---
 
@@ -486,14 +486,14 @@ src/hybrid/database/
 
 Responsibilities:
 
-- Berkeley DB Integration
-- Packet Storage
-- Metadata Storage
-- Record Retrieval
+- Packet storage
+- Packet retrieval
+- Persistent data management
+- Database management
 
 Status:
 
-Not Implemented
+Implemented
 
 ---
 
@@ -557,7 +557,7 @@ Responsibilities:
 
 Status:
 
-Not Implemented
+Implemented
 
 # APIs
 
@@ -610,19 +610,27 @@ int create_worker_pool(int thread_count);
 ### Database Initialization
 
 ```c
-int initialize_database(void);
+int db_initialize(const char *db_name);
 ```
 
 ### Store Packet
 
 ```c
-int store_packet(TelecomPacket *packet);
+int db_store_packet(const TelecomPacket *packet);
+```
+
+### Get Packet
+
+```c
+
+int db_get_packet(uint32_t packet_id,
+                  TelecomPacket *packet);
 ```
 
 ### Close Database
 
 ```c
-void close_database(void);
+void db_close(void);
 ```
 
 ---

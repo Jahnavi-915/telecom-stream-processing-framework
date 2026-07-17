@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "packet_processor.h"
+#include "../database/berkeley_db.h"
 
 void process_telecom_packet(
     const TelecomPacket *packet,
@@ -23,4 +24,12 @@ void process_telecom_packet(
         packet->priority,
         packet->packet_size,
         packet->timestamp);
+
+    if (db_store_packet(packet) != 0)
+    {
+        fprintf(stderr,
+                "[Worker-%d] Failed to store Packet %u.\n",
+                worker_id,
+                packet->packet_id);
+    }
 }

@@ -61,10 +61,10 @@ Worker Thread Pool
 Packet Processing Engine
           │
           ▼
-Graph Construction Engine
+Berkeley DB Storage
           │
           ▼
-Berkeley DB Storage
+Graph Construction Engine
           │
           ▼
 Analytics Engine
@@ -199,10 +199,10 @@ Components:
 
 Responsibilities:
 
-* Packet storage
-* Metadata storage
-* Processed data management
-* Persistent record maintenance
+- Packet storage
+- Packet retrieval
+- Persistent data management
+- Database management
 
 ---
 
@@ -334,7 +334,7 @@ Processed telecom packet information.
 
 ## Berkeley DB Records
 
-Persistent packet and metadata storage.
+Persistent storage and retrieval of processed telecom packet records.
 
 ## Traffic Graphs
 
@@ -379,10 +379,10 @@ Worker Threads
 Packet Processing
       │
       ▼
-Graph Construction
+Berkeley DB
       │
       ▼
-Berkeley DB
+Graph Construction
       │
       ▼
 Analytics

@@ -1,4 +1,5 @@
 #include "berkeley_db.h"
+#include "../monitoring/monitoring.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -77,6 +78,7 @@ int db_store_packet(const TelecomPacket *packet)
                 packet->packet_id);
         return -1;
     }
+    monitoring_get_statistics()->packets_stored++;
 
     printf("Packet %u stored in Berkeley DB.\n", packet->packet_id);
 

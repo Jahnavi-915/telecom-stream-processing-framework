@@ -10,6 +10,7 @@
 #include "../processing/worker_pool.h"
 #include "../database/berkeley_db.h"
 #include "../graph/graph.h"
+#include "../monitoring/monitoring.h"
 
 #include <mpi.h>
 #include <stdio.h>
@@ -50,6 +51,8 @@ int initialize_server(int *argc, char ***argv)
     }
 
     initialize_graph(&telecom_graph);
+
+    monitoring_initialize();
 
     printf("MPI Server initialized.\n");
 
@@ -106,6 +109,7 @@ int receive_packet(TelecomPacket *packet)
         return -1;
     }
 
+    monitoring_get_statistics()->packets_received++;
 
     return 0;
 }
@@ -150,6 +154,14 @@ int run_server(void)
     double execution_time = end_time - start_time;
     double throughput = (double) total_packets / execution_time;
     double average_time = execution_time / total_packets;
+
+    SystemStatistics *stats = monitoring_get_statistics();
+
+    stats->packets_enqueued = total_packets_enqueued();
+    stats->packets_dequeued = total_packets_dequeued();
+
+    stats->execution_time = execution_time;
+    stats->throughput = throughput;
 
     printf("\n");
     printf("========== PERFORMANCE SUMMARY ==========\n");
@@ -219,6 +231,13 @@ int finalize_server(void)
 
     print_graph_statistics(&telecom_graph);
 
+    SystemStatistics *stats = monitoring_get_statistics();
+
+    stats->total_vertices = telecom_graph.vertex_count;
+    stats->total_edges = telecom_graph.edge_count;
+    stats->communication_volume =
+        total_communication_volume(&telecom_graph);
+
     printf("\n========== GRAPH ANALYTICS ==========\n");
 
     printf("Total Communication Volume : %u packets\n",
@@ -253,19 +272,22 @@ int finalize_server(void)
 
     printf("\n========== NODE DEGREES ==========\n");
 
-GraphVertex *vertex = telecom_graph.vertices;
+    GraphVertex *vertex = telecom_graph.vertices;
 
-while (vertex != NULL)
-{
-    printf("%-10s  Out:%2u  In:%2u\n",
-           vertex->node_name,
-           out_degree(&telecom_graph, vertex->node_name),
-           in_degree(&telecom_graph, vertex->node_name));
+    while (vertex != NULL)
+    {
+        printf("%-10s  Out:%2u  In:%2u\n",
+            vertex->node_name,
+            out_degree(&telecom_graph, vertex->node_name),
+            in_degree(&telecom_graph, vertex->node_name));
 
-    vertex = vertex->next;
-}
+        vertex = vertex->next;
+    }
 
-printf("==================================\n");
+    printf("==================================\n");
+
+    printf("\n");
+    monitoring_print_dashboard();
 
     free_graph(&telecom_graph);
 

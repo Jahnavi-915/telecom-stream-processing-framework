@@ -12,6 +12,7 @@ MPI_DIR = mpi
 PROCESSING_DIR = processing
 DATABASE_DIR = database
 GRAPH_DIR = graph
+MONITORING_DIR = monitoring
 
 # Compiler Flags
 CFLAGS = -D_DEFAULT_SOURCE -D_XOPEN_SOURCE=700 -Wall -Wextra -std=c11 -pthread -I$(INCLUDE_DIR)
@@ -32,6 +33,9 @@ $(PROCESSING_DIR)/packet_processor.c \
 $(PROCESSING_DIR)/worker_pool.c \
 $(DATABASE_DIR)/berkeley_db.c \
 $(GRAPH_DIR)/graph.c \
+$(MONITORING_DIR)/logger.c \
+$(MONITORING_DIR)/statistics.c \
+$(MONITORING_DIR)/monitoring.c \
 $(MPI_DIR)/config.c
 
 # Object Files

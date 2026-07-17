@@ -10,6 +10,8 @@
 #include <mpi.h>
 #include <stdio.h>
 
+#include "monitoring/logger.h"
+
 int main(int argc, char *argv[])
 {
     int rank;

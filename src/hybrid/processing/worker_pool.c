@@ -1,5 +1,6 @@
 #include "worker_pool.h"
 #include "../include/queue_interface.h"
+#include "../monitoring/monitoring.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,6 +22,7 @@ static void *worker_thread(void *arg)
         {
             increment_packets_dequeued();
             process_telecom_packet(&packet, worker_id);
+            monitoring_get_statistics()->packets_processed++;
         }
         else
         {

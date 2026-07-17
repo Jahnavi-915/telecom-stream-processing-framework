@@ -23,8 +23,8 @@ Unlike the **Architecture** and **Design** documents, which describe the target 
 | Communication Layer | ✅ Completed |
 | Processing Layer | ✅ Completed |
 | Storage Layer | ✅ Completed |
-| Graph Construction Layer | ⏳ Not Implemented |
-| Analytics Layer | ⏳ Not Implemented |
+| Graph Construction Layer | ✅ Completed |
+| Analytics Layer | ✅ Completed |
 | Monitoring Layer | 🟡 Basic Runtime Statistics Implemented |
 
 ---
@@ -760,13 +760,201 @@ Concurrent packet storage was successfully synchronized without runtime failures
 
 ---
 
+# Graph Construction Layer Implementation
+
+The Graph Construction Layer models telecom communication as a directed weighted graph.
+
+Its responsibilities include:
+
+- Graph initialization
+- Vertex creation
+- Edge creation
+- Edge weight management
+- Graph statistics
+- Memory management
+
+The Graph Construction Layer was implemented incrementally through four development phases.
+
+---
+
+## Phase 1 – Graph Infrastructure
+
+### Objective
+
+Create the graph data structures required to model telecom communication.
+
+### Implemented Components
+
+- Graph structure
+- GraphVertex structure
+- GraphEdge structure
+- Graph initialization
+- Graph cleanup
+
+### Outcome
+
+A directed adjacency-list graph was successfully implemented.
+
+**Status:** Completed and Validated
+
+---
+
+## Phase 2 – Automatic Graph Construction
+
+### Objective
+
+Construct the graph dynamically while processing telecom packets.
+
+### Implemented Components
+
+- Automatic vertex creation
+- Automatic edge creation
+- Edge weight updates
+- Duplicate edge detection
+
+### Graph Pipeline
+
+Worker Thread
+
+↓
+
+Packet Processing
+
+↓
+
+Berkeley DB Storage
+
+↓
+
+Graph Construction
+
+### Outcome
+
+The graph is automatically updated whenever a packet is processed.
+
+**Status:** Completed and Validated
+
+---
+
+## Phase 3 – Graph Statistics
+
+### Objective
+
+Generate statistics describing the communication graph.
+
+### Implemented Components
+
+- Total vertices
+- Total edges
+- Graph printing
+- Graph statistics
+
+### Outcome
+
+Graph statistics successfully describe the communication topology.
+
+**Status:** Completed and Validated
+
+---
+
+## Phase 4 – Memory Management
+
+### Objective
+
+Release graph resources during system shutdown.
+
+### Implemented Components
+
+- Graph cleanup
+- Edge cleanup
+- Vertex cleanup
+
+### Outcome
+
+All graph resources are released successfully during shutdown.
+
+**Status:** Completed and Validated
+
+---
+
+# Analytics Layer Implementation
+
+The Analytics Layer performs communication analysis over the constructed telecom graph.
+
+Its responsibilities include:
+
+- Communication volume analysis
+- Source traffic analysis
+- Destination traffic analysis
+- Communication link analysis
+- Degree analysis
+
+The Analytics Layer was implemented incrementally through three development phases.
+
+---
+
+## Phase 1 – Communication Analytics
+
+Implemented Components
+
+- Total Communication Volume
+- Most Active Source Tower
+- Most Active Destination Tower
+
+Outcome
+
+Real-time communication statistics are generated from the graph.
+
+**Status:** Completed and Validated
+
+---
+
+## Phase 2 – Communication Link Analysis
+
+Implemented Components
+
+- Top Communication Link
+
+Outcome
+
+The busiest communication path is identified successfully.
+
+**Status:** Completed and Validated
+
+---
+
+## Phase 3 – Degree Analysis
+
+Implemented Components
+
+- In-Degree
+- Out-Degree
+- Per-node degree reporting
+
+Outcome
+
+Connectivity information for every telecom tower is generated successfully.
+
+**Status:** Completed and Validated
+
+---
+
 # Current Milestone
 
-The Communication Layer, Processing Layer, and Berkeley DB Storage Layer have been successfully integrated into the Hybrid Telecom Stream Processing Framework.
+The Communication Layer, Processing Layer, Storage Layer,
+Graph Construction Layer, and Analytics Layer have been
+successfully implemented, integrated, tested, validated,
+performance evaluated (where applicable), and documented.
 
-The implementation now supports distributed packet communication, concurrent packet processing, persistent packet storage, interactive packet retrieval, runtime statistics collection, and graceful shutdown.
+The framework now supports:
 
-The next development milestone is the implementation of the Graph Construction Layer.
+• Distributed MPI communication
+• Concurrent packet processing
+• Berkeley DB persistent storage
+• Automatic graph construction
+• Communication analytics
+• Degree analysis
+• Graceful shutdown
 
 ---
 
@@ -820,28 +1008,33 @@ Monitoring
 | Communication Layer | ✅ 100% |
 | Processing Layer | ✅ 100% |
 | Storage Layer | ✅ 100% |
-| Graph Construction Layer | ⏳ Not Started |
-| Analytics Layer | ⏳ Not Started |
-| Monitoring Layer | 🟡 Basic Framework Available |
+| Graph Construction Layer | ✅ 100% |
+| Analytics Layer | ✅ 100% |
+| Monitoring Layer | 🟡 In Progress |
 
 ---
 
 # Overall Status
 
-The Communication Layer, Processing Layer, and Storage Layer of the Hybrid Telecom Stream Processing Framework have been successfully:
+The Communication Layer, Processing Layer, Storage Layer,
+Graph Construction Layer, and Analytics Layer have been
+successfully:
 
 - Implemented
 - Integrated
 - Tested
 - Validated
-- Performance Evaluated
 - Documented
 
-The hybrid processing pipeline now supports distributed packet communication, concurrent packet processing, persistent packet storage using Berkeley DB, packet retrieval, runtime statistics collection, and graceful system shutdown.
+The Hybrid Telecom Stream Processing Framework now supports:
 
-Subsequent development phases will focus on:
+- Distributed MPI communication
+- Concurrent packet processing
+- Berkeley DB persistent storage
+- Automatic graph construction
+- Communication analytics
+- Degree analysis
+- Runtime statistics
+- Graceful shutdown
 
-- Graph Construction Layer
-- Analytics Engine
-- Monitoring Layer
-- End-to-End System Validation
+The remaining implementation milestone is the Monitoring Layer, followed by complete end-to-end system validation.

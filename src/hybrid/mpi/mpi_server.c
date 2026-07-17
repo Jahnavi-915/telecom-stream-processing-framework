@@ -9,12 +9,14 @@
 #include "../include/serialization.h"
 #include "../processing/worker_pool.h"
 #include "../database/berkeley_db.h"
+#include "../graph/graph.h"
 
 #include <mpi.h>
 #include <stdio.h>
 #include <string.h>
 
 static WorkerPool processing_pool;
+Graph telecom_graph;
 
 int initialize_server(int *argc, char ***argv)
 {
@@ -46,6 +48,8 @@ int initialize_server(int *argc, char ***argv)
         fprintf(stderr, "ERROR: Failed to initialize Berkeley DB.\n");
         return -1;
     }
+
+    initialize_graph(&telecom_graph);
 
     printf("MPI Server initialized.\n");
 
@@ -209,6 +213,61 @@ int finalize_server(void)
             printf("===========================================\n");
         }
     }
+
+    printf("\n");
+    print_graph(&telecom_graph);
+
+    print_graph_statistics(&telecom_graph);
+
+    printf("\n========== GRAPH ANALYTICS ==========\n");
+
+    printf("Total Communication Volume : %u packets\n",
+        total_communication_volume(&telecom_graph));
+
+    GraphVertex *active = most_active_source(&telecom_graph);
+
+    if (active != NULL)
+    {
+        printf("Most Active Source Tower  : %s\n",
+            active->node_name);
+    }
+
+    GraphVertex *destination =
+    most_active_destination(&telecom_graph);
+
+    if (destination != NULL)
+    {
+        printf("Most Active Destination Tower : %s\n",
+            destination->node_name);
+    }
+
+    TopCommunicationLink top =
+    get_top_communication_link(&telecom_graph);
+
+    printf("Top Communication Link     : %s -> %s (%u packets)\n",
+        top.source,
+        top.destination,
+        top.weight);
+
+    printf("=====================================\n");
+
+    printf("\n========== NODE DEGREES ==========\n");
+
+GraphVertex *vertex = telecom_graph.vertices;
+
+while (vertex != NULL)
+{
+    printf("%-10s  Out:%2u  In:%2u\n",
+           vertex->node_name,
+           out_degree(&telecom_graph, vertex->node_name),
+           in_degree(&telecom_graph, vertex->node_name));
+
+    vertex = vertex->next;
+}
+
+printf("==================================\n");
+
+    free_graph(&telecom_graph);
 
     db_close();
     destroy_queue_interface();

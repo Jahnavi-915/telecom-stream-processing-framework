@@ -2,6 +2,9 @@
 
 #include "packet_processor.h"
 #include "../database/berkeley_db.h"
+#include "../graph/graph.h" 
+
+extern Graph telecom_graph;
 
 void process_telecom_packet(
     const TelecomPacket *packet,
@@ -32,4 +35,8 @@ void process_telecom_packet(
                 worker_id,
                 packet->packet_id);
     }
+
+    add_edge(&telecom_graph,
+             packet->source,
+             packet->destination);
 }

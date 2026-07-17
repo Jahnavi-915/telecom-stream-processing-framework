@@ -104,11 +104,14 @@ int finalize_client(void)
 int run_client(void)
 {
     TelecomPacket packet;
+    int rank;
+
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
     for (int i = 0; i < DEFAULT_PACKETS_PER_CLIENT; i++)
     {
         /* Generate a synthetic telecom packet */
-        generate_packet(&packet);
+        generate_packet(&packet, (uint32_t)rank);
 
         #if ENABLE_PACKET_LOGGING
         printf("\n========== CLIENT : Packet %d ==========\n", i + 1);

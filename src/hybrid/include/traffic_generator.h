@@ -17,7 +17,7 @@
  *
  * @param packet Pointer to TelecomPacket.
  */
-void generate_packet(TelecomPacket *packet);
+void generate_packet(TelecomPacket *packet, uint32_t des_id);
 
 /**
  * @brief Generate timestamp.

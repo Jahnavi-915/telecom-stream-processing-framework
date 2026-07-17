@@ -31,6 +31,7 @@ The objective of this validation activity was to verify the correctness, reliabi
 | Multiple MPI Clients | PASS |
 | Scalability Validation | PASS |
 | Performance Evaluation | PASS |
+| Multi-DES Communication | PASS |
 
 ---
 
@@ -46,6 +47,7 @@ The communication layer successfully demonstrated:
 - Stable continuous communication.
 - Successful multi-client communication.
 - Stable communication performance under increasing workloads.
+- Successful Multi-DES communication with correct DES identification.
 
 ---
 

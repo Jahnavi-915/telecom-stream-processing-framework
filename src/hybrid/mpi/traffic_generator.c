@@ -73,14 +73,14 @@ void generate_payload(char *payload)
 /*                          Generate Packet                                   */
 /* -------------------------------------------------------------------------- */
 
-void generate_packet(TelecomPacket *packet)
+void generate_packet(TelecomPacket *packet, uint32_t des_id)
 {
     static uint32_t packet_id = 1;
 
     initialize_packet(packet);
 
     packet->packet_id = packet_id++;
-    packet->des_id = 1;
+    packet->des_id = des_id;
 
     generate_timestamp(packet->timestamp);
     generate_source(packet->source);

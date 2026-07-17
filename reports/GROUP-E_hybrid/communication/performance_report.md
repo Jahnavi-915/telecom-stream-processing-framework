@@ -38,18 +38,18 @@ During benchmarking:
 
 - Performance Mode was enabled.
 - Packet logging was disabled.
-- Each client transmitted 1000 packets.
+- Each MPI client transmitted 1000 packets to the communication server.
 - Packets were processed immediately after reception to eliminate the artificial processing bottleneck introduced during queue stress testing.
 
 ---
 
 # Benchmark Results
 
-| Clients | Packets / Client | Total Packets | Execution Time (s) | Average Time / Packet (ms) | Throughput (Packets/s) |
-|----------|-----------------:|--------------:|-------------------:|---------------------------:|-----------------------:|
-| 1 | 1000 | 1000 | 0.003072 | 0.003072 | 325541.29 |
-| 2 | 1000 | 2000 | 0.003146 | 0.001573 | 635749.73 |
-| 4 | 1000 | 4000 | 0.003380 | 0.000845 | 1183602.84 |
+| MPI Processes | MPI Clients | Packets / MPI Client | Total Packets | Execution Time (s) | Average Time / Packet (ms) | Throughput (Packets/s) |
+|---------------:|------------:|---------------------:|--------------:|-------------------:|---------------------------:|-----------------------:|
+| 2 | 1 | 1000 | 1000 | 0.003072 | 0.003072 | 325541.29 |
+| 3 | 2 | 1000 | 2000 | 0.003146 | 0.001573 | 635749.73 |
+| 5 | 4 | 1000 | 4000 | 0.003380 | 0.000845 | 1183602.84 |
 
 ---
 
@@ -60,6 +60,7 @@ During benchmarking:
 - Packets Enqueued matched Packets Dequeued in every experiment.
 - Queue occupancy remained at one packet because packets were processed immediately after reception.
 - Communication throughput increased with increasing numbers of concurrent MPI clients.
+- Execution time remained nearly constant while total packet count increased, resulting in higher aggregate communication throughput.
 
 ---
 
@@ -73,8 +74,10 @@ The communication queue therefore operated without the artificial producer-consu
 
 # Conclusion
 
-The MPI communication layer demonstrated stable communication performance under increasing workloads.
+The MPI communication layer demonstrated stable and scalable communication performance under increasing workloads. As the number of concurrent MPI clients increased, overall throughput improved while maintaining reliable packet transmission and reception.
 
 The benchmark results indicate that the communication module scales effectively with multiple concurrent MPI clients while maintaining correct packet transmission and reception.
 
 The communication layer is considered ready for hybrid integration with the POSIX Threads shared buffer.
+
+Within the Hybrid Telecom Stream Processing Framework, each MPI client represents an individual Data Extraction Server (DES) during communication-layer execution.

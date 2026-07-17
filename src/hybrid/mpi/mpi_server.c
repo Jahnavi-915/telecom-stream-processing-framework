@@ -55,11 +55,6 @@ int receive_packet(TelecomPacket *packet)
         return -1;
     }
 
-    #if ENABLE_PACKET_LOGGING
-    printf("Received packet from Client %d\n",
-       status.MPI_SOURCE);
-    #endif
-
     /* Deserialize packet */
     if (deserialize_packet(buffer,
                            sizeof(buffer),
@@ -68,6 +63,13 @@ int receive_packet(TelecomPacket *packet)
         fprintf(stderr, "ERROR: Packet deserialization failed.\n");
         return -1;
     }
+
+    #if ENABLE_PACKET_LOGGING
+        printf("Received Packet %u from DES-%u (MPI Rank %d)\n",
+        packet->packet_id,
+        packet->des_id,
+        status.MPI_SOURCE);
+    #endif
 
     /* Forward packet to processing layer */
     if (!enqueue_packet(packet))
@@ -88,8 +90,8 @@ int run_server(void)
     int world_size;
     MPI_Comm_size(MPI_COMM_WORLD, &world_size);
 
-    int total_clients = world_size - 1;
-    int total_packets = total_clients * DEFAULT_PACKETS_PER_CLIENT;
+    int total_des = world_size - 1;
+    int total_packets = total_des * DEFAULT_PACKETS_PER_CLIENT;
 
     /* Start performance timer */
     double start_time = MPI_Wtime();
@@ -130,8 +132,9 @@ int run_server(void)
                 }
 
         #if ENABLE_PACKET_LOGGING
-                printf("Processed Packet %u\n",
-                    processed_packet.packet_id);
+                printf("Processed Packet %u from DES-%u\n",
+                  processed_packet.packet_id,
+                  processed_packet.des_id);
 
                 printf("Queue Size After Dequeue : %d\n",
                     queue_size());
@@ -150,8 +153,9 @@ int run_server(void)
         }
 
         #if ENABLE_PACKET_LOGGING
-        printf("Processed Remaining Packet %u\n",
-               processed_packet.packet_id);
+        printf("Processed Remaining Packet %u from DES-%u\n",
+                processed_packet.packet_id,
+                processed_packet.des_id);
         #endif
     }
 
@@ -163,15 +167,15 @@ int run_server(void)
 
     printf("\n");
     printf("========== PERFORMANCE SUMMARY ==========\n");
-    printf("Clients              : %d\n", total_clients);
-    printf("Packets Per Client   : %d\n", DEFAULT_PACKETS_PER_CLIENT);
-    printf("Total Packets        : %d\n", total_packets);
-    printf("Execution Time       : %.6f seconds\n", execution_time);
-    printf("Average Time/Packet  : %.6f ms\n", average_time * 1000);
-    printf("Throughput           : %.2f packets/second\n", throughput);
-    printf("Maximum Queue Size   : %d\n", max_queue_size());
-    printf("Packets Enqueued     : %d\n", total_packets_enqueued());
-    printf("Packets Dequeued     : %d\n", total_packets_dequeued());
+    printf("Data Extraction Servers : %d\n", total_des);
+    printf("Packets Per DES         : %d\n", DEFAULT_PACKETS_PER_CLIENT);
+    printf("Total Packets           : %d\n", total_packets);
+    printf("Execution Time          : %.6f seconds\n", execution_time);
+    printf("Average Time/Packet     : %.6f ms\n", average_time * 1000);
+    printf("Throughput              : %.2f packets/second\n", throughput);
+    printf("Maximum Queue Size      : %d\n", max_queue_size());
+    printf("Packets Enqueued        : %d\n", total_packets_enqueued());
+    printf("Packets Dequeued        : %d\n", total_packets_dequeued());
     printf("=========================================\n");
 
     return 0;

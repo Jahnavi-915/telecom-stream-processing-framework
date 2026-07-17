@@ -1,54 +1,33 @@
-# Telecom Stream Processing Framework
+# Communication Layer for a Hybrid Telecom Stream Processing Framework
 
 ## Overview
 
-The Telecom Stream Processing Framework is a parallel and distributed systems project focused on the design, implementation, testing, validation, and evaluation of scalable telecom data processing architectures.
+The Telecom Stream Processing Framework is a parallel and distributed systems project focused on the design, implementation, testing, validation, and performance evaluation of scalable telecom communication architectures.
 
-The project aims to develop a Hybrid Telecom Stream Processing Framework capable of processing telecom traffic streams in real time while supporting both single-machine and cluster-based deployment environments.
+This project presents the implementation of the Communication Layer for a Hybrid Telecom Stream Processing Framework. The implemented communication subsystem establishes the distributed communication foundation required for reliable telecom packet exchange between multiple Data Extraction Servers (DES) using MPI.
 
-The framework integrates:
+The Communication Layer includes TelecomPacket design, traffic generation, MPI client-server communication, packet serialization and deserialization, communication queue management, multi-client communication, performance monitoring, and comprehensive testing and validation.
 
-* MPI-based distributed processing
-* POSIX Thread-based parallel processing
-* Berkeley DB persistent storage
-* Graph construction and analytics
-* Monitoring and performance evaluation
-* Comprehensive testing and validation
-
-The final objective is to build a modular, scalable, and maintainable telecom data processing platform that can ingest, process, store, analyze, and visualize telecom traffic streams.
+The project follows an incremental software engineering methodology, where the communication subsystem has been independently designed, implemented, tested, validated, and documented. Although only the Communication Layer was implemented in this project, the proposed Hybrid Telecom Stream Processing Framework architecture can be extended to incorporate packet processing, persistent storage, graph analytics, and monitoring components.
 
 ---
 
 ## Implementation Progress
 
-The project is being developed incrementally.
-
-Each major subsystem is independently:
-
-- Designed
-- Implemented
-- Tested
-- Validated
-- Documented
-
-before being integrated into the complete Hybrid Telecom Stream Processing Framework.
-
-The Communication Layer has been completed and serves as the foundation for subsequent hybrid integration.
+The project was developed using an incremental software engineering methodology. Each implementation phase was independently designed, implemented, tested, validated, documented, and evaluated before progressing to the next phase. This repository represents the final project deliverable, documenting the implementation and evaluation of the Communication Layer for the Hybrid Telecom Stream Processing Framework.
 
 ---
 
 # Project Objectives
 
-* Process telecom traffic streams in real time.
-* Support both single-machine and distributed cluster deployments.
-* Integrate process-level and thread-level parallelism.
-* Store processed telecom data using Berkeley DB.
-* Construct communication graphs from telecom traffic.
-* Generate traffic and performance analytics.
-* Evaluate throughput, scalability, latency, and resource utilization.
-* Follow professional software engineering practices.
-* Develop reusable testing and validation methodologies.
-* Provide comprehensive documentation and deployment support.
+* Design a modular communication framework for telecom stream processing.
+* Implement distributed packet communication using MPI.
+* Support communication from multiple Data Extraction Servers (DES).
+* Implement TelecomPacket serialization and deserialization.
+* Develop reliable packet transmission and reception mechanisms.
+* Evaluate throughput, latency, scalability, and communication performance.
+* Validate communication correctness under multiple client configurations.
+* Follow professional software engineering practices through modular implementation, testing, documentation, and version control.
 
 ---
 
@@ -84,6 +63,7 @@ Analytics Engine
           ▼
 Reports & Visualization
 ```
+Note: The above diagram illustrates the complete target architecture of the proposed Hybrid Telecom Stream Processing Framework. The scope of this project is limited to the implementation, testing, validation, and performance evaluation of the MPI-based Communication Layer.
 
 ---
 
@@ -141,18 +121,18 @@ Features:
 
 # Core Components
 
-## Communication Layer
+## Communication Layer - Implemented
 
 Responsibilities:
 
 * MPI Communication
-* Multi-DES Communication
+* Multi-client MPI Communication
 * Packet Distribution
 * Distributed Coordination
 
 ---
 
-## Processing Layer
+## Processing Layer - Proposed Extension
 
 Responsibilities:
 
@@ -163,47 +143,22 @@ Responsibilities:
 
 ---
 
-## Storage Layer
-
-Responsibilities:
-
-* Berkeley DB Integration
-* Packet Storage
-* Metadata Storage
-* Persistent Data Management
+## Storage Layer - Proposed Extension
 
 ---
 
-## Graph Construction Layer
-
-Responsibilities:
-
-* Vertex Management
-* Edge Management
-* Communication Graph Generation
-* Graph Statistics
+## Graph Construction Layer - Proposed Extension
 
 ---
 
-## Analytics Layer
-
-Responsibilities:
-
-* Traffic Analysis
-* Communication Pattern Analysis
-* Graph Analytics
-* Performance Evaluation
+## Analytics Layer - Proposed EXtension
 
 ---
 
-## Monitoring Layer
+## Monitoring Layer - Proposed Extension
 
-Responsibilities:
 
-* Runtime Logging
-* Statistics Collection
-* Throughput Measurement
-* Performance Monitoring
+These modules are part of the proposed Hybrid Framework architecture and are presented as possible extensions beyond the scope of this implementation.
 
 ---
 
@@ -239,18 +194,6 @@ The framework generates:
 
 Processed telecom packet information.
 
-### Berkeley DB Records
-
-Persistent packet and metadata storage.
-
-### Traffic Graphs
-
-Communication graphs representing traffic relationships.
-
-### Analytics Reports
-
-Traffic and communication analysis.
-
 ### Performance Reports
 
 Execution statistics and performance metrics.
@@ -266,7 +209,6 @@ Testing and verification artifacts.
 * C
 * POSIX Threads (Pthreads)
 * MPI
-* Berkeley DB
 * TCP Socket Programming
 * Ubuntu Linux
 * GCC
@@ -350,12 +292,22 @@ Extended the MPI framework to support multiple Data Extraction Servers (DES), en
 
 ## Phase 6 – Hybrid Telecom Stream Processing Framework (Current Project)
 
-The Hybrid Telecom Stream Processing Framework integrates the concepts, components, and lessons learned from all previous phases into a unified end-to-end telecom data processing platform.
+Phase 6 focused on the design, implementation, testing, validation, and performance evaluation of the Communication Layer for the Hybrid Telecom Stream Processing Framework.
 
-This phase serves as the primary project deliverable and represents the culmination of the project's evolution from individual parallel and distributed computing prototypes to a complete telecom stream processing framework.
+The implemented Communication Layer includes:
 
-The Hybrid Telecom Stream Processing Framework currently includes a fully implemented Communication Layer consisting of MPI-based packet communication, multi-client support, communication validation, queue stress testing, and performance evaluation. The next development milestone is the integration of the completed Communication Layer with the POSIX Threads processing framework, followed by Berkeley DB storage, graph construction, analytics, and monitoring.
+- TelecomPacket Design
+- Traffic Generator
+- MPI Client
+- MPI Server
+- Packet Serialization and Deserialization
+- Queue Interface
+- Multi-client MPI Communication
+- Communication Statistics
+- Performance Evaluation
+- Testing and Validation
 
+The Processing Layer, Storage Layer, Graph Construction Layer, Analytics Layer, and Monitoring Layer are presented as architectural extensions and were not implemented within the scope of this project.
 ---
 
 # Repository Structure
@@ -411,28 +363,30 @@ src/hybrid/
 │
 ├── include/
 ├── mpi/
-├── processing/
-├── database/
-├── graph/
-├── analytics/
-├── monitoring/
+├── processing/     (Reserved for Extension)
+├── database/       (Reserved for Extension)
+├── graph/          (Reserved for Extension)
+├── analytics/      (Reserved for Extension)
+├── monitoring/     (Reserved for Extension)
 │
 ├── Makefile
 └── hybrid_main.c
 ```
 
+This repository contains the complete implementation, testing, validation, performance evaluation, and documentation of the Communication Layer for the Hybrid Telecom Stream Processing Framework. The remaining architectural components are included only as part of the proposed system design and are not implemented within the scope of this project.
+
 ### Module Responsibilities
 
-| Module | Responsibility |
-|---------|----------------|
-| include | Common data structures, configuration files, APIs, and shared definitions |
-| mpi | MPI communication, packet transmission, serialization, traffic generation, queue management, and Multi-DES communication |
-| processing | Shared buffer management, thread synchronization, and packet processing |
-| database | Berkeley DB integration and persistent packet storage |
-| graph | Telecom graph construction, vertex and edge management, and graph statistics |
-| analytics | Traffic analysis, graph analytics, performance evaluation, and report generation |
-| monitoring | Runtime logging, statistics collection, and performance monitoring |
-| hybrid_main | Overall system initialization, module orchestration, and application lifecycle management |
+| Module | Status | Responsibility |
+|---------|--------|----------------|
+| **include** | ✅ Implemented | Common data structures, configuration files, APIs, constants, and shared definitions used across the Communication Layer. |
+| **mpi** | ✅ Implemented | Traffic generation, MPI client-server communication, TelecomPacket transmission, packet serialization and deserialization, queue interface, multi-client MPI communication, communication statistics, and performance monitoring. |
+| **processing** | Proposed Extension | Shared buffer management, thread synchronization, worker thread management, and packet processing for hybrid execution. |
+| **database** | Proposed Extension | Berkeley DB integration, persistent packet storage, and metadata management. |
+| **graph** | Proposed Extension | Communication graph construction, vertex and edge management, and graph statistics generation. |
+| **analytics** | Proposed Extension | Traffic analysis, communication pattern analysis, performance evaluation, and report generation. |
+| **monitoring** | Proposed Extension | Runtime logging, statistics collection, throughput monitoring, and system performance visualization. |
+| **hybrid_main** | ✅ Implemented | Framework initialization, Communication Layer orchestration, configuration management, and application execution control. |
 
 ---
 
@@ -510,15 +464,13 @@ mpirun -np 5 ./hybrid
 - Communication Testing & Validation
 - Communication Performance Evaluation
 
-## In Progress
+## Proposed Extensions
 
-- Hybrid Integration (MPI + POSIX Threads Shared Buffer)
-- Berkeley DB Storage Layer
-- Graph Construction Layer
-- Analytics Layer
-- Monitoring Layer
-- End-to-End Hybrid Validation
-
+- POSIX Threads Processing Layer
+- Berkeley DB Storage
+- Graph Construction
+- Analytics
+- Monitoring
 ---
 
 # Current Milestone
@@ -534,7 +486,7 @@ Current capabilities include:
 - Queue stress testing
 - Communication performance benchmarking
 
-The next development milestone is the integration of the Communication Layer with the POSIX Threads Shared Buffer developed by Group-F.
+This project concludes with the successful implementation, testing, validation, and performance evaluation of the Communication Layer. The remaining components shown in the proposed Hybrid Telecom Stream Processing Framework architecture represent potential extensions and are outside the scope of this project.
 
 ---
 

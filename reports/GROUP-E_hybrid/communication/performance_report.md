@@ -78,3 +78,26 @@ The MPI communication layer demonstrated stable communication performance under 
 The benchmark results indicate that the communication module scales effectively with multiple concurrent MPI clients while maintaining correct packet transmission and reception.
 
 The communication layer is considered ready for hybrid integration with the POSIX Threads shared buffer.
+
+
+---
+
+# Independent Performance Validation
+
+The communication layer was independently executed to verify the reported communication performance.
+
+The generated execution summary successfully displayed:
+
+- Execution Time
+- Average Time per Packet
+- Throughput
+- Queue Statistics
+- Packet Counts
+
+The observed execution behaviour was consistent with the documented benchmark results.
+
+---
+
+# Performance Validation Status
+
+PASS

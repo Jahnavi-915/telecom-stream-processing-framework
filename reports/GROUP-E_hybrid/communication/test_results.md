@@ -343,3 +343,42 @@ Packet Processing
 In this architecture, the receiver thread continuously accepts incoming packets while worker threads concurrently remove packets from the shared buffer for processing. If the shared buffer becomes full, producer threads will block until buffer space becomes available instead of terminating the communication process.
 
 This producer-consumer design eliminates the artificial bottleneck introduced by the current single-threaded implementation and provides realistic queue behavior under high communication workloads.
+
+
+---
+
+# Independent Validation Summary
+
+## Validation Activities
+
+The communication layer was independently validated after integrating the latest communication prototype.
+
+The following activities were performed:
+
+- Successfully compiled the project.
+- Successfully executed the communication prototype.
+- Verified MPI communication.
+- Verified queue operations.
+- Verified packet transmission.
+- Verified packet reception.
+- Reviewed communication statistics.
+- Compared observed execution with documented results.
+
+---
+
+# Validation Summary
+
+| Validation Item | Status |
+|-----------------|--------|
+| Build Verification | PASS |
+| MPI Communication | PASS |
+| Queue Operations | PASS |
+| Packet Transmission | PASS |
+| Packet Reception | PASS |
+| Performance Summary | PASS |
+
+---
+
+# Conclusion
+
+The communication layer operated correctly during validation. The observed behaviour matched the documented communication workflow and no functional issues were identified.

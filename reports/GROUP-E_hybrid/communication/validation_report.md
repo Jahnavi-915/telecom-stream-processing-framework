@@ -104,3 +104,102 @@ Analytics
 ↓
 
 Monitoring
+
+
+---
+
+# Independent Validation
+
+## Validation Activity
+
+The communication layer implementation was independently reviewed and validated after merging the latest communication prototype into the testing-validation branch.
+
+The following validation activities were completed:
+
+- Successfully compiled the communication layer.
+- Successfully generated the hybrid executable.
+- Executed the MPI communication prototype.
+- Verified packet transmission between MPI client and MPI server.
+- Verified communication queue operations.
+- Verified enqueue and dequeue functionality.
+- Confirmed correct packet processing.
+- Reviewed queue statistics and communication performance.
+- Reviewed the implementation documentation and validation reports.
+
+---
+
+# Build Verification
+
+## Build Configuration
+
+| Parameter | Value |
+|------------|--------|
+| Build System | Make |
+| Compiler | MPICC |
+| Platform | Ubuntu Linux |
+
+### Observed Result
+
+The project compiled successfully without compilation errors.
+
+### Result
+
+PASS
+
+---
+
+# Execution Verification
+
+## Configuration
+
+| Parameter | Value |
+|------------|--------|
+| MPI Processes | 2 |
+| Server | 1 |
+| Client | 1 |
+
+### Observed Result
+
+- MPI client initialized successfully.
+- MPI server initialized successfully.
+- Packet transmission completed successfully.
+- Queue operations executed correctly.
+- Communication terminated normally.
+
+### Result
+
+PASS
+
+---
+
+# Queue Validation
+
+The communication queue correctly accepted incoming packets, processed queued packets, and released all allocated resources after execution.
+
+### Result
+
+PASS
+
+---
+
+# Performance Verification
+
+The communication layer generated execution statistics including execution time, throughput, average packet processing time, queue statistics, and packet counts.
+
+### Result
+
+PASS
+
+---
+
+# Validation Conclusion
+
+The communication layer successfully compiled and executed during independent validation.
+
+The observed behaviour matched the documented implementation and expected communication workflow.
+
+No functional issues were identified during validation.
+
+Overall Validation Status:
+
+PASS

@@ -38,7 +38,7 @@
 /*                      Traffic Generator Configuration                       */
 /* -------------------------------------------------------------------------- */
 
-#define DEFAULT_PACKETS_PER_CLIENT 25
+#define DEFAULT_PACKETS_PER_CLIENT 1000
 
 /* -------------------------------------------------------------------------- */
 /*                        Statistics Configuration                            */

@@ -25,7 +25,7 @@ Unlike the **Architecture** and **Design** documents, which describe the target 
 | Storage Layer | ✅ Completed |
 | Graph Construction Layer | ✅ Completed |
 | Analytics Layer | ✅ Completed |
-| Monitoring Layer | 🟡 Basic Runtime Statistics Implemented |
+| Monitoring Layer | ✅ Completed |
 
 ---
 
@@ -770,6 +770,7 @@ Its responsibilities include:
 - Vertex creation
 - Edge creation
 - Edge weight management
+- Communication analysis
 - Graph statistics
 - Memory management
 
@@ -877,63 +878,101 @@ All graph resources are released successfully during shutdown.
 
 ---
 
-# Analytics Layer Implementation
+## Phase 5 – Graph Analysis
 
-The Analytics Layer performs communication analysis over the constructed telecom graph.
+### Objective
+
+Generate communication statistics from the constructed telecom graph.
+
+### Implemented Components
+
+- Total communication volume
+- Most active source
+- Most active destination
+- Top communication link
+- In-degree analysis
+- Out-degree analysis
+- Graph statistics
+
+### Outcome
+
+Communication statistics are generated directly from the graph representation of telecom traffic.
+
+**Status:** Completed and Validated
+
+---
+
+# Monitoring Layer Implementation
+
+The Monitoring Layer provides runtime statistics collection and performance monitoring for the Hybrid Telecom Stream Processing Framework.
 
 Its responsibilities include:
 
-- Communication volume analysis
-- Source traffic analysis
-- Destination traffic analysis
-- Communication link analysis
-- Degree analysis
+- Monitoring subsystem initialization
+- Runtime statistics collection
+- Performance measurement
+- Monitoring dashboard generation
 
-The Analytics Layer was implemented incrementally through three development phases.
+The Monitoring Layer was implemented incrementally through three development phases.
 
 ---
 
-## Phase 1 – Communication Analytics
+## Phase 1 – Monitoring Framework
 
-Implemented Components
+### Objective
 
-- Total Communication Volume
-- Most Active Source Tower
-- Most Active Destination Tower
+Initialize the monitoring subsystem and runtime statistics.
 
-Outcome
+### Implemented Components
 
-Real-time communication statistics are generated from the graph.
+- Monitoring initialization
+- System statistics structure
+- Runtime statistics management
+
+### Outcome
+
+The monitoring subsystem was successfully initialized during system startup.
 
 **Status:** Completed and Validated
 
 ---
 
-## Phase 2 – Communication Link Analysis
+## Phase 2 – Runtime Statistics Collection
 
-Implemented Components
+### Objective
 
-- Top Communication Link
+Collect execution statistics throughout packet processing.
 
-Outcome
+### Implemented Components
 
-The busiest communication path is identified successfully.
+- Packet count tracking
+- Execution time measurement
+- Throughput calculation
+- Processing statistics collection
+
+### Outcome
+
+Runtime statistics were successfully collected while the framework processed telecom packets.
 
 **Status:** Completed and Validated
 
 ---
 
-## Phase 3 – Degree Analysis
+## Phase 3 – Monitoring Dashboard
 
-Implemented Components
+### Objective
 
-- In-Degree
-- Out-Degree
-- Per-node degree reporting
+Provide a consolidated view of runtime statistics.
 
-Outcome
+### Implemented Components
 
-Connectivity information for every telecom tower is generated successfully.
+- Monitoring dashboard
+- Statistics reporting
+- Performance summary generation
+
+### Outcome
+
+The Monitoring Layer successfully reports execution statistics and performance metrics for the Hybrid Telecom Stream Processing Framework.
 
 **Status:** Completed and Validated
 
@@ -942,7 +981,7 @@ Connectivity information for every telecom tower is generated successfully.
 # Current Milestone
 
 The Communication Layer, Processing Layer, Storage Layer,
-Graph Construction Layer, and Analytics Layer have been
+Graph Construction Layer, and MonitoringLayer have been
 successfully implemented, integrated, tested, validated,
 performance evaluated (where applicable), and documented.
 
@@ -952,52 +991,11 @@ The framework now supports:
 • Concurrent packet processing
 • Berkeley DB persistent storage
 • Automatic graph construction
+• Graph statistics
 • Communication analytics
 • Degree analysis
+• Runtime monitoring
 • Graceful shutdown
-
----
-
-# Next Development Milestone – Graph Construction Layer
-
-The next implementation milestone is the Graph Construction Layer.
-
-The Graph Layer will provide:
-
-- Graph generation from stored telecom packets
-- Communication edge creation
-- Tower connectivity modelling
-- Graph interface for analytics
-
-The processing pipeline will become:
-
-```text
-Traffic Source
-      │
-      ▼
-MPI Communication Layer
-      │
-      ▼
-Shared Buffer
-      │
-      ▼
-Worker Thread Pool
-      │
-      ▼
-Packet Processing Engine
-      │
-      ▼
-Berkeley DB Storage
-      │
-      ▼
-Graph Construction
-      │
-      ▼
-Analytics
-      │
-      ▼
-Monitoring
-```
 
 ---
 
@@ -1010,14 +1008,14 @@ Monitoring
 | Storage Layer | ✅ 100% |
 | Graph Construction Layer | ✅ 100% |
 | Analytics Layer | ✅ 100% |
-| Monitoring Layer | 🟡 In Progress |
+| Monitoring Layer | ✅ 100% |
 
 ---
 
 # Overall Status
 
 The Communication Layer, Processing Layer, Storage Layer,
-Graph Construction Layer, and Analytics Layer have been
+Graph Construction Layer, and MonitoringLayer have been
 successfully:
 
 - Implemented
@@ -1032,9 +1030,11 @@ The Hybrid Telecom Stream Processing Framework now supports:
 - Concurrent packet processing
 - Berkeley DB persistent storage
 - Automatic graph construction
+- Graph statistics
 - Communication analytics
 - Degree analysis
 - Runtime statistics
+- Performance monitoring
 - Graceful shutdown
 
-The remaining implementation milestone is the Monitoring Layer, followed by complete end-to-end system validation.
+The Hybrid Telecom Stream Processing Framework has been fully implemented. The remaining work consisted of comprehensive end-to-end testing, performance evaluation, validation, and documentation, all of which have been completed.

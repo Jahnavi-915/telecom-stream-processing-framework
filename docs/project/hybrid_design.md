@@ -64,7 +64,7 @@ Responsible for persistent storage of processed telecom data using Berkeley DB.
 ### Responsibilities
 
 - Packet storage
-- Metadata storage
+- Packet retrieval
 - Database management
 
 ### Input
@@ -89,6 +89,8 @@ Responsible for constructing communication graphs from telecom traffic.
 - Edge creation
 - Edge weight management
 - Graph statistics generation
+- Communication analysis
+- Traffic analysis
 
 ### Input
 
@@ -97,31 +99,8 @@ Responsible for constructing communication graphs from telecom traffic.
 ### Output
 
 - Traffic graphs
-
----
-
-## Analytics Module
-
-### Description
-
-Responsible for traffic analysis, graph analysis, and performance evaluation.
-
-### Responsibilities
-
-- Traffic analysis
-- Utilization analysis
-- Graph analysis
-- Report generation
-
-### Input
-
-- Graph data
-- Database records
-- Performance statistics
-
-### Output
-
-- Analytics reports
+- Graph statistics
+- Communication summaries
 
 ---
 
@@ -135,6 +114,7 @@ Responsible for runtime logging, statistics collection, and performance monitori
 
 - Logging
 - Statistics collection
+- Execution time measurement
 - Throughput measurement
 - Performance monitoring
 
@@ -145,7 +125,7 @@ Responsible for runtime logging, statistics collection, and performance monitori
 ### Output
 
 - Logs
-- Statistics
+- Runtime statistics
 - Performance metrics
 
 ---
@@ -179,18 +159,16 @@ Berkeley DB Storage
 Graph Construction Engine
             │
             ▼
-Analytics Engine
+MOnotoring and Graph Statistics
             │
             ▼
-Reports & Visualization
+        Reports
 ```
 
 ## Step 1: Traffic Ingestion
 
-Traffic is received from real-time streams, telecom traces, network traces, or CSV datasets.
-
+Traffic is generated as simulated telecom packets by multiple Data Extraction Server (DES) processes.
 The traffic is converted into TelecomPacket structures.
-
 ---
 
 ## Step 2: Data Extraction Servers
@@ -218,9 +196,9 @@ Packets received through MPI are inserted into a shared buffer.
 
 Responsibilities:
 
-- Packet buffering
-- Synchronization
-- Temporary storage
+- Circular packet buffering
+- Thread-safe synchronization using POSIX read-write locks
+- Temporary packet storage
 
 ---
 
@@ -238,13 +216,13 @@ Responsibilities:
 
 ## Step 6: Berkeley DB Storage
 
-Processed packet records and graph information are stored persistently.
+Processed telecom packet records are stored persistently in Berkeley DB.
 
 Responsibilities:
 
 - Packet storage
-- Metadata storage
-- Graph storage
+- Packet retrieval
+- Database management
 
 ---
 
@@ -262,25 +240,25 @@ Edge weights represent traffic volume.
 
 ---
 
-## Step 8: Analytics
+## Step 8: Graph Analytics
 
-The analytics engine processes stored information and generates:
+The Graph Module analyzes the communication graph and generates:
 
 - Traffic statistics
 - Graph statistics
 - Performance metrics
-- Utilization metrics
+- Communication summaries
 
 ---
 
 ## Step 9: Reporting
 
-The generated analytics are converted into:
+The monitoring and graph modules generate:
 
-- Reports
 - Performance summaries
 - Validation reports
-- Visualizations
+- Communication summaries
+- Graph statistics
 
 ---
 
@@ -362,17 +340,20 @@ Source Node ─────► Destination Node
 
 ---
 
-## Analytics Record
+## Performance Statistics Record
 
-Analytics records are generated from processed traffic data.
+Performance statistics are generated during packet processing and graph construction.
 
 Example Metrics:
 
 - Total Packets Processed
+- Execution Time
 - Throughput
-- DES Utilization
-- Worker Utilization
 - Graph Statistics
+- Communication Statistics
+- Most Active Source
+- Most Active Destination
+- Top Communication Links
 
 ---
 
@@ -474,133 +455,64 @@ Performs packet-level processing before graph construction and storage.
 
 ---
 
-## New Modules to be Implemented
-
-### Storage Module
-
-Location:
-
-```text
-src/hybrid/database/
-```
-
-Responsibilities:
-
-- Packet storage
-- Packet retrieval
-- Persistent data management
-- Database management
-
-Status:
-
-Implemented
-
----
-
-### Graph Module
-
-Location:
-
-```text
-src/hybrid/graph/
-```
-
-Responsibilities:
-
-- Vertex Management
-- Edge Management
-- Traffic Graph Construction
-- Graph Statistics
-
-Status:
-
-Not Implemented
-
----
-
-### Analytics Module
-
-Location:
-
-```text
-src/hybrid/analytics/
-```
-
-Responsibilities:
-
-- Traffic Analysis
-- Utilization Analysis
-- Graph Analysis
-- Report Generation
-
-Status:
-
-Not Implemented
-
----
-
-## Hybrid Integration Layer
-
-Location:
-
-```text
-src/hybrid/
-```
-
-Responsibilities:
-
-- Integrate MPI Layer
-- Integrate Shared Buffer
-- Integrate Thread Pool
-- Coordinate Data Flow
-- Manage End-to-End Processing
-
-Status:
-
-Implemented
-
 # APIs
 
 ## Communication Module APIs
 
-### MPI Initialization
+### Server Initialization
 
 ```c
-int initialize_mpi(int *argc, char ***argv);
+int initialize_server(int *argc, char ***argv);
 ```
 
-### MPI Finalization
+### Client Initialization
 
 ```c
-void finalize_mpi(void);
+int initialize_client(int *argc, char ***argv);
 ```
 
-### Packet Distribution
+### Packet Transmission
 
 ```c
-int distribute_packet(TelecomPacket *packet);
+int send_packet(const TelecomPacket *packet);
+```
+
+### Packet Reception
+
+```c
+int receive_packet(TelecomPacket *packet);
 ```
 
 ---
 
 ## Processing Module APIs
 
-### Shared Buffer Insert
+### Initialize Shared Buffer
 
 ```c
-int enqueue_packet(TelecomPacket *packet);
+int buffer_init(SharedBuffer *buf);
 ```
 
-### Shared Buffer Remove
+### Enqueue Packet
 
 ```c
-int dequeue_packet(TelecomPacket *packet);
+int enqueue(SharedBuffer *buf,
+            const TelecomPacket *packet);
 ```
 
-### Worker Thread Creation
+### Dequeue Packet
 
 ```c
-int create_worker_pool(int thread_count);
+int dequeue(SharedBuffer *buf,
+            TelecomPacket *out);
+```
+
+### Process Telecom Packet
+
+```c
+void process_telecom_packet(
+    const TelecomPacket *packet,
+    int worker_id);
 ```
 
 ---
@@ -619,10 +531,9 @@ int db_initialize(const char *db_name);
 int db_store_packet(const TelecomPacket *packet);
 ```
 
-### Get Packet
+### Retrieve Packet
 
 ```c
-
 int db_get_packet(uint32_t packet_id,
                   TelecomPacket *packet);
 ```
@@ -637,66 +548,57 @@ void db_close(void);
 
 ## Graph Module APIs
 
+### Initialize Graph
+
+```c
+void initialize_graph(Graph *graph);
+```
+
 ### Add Vertex
 
 ```c
-int add_vertex(const char *node);
+GraphVertex *add_vertex(Graph *graph,
+                        const char *node);
 ```
 
 ### Add Edge
 
 ```c
-int add_edge(const char *source,
-             const char *destination);
+void add_edge(Graph *graph,
+              const char *source,
+              const char *destination);
 ```
 
-### Update Edge Weight
+### Print Graph Statistics
 
 ```c
-int update_edge_weight(const char *source,
-                       const char *destination);
+void print_graph_statistics(Graph *graph);
 ```
 
----
-
-## Analytics Module APIs
-
-### Generate Traffic Statistics
+### Get Top Communication Link
 
 ```c
-void generate_traffic_statistics(void);
-```
-
-### Generate Graph Statistics
-
-```c
-void generate_graph_statistics(void);
-```
-
-### Generate Performance Statistics
-
-```c
-void generate_performance_statistics(void);
+TopCommunicationLink get_top_communication_link(Graph *graph);
 ```
 
 ---
 
 ## Monitoring Module APIs
 
-### Log Event
+### Initialize Monitoring
 
 ```c
-void log_event(const char *message);
+void monitoring_initialize(void);
 ```
 
-### Update Statistics
+### Get Statistics
 
 ```c
-void update_statistics(void);
+SystemStatistics *monitoring_get_statistics(void);
 ```
 
-### Generate Runtime Report
+### Print Monitoring Dashboard
 
 ```c
-void generate_runtime_report(void);
+void monitoring_print_dashboard(void);
 ```

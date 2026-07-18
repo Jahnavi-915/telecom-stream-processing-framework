@@ -115,7 +115,6 @@ telecom-stream-processing-framework/
 ├── docs/
 │   ├── evolution/
 │   ├── project/
-│   └── workflow/
 │
 ├── logs/
 │
@@ -131,7 +130,8 @@ telecom-stream-processing-framework/
 │   ├── GROUP-E_integration/
 │   ├── GROUP-E_mpi/
 │   ├── GROUP-E_posix_threads/
-│   └── GROUP-E_sockets/
+│   ├── GROUP-E_posix_threads/
+│   └── GROUP-F_validation/
 │
 ├── .gitignore
 └── README.md
@@ -170,3 +170,278 @@ Hybrid Telecom Stream Processing Framework
 ```
 
 Each implementation phase was independently designed, implemented, tested, validated, and documented before progressing to the next stage.
+
+---
+
+# Technology Stack
+
+| Category | Technologies |
+|----------|--------------|
+| Programming Language | C |
+| Parallel Programming | POSIX Threads (Pthreads) |
+| Distributed Computing | MPI (OpenMPI) |
+| Networking | TCP Socket Programming |
+| Database | Berkeley DB |
+| Synchronization | Mutexes, Condition Variables |
+| Data Structures | Circular Queue, Graph |
+| Build System | Make |
+| Operating System | Ubuntu Linux |
+| Version Control | Git & GitHub |
+
+---
+
+# Build Instructions
+
+## Prerequisites
+
+The following software must be installed before building the project.
+
+- GCC Compiler
+- GNU Make
+- OpenMPI
+- Berkeley DB Development Libraries
+- POSIX Threads
+
+### Ubuntu Installation
+
+```bash
+sudo apt update
+
+sudo apt install build-essential
+
+sudo apt install openmpi-bin libopenmpi-dev
+
+sudo apt install libdb-dev
+```
+
+---
+
+## Build Individual Modules
+
+Each implementation phase can be built independently.
+
+### POSIX Threads
+
+```bash
+cd src/pthreads
+make
+```
+
+### TCP Sockets
+
+```bash
+cd src/sockets
+make
+```
+
+### MPI Communication
+
+```bash
+cd src/mpi
+make
+```
+
+---
+
+## Build Hybrid Framework
+
+```bash
+cd src/hybrid
+make
+```
+
+The generated executable will be created inside the hybrid source directory.
+
+---
+
+# Running the Project
+
+Run the hybrid implementation using OpenMPI.
+
+```bash
+mpirun -np 2 ./hybrid
+```
+
+---
+
+# Packet Processing Workflow
+
+The hybrid framework processes telecom packets through the following pipeline:
+
+```text
+Generate Telecom Packet
+            │
+            ▼
+MPI Communication
+            │
+            ▼
+Shared Circular Buffer
+            │
+            ▼
+Worker Thread Pool
+            │
+            ▼
+Packet Processing
+            │
+            ▼
+Berkeley DB Storage
+            │
+            ▼
+Communication Graph
+            │
+            ▼
+Monitoring & Statistics
+```
+
+---
+
+# Public API
+
+## Communication Layer
+
+| Function | Description |
+|----------|-------------|
+| `initialize_server()` | Initializes the MPI server. |
+| `initialize_client()` | Initializes the MPI client. |
+| `send_packet()` | Sends a telecom packet. |
+| `receive_packet()` | Receives a telecom packet. |
+
+---
+
+## Telecom Packet
+
+| Function | Description |
+|----------|-------------|
+| `initialize_packet()` | Initializes a telecom packet. |
+| `clear_packet()` | Clears packet contents. |
+| `validate_packet()` | Validates packet integrity. |
+| `print_packet()` | Prints packet information. |
+
+---
+
+## Traffic Generation
+
+| Function | Description |
+|----------|-------------|
+| `generate_packet()` | Generates a telecom packet. |
+| `generate_timestamp()` | Generates a packet timestamp. |
+| `generate_source()` | Generates the packet source identifier. |
+| `generate_destination()` | Generates the packet destination identifier. |
+| `generate_traffic_type()` | Generates the telecom traffic type. |
+| `generate_payload()` | Generates the packet payload. |
+
+---
+
+## Processing Layer
+
+| Function | Description |
+|----------|-------------|
+| `buffer_init()` | Initializes the shared circular buffer. |
+| `enqueue()` | Inserts packets into the buffer. |
+| `dequeue()` | Removes packets from the buffer. |
+| `process_telecom_packet()` | Processes telecom packets using worker threads. |
+
+---
+
+## Storage Layer
+
+| Function | Description |
+|----------|-------------|
+| `db_initialize()` | Initializes Berkeley DB. |
+| `db_store_packet()` | Stores a telecom packet. |
+| `db_get_packet()` | Retrieves a stored packet. |
+| `db_close()` | Closes the database. |
+
+---
+
+## Graph Construction Layer
+
+| Function | Description |
+|----------|-------------|
+| `initialize_graph()` | Initializes the communication graph. |
+| `add_vertex()` | Adds a communication endpoint. |
+| `add_edge()` | Creates a communication relationship. |
+| `print_graph_statistics()` | Displays graph statistics. |
+| `get_top_communication_link()` | Returns the most active communication link. |
+
+---
+
+## Monitoring Layer
+
+| Function | Description |
+|----------|-------------|
+| `monitoring_initialize()` | Initializes runtime monitoring. |
+| `monitoring_get_statistics()` | Retrieves execution statistics. |
+| `monitoring_print_dashboard()` | Displays runtime monitoring information. |
+
+---
+
+# Documentation
+
+The repository contains detailed documentation covering the complete software development lifecycle.
+
+| Documentation | Description |
+|--------------|-------------|
+| Project Documentation | System architecture, module design and implementation details |
+| Workflow Documentation | Collaboration workflow, roadmap and meeting notes |
+| Evolution Documentation | Development history across all project phases |
+| Diagrams | System architecture, deployment and module interaction diagrams |
+
+---
+
+# Testing and Reports
+
+Each implementation phase was independently tested and validated before integration into the final hybrid framework.
+
+The repository includes:
+
+- Functional Testing
+- Unit Testing
+- Integration Testing
+- Performance Evaluation
+- Validation Reports
+- Scalability Testing
+- Communication Testing
+- Hybrid System Testing
+
+The final hybrid implementation combines all validated modules into a unified telecom stream processing framework while preserving the complete implementation history.
+
+---
+
+# Team
+
+| Name | Institution | Role |
+|------|-------------|------|
+| Jahnavi Pathi | MNIT Jaipur | Team Lead |
+| Sreeja | GNITS Hyderabad | Team Member |
+
+---
+
+# Future Enhancements
+
+# Future Enhancements
+
+The modular architecture allows the framework to be extended with additional capabilities such as:
+
+- Advanced telecom traffic analytics
+- Real-time monitoring dashboard
+- Fault tolerance and recovery mechanisms
+- Dynamic load balancing
+- Distributed cluster deployment
+- Cloud-native deployment
+- Containerization using Docker
+- Web-based visualization of communication graphs
+
+---
+
+# Acknowledgement
+
+This project was developed as part of the **MPPLAB Telecom Data Extraction Initiative** under the guidance of **Dr. V. C. V. Rao**.
+
+The project focuses on scalable parallel and distributed approaches for telecom data extraction, communication, processing, storage, graph construction, and runtime monitoring.
+
+---
+
+# License
+
+This repository is intended for academic, research, and educational purposes.

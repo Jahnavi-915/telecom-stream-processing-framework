@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "packet_processor.h"
-#include "../database/berkeley_db.h"
+#include "../storage/berkeley_db.h"
 #include "../graph/graph.h" 
 
 extern Graph telecom_graph;

@@ -10,7 +10,7 @@ CC = mpicc
 INCLUDE_DIR = include
 MPI_DIR = mpi
 PROCESSING_DIR = processing
-DATABASE_DIR = database
+DATABASE_DIR = storage
 GRAPH_DIR = graph
 MONITORING_DIR = monitoring
 

@@ -8,7 +8,7 @@
 #include "../include/queue_interface.h"
 #include "../include/serialization.h"
 #include "../processing/worker_pool.h"
-#include "../database/berkeley_db.h"
+#include "../storage/berkeley_db.h"
 #include "../graph/graph.h"
 #include "../monitoring/monitoring.h"
 

@@ -22,6 +22,9 @@ int main(int argc, char *argv[])
     /* Get current process rank */
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
+    log_info("Hybrid Telecom Stream Processing Framework Started");
+    log_info("MPI initialized successfully");
+
     if (rank == SERVER_RANK)
     {
         printf("\n===== MPI SERVER =====\n");
